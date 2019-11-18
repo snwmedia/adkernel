@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/snwmedia/adkernel/issues"
   },
-  "homepage": "https://github.com/snwmedia/adkernel#readme"
+  "homepage": "https://github.com/snwmedia/adkernel#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
 }
