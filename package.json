@@ -1,0 +1,19 @@
+{
+  "name": "adkernel",
+  "version": "1.0.0",
+  "description": "adkernel sdk",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snwmedia/adkernel.git"
+  },
+  "author": "Oded Breiner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/snwmedia/adkernel/issues"
+  },
+  "homepage": "https://github.com/snwmedia/adkernel#readme"
+}
