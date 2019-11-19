@@ -1,5 +1,5 @@
 {
-  "name": "adkernel",
+  "name": "@snwmedia/adkernel",
   "version": "1.0.0",
   "description": "adkernel sdk",
   "main": "index.js",
