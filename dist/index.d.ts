@@ -1,3 +1,3 @@
-export declare class AdKernel {
-    static authenticate(): void;
+export declare class RTB {
+    static getAllApps(): any[];
 }
