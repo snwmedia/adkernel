@@ -8,7 +8,7 @@ class Common {
             console.log(`authenticating ${process.env.DOMAIN} User:${process.env.USER}`);
         }
         else {
-            throw (`Set environment variable. \nOn VS code launch.json: \n
+            throw (`Set environment variables:\n
             "env": {"DOMAIN": "https://login.adservme.com/admin", "USER":"oded", "PASS":"123"}`);
         }
         let result = await request({
