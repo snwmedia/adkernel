@@ -5,5 +5,5 @@ class AdKernel {
         console.log('authenticate');
     }
 }
-exports.AdKernel = AdKernel;
+exports.default = AdKernel;
 //# sourceMappingURL=index.js.map
