@@ -3,6 +3,7 @@
         "baseUrl": ".",
         "module": "commonjs",
         "target": "es2017",
+        "declaration": true,
         "noImplicitAny": true,
         "outDir": "./dist",
         "sourceMap": true,
