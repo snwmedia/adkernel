@@ -1,4 +1,4 @@
-export default class AdKernel {
+export class AdKernel {
     public static authenticate() {
         console.log('authenticate')
     }

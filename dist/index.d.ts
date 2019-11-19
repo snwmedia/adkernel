@@ -1,3 +1,3 @@
-export default class AdKernel {
+export declare class AdKernel {
     static authenticate(): void;
 }
