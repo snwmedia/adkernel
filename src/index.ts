@@ -1,4 +1,4 @@
-import * as request from "request";
+import * as request from 'request-promise-native';
 
 class Common {
     static token: string;
@@ -14,20 +14,47 @@ class Common {
 
         let result: any = await request({
             method: 'GET',
-            url: `${Adkernel.adServmeAPI}/auth?login=${Adkernel.userName}&password=${Adkernel.password}`
+            url: `${process.env.DOMAIN}/auth?login=${process.env.USER}&password=${process.env.PASS}`
         });
-        if (result.statusCode === 200) {
-            Common.token = result.body;
+        if (result) {
+            Common.token = result;
             return Common.token;
         } else {
             throw ('AdKernel authentication error');
         }
     }
+
+    static async getAllBundles(token: string, timeRange: string, startFrom: number, bundlesReport: any[], limit?: number): Promise<any[]> {
+        let endTo = startFrom + 1000;
+        if (limit && limit < endTo) {
+            endTo = limit;
+        }
+        let result: any = await request({
+            method: 'GET',
+            url: `${process.env.DOMAIN}/api/ZoneReports/app_bundle?token=${token}&filters=date:${timeRange}&range=${startFrom}-${endTo}`,
+        });
+        if (JSON.parse(result)['response'] && JSON.parse(result)['response'].list) {
+            let list = JSON.parse(result)['response'].list;
+            if (Object.keys(list).length) {
+                for (let bundle in list) {
+                    if (!limit || (limit && bundlesReport.length < limit)) {
+                        let bundleObject = list[bundle];
+                        bundlesReport.push(bundleObject);
+                    }
+                }
+                if (!limit || limit !== endTo) {
+                    return await Common.getAllBundles(token, timeRange, endTo, bundlesReport, limit);
+                }
+            }
+        }
+        return bundlesReport;
+    }
 }
 
 export class RTB {
-    public static async getAllApps() {
+    public static async getAllAppBundles(timeRange: string, limit?: number) {
         let token = await Common.getToken();
-        return [];
+        let bundlesReport: any[] = await Common.getAllBundles(token, timeRange, 0, [], limit);
+        return bundlesReport;
     }
 }

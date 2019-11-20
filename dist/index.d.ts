@@ -1,3 +1,3 @@
 export declare class RTB {
-    static getAllApps(): any[];
+    static getAllAppBundles(timeRange: string, limit?: number): any[];
 }
