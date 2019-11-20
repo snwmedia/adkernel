@@ -18,5 +18,8 @@
   "homepage": "https://github.com/snwmedia/adkernel#readme",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
+  },
+  "dependencies": {
+    "request": "^2.88.0"
   }
 }

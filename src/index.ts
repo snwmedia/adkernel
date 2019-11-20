@@ -1,3 +1,5 @@
+import * as request from "request";
+
 class Common {
     static token: string;
     static async getToken() {
