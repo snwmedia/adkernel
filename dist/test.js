@@ -4,7 +4,7 @@ const dist_1 = require("../dist");
 console.log('test running');
 let d = new Date();
 d.setDate(d.getDate() - 1);
-dist_1.RTB.getAllZones(d, d);
+await dist_1.RTB.getAllZones(d, d);
 // RTB.getAllAppBundlesByZone(d, d, 84363, 1030);
 // RTB.getAllAppBundles(d, d, 1030);
 //# sourceMappingURL=test.js.map
