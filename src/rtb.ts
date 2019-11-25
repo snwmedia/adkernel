@@ -49,7 +49,7 @@ export class RTB {
         return reportList;
     }
 
-    public static async getAllAppBundlesByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number) {
+    public static async getAllAppBundlesByZoneRemoteFeed(from: Date, to: Date, zoneId: number, remoteFeedId: number, limit?: number) {
         let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/app_bundle`;
         let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
@@ -76,7 +76,7 @@ export class RTB {
         return reportList;
     }
 
-    public static async getAllSiteDomainsByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number) {
+    public static async getAllSiteDomainsByZoneRemoteFeed(from: Date, to: Date, zoneId: number, remoteFeedId: number, limit?: number) {
         let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/site_domain`;
         let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
@@ -102,7 +102,7 @@ export class RTB {
         return reportList;
     }
 
-    public static async getAllSspPublishersByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number) {
+    public static async getAllSspPublishersByZoneRemoteFeed(from: Date, to: Date, zoneId: number, remoteFeedId: number, limit?: number) {
         let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/ssp_publisher_id`;
         let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;

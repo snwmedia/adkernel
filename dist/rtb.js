@@ -39,7 +39,7 @@ class RTB {
         let reportList = await common_1.Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
     }
-    static async getAllAppBundlesByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) {
+    static async getAllAppBundlesByZoneRemoteFeed(from, to, zoneId, remoteFeedId, limit) {
         let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/app_bundle`;
         let reportList = await common_1.Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
@@ -60,7 +60,7 @@ class RTB {
         let reportList = await common_1.Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
     }
-    static async getAllSiteDomainsByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) {
+    static async getAllSiteDomainsByZoneRemoteFeed(from, to, zoneId, remoteFeedId, limit) {
         let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/site_domain`;
         let reportList = await common_1.Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
@@ -81,7 +81,7 @@ class RTB {
         let reportList = await common_1.Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
     }
-    static async getAllSspPublishersByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) {
+    static async getAllSspPublishersByZoneRemoteFeed(from, to, zoneId, remoteFeedId, limit) {
         let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/ssp_publisher_id`;
         let reportList = await common_1.Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
