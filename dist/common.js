@@ -28,6 +28,38 @@ class Common {
         let dateUrl = from.toISOString().slice(0, 10) + '_' + to.toISOString().slice(0, 10);
         return dateUrl;
     }
+    static async PrepareTheAPICall(from, to, url, limit) {
+        let timeRange = Common.getCustomDate(from, to);
+        let token = await Common.getToken();
+        let bundlesReport = await Common.getReportListByRecursion(url, token, timeRange, 0, [], limit);
+        return bundlesReport;
+    }
+    //recursion
+    static async getReportListByRecursion(url, token, timeRange, startFrom, reportList, limit) {
+        let endTo = startFrom + 500;
+        if (limit && limit < endTo) {
+            endTo = limit;
+        }
+        let result = await request({
+            method: 'GET',
+            url: `${url}?token=${token}&filters=date:${timeRange}&range=${startFrom}-${endTo}`,
+        });
+        if (JSON.parse(result)['response'] && JSON.parse(result)['response'].list) {
+            let allData = JSON.parse(result)['response'].list;
+            if (Object.keys(allData).length) {
+                for (let item in allData) {
+                    if (!limit || (limit && reportList.length < limit)) {
+                        let object = allData[item];
+                        reportList.push(object);
+                    }
+                }
+                if (!limit || limit !== endTo) {
+                    return await Common.getReportListByRecursion(url, token, timeRange, endTo, reportList, limit);
+                }
+            }
+        }
+        return reportList;
+    }
 }
 Common.yesterday = 'yesterday';
 exports.Common = Common;

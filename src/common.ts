@@ -34,4 +34,41 @@ export class Common {
     }
 
 
+    static async PrepareTheAPICall(from: Date, to: Date, url: string, limit?: number) {
+        let timeRange: string = Common.getCustomDate(from, to);
+        let token = await Common.getToken();
+        let bundlesReport: any[] = await Common.getReportListByRecursion(url, token, timeRange, 0, [], limit);
+        return bundlesReport;
+    }
+
+
+
+    //recursion
+    static async getReportListByRecursion(url: string, token: string, timeRange: string, startFrom: number, reportList: any[], limit?: number): Promise<any[]> {
+        let endTo = startFrom + 500;
+        if (limit && limit < endTo) {
+            endTo = limit;
+        }
+
+        let result: any = await request({
+            method: 'GET',
+            url: `${url}?token=${token}&filters=date:${timeRange}&range=${startFrom}-${endTo}`,
+        });
+        if (JSON.parse(result)['response'] && JSON.parse(result)['response'].list) {
+            let allData = JSON.parse(result)['response'].list;
+            if (Object.keys(allData).length) {
+                for (let item in allData) {
+                    if (!limit || (limit && reportList.length < limit)) {
+                        let object = allData[item];
+                        reportList.push(object);
+                    }
+                }
+                if (!limit || limit !== endTo) {
+                    return await Common.getReportListByRecursion(url, token, timeRange, endTo, reportList, limit);
+                }
+            }
+        }
+        return reportList;
+    }
+
 }
