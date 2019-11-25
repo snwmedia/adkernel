@@ -1,5 +1,4 @@
-import { RTB } from "./rtb";
-import { Xml } from "./xml";
+import { RTB } from "../dist";
 
 test();
 // RTB.getAllAppBundlesByZone(d, d, 84363, 1030);
