@@ -28,7 +28,7 @@ class Common {
         let dateUrl = from.toISOString().slice(0, 10) + '_' + to.toISOString().slice(0, 10);
         return dateUrl;
     }
-    static async PrepareTheAPICall(from, to, url, limit) {
+    static async PrepareAPICallForReports(from, to, url, limit) {
         let timeRange = Common.getCustomDate(from, to);
         let token = await Common.getToken();
         let bundlesReport = await Common.getReportListByRecursion(url, token, timeRange, 0, [], limit);

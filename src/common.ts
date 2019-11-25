@@ -34,7 +34,7 @@ export class Common {
     }
 
 
-    static async PrepareTheAPICall(from: Date, to: Date, url: string, limit?: number) {
+    static async PrepareAPICallForReports(from: Date, to: Date, url: string, limit?: number) {
         let timeRange: string = Common.getCustomDate(from, to);
         let token = await Common.getToken();
         let bundlesReport: any[] = await Common.getReportListByRecursion(url, token, timeRange, 0, [], limit);
