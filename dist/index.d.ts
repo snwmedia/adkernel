@@ -15,6 +15,7 @@ export declare class RTB {
     static getSspPublishersReportByZone(from: Date, to: Date, zoneId: number, limit?: number): Promise<any[]>;
     static getSspPublishersReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number): Promise<any[]>;
     static getSspPublishersReportByZoneRemoteFeed(from: Date, to: Date, zoneId: number, remoteFeedId: number, limit?: number): Promise<any[]>;
+    static getZoneRemoteFeedData(zoneId: number, RemoteFeedId: number): Promise<any[]>;
 }
 export declare class XML {
     static getRemoteFeedsReportByPubFeed(from: Date, to: Date, pubFeedId: number): Promise<any[]>;
@@ -25,5 +26,6 @@ export declare class XML {
     static getSubIdsReportByRemoteFeed(from: Date, to: Date, RemoteFeedId: number, limit?: number): Promise<any[]>;
     static getSubIdsReportByPublisherFeed(from: Date, to: Date, pubFeedId: number, limit?: number): Promise<any[]>;
     static getSubIdsReportByRemotePublisherFeed(from: Date, to: Date, RemoteFeedId: number, pubFeedId: number, limit?: number): Promise<any[]>;
-    static getAllSubIdsByRemotePublisherFeed(RemoteFeedId: number, pubFeedId: number): Promise<any[]>;
+    static getRemotePublisherFeedData(RemoteFeedId: number, pubFeedId: number): Promise<any[]>;
+    static updateSubIdsByRemotePublisherFeed(remotePublisherId: number, RemoteFeedId: number, pubFeedId: number, subIdListMode: string, subIdList: string[]): Promise<any[]>;
 }

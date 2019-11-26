@@ -67,6 +67,17 @@ class Common {
         });
         return JSON.parse(result)['response'];
     }
+    static async UpdateData(url, json) {
+        let result = await request({
+            method: 'PUT',
+            url: url,
+            headers: {
+                'Content-Types': 'application/json',
+            },
+            json: json,
+        });
+        return result.body.status;
+    }
 }
 Common.yesterday = 'yesterday';
 class RTB {
@@ -154,6 +165,13 @@ class RTB {
         let reportList = await Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
     }
+    // GET DATA:
+    static async getZoneRemoteFeedData(zoneId, RemoteFeedId) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/ZoneRemoteFeed/?token=${token}&filters=remotefeed:${RemoteFeedId};zone:${zoneId}`;
+        let remotePublisherFeed = await Common.getData(url);
+        return remotePublisherFeed;
+    }
 }
 exports.RTB = RTB;
 class XML {
@@ -200,10 +218,22 @@ class XML {
         return reportList;
     }
     // GET DATA:
-    static async getAllSubIdsByRemotePublisherFeed(RemoteFeedId, pubFeedId) {
+    static async getRemotePublisherFeedData(RemoteFeedId, pubFeedId) {
         let token = await Common.getToken();
         let url = `${process.env.DOMAIN}/api/RemotePublisherFeed/?token=${token}&filters=remotefeed:${RemoteFeedId};publisherfeed:${pubFeedId}`;
         let remotePublisherFeed = await Common.getData(url);
+        return remotePublisherFeed;
+    }
+    // UPDATE DATA:
+    static async updateSubIdsByRemotePublisherFeed(remotePublisherId, RemoteFeedId, pubFeedId, subIdListMode, subIdList) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/RemotePublisherFeed/${remotePublisherId}?token=${token}`;
+        let json = {};
+        json.remotefeed_id = RemoteFeedId;
+        json.feed_id = pubFeedId;
+        json.subidlist_mode = subIdListMode;
+        json.subidlist = subIdList;
+        let remotePublisherFeed = await Common.UpdateData(url, json);
         return remotePublisherFeed;
     }
 }

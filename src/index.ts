@@ -78,6 +78,19 @@ class Common {
         });
         return JSON.parse(result)['response'];
     }
+
+
+    static async UpdateData(url: string, json: any) {
+        let result: any = await request({
+            method: 'PUT',
+            url: url,
+            headers: {
+                'Content-Types': 'application/json',
+            },
+            json: json,
+        });
+        return result.body.status;
+    }
 }
 
 
@@ -188,6 +201,15 @@ export class RTB {
         let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
     }
+
+
+    // GET DATA:
+    public static async getZoneRemoteFeedData(zoneId: number, RemoteFeedId: number, ) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/ZoneRemoteFeed/?token=${token}&filters=remotefeed:${RemoteFeedId};zone:${zoneId}`;
+        let remotePublisherFeed: any[] = await Common.getData(url);
+        return remotePublisherFeed;
+    }
 }
 
 export class XML {
@@ -247,10 +269,25 @@ export class XML {
 
 
     // GET DATA:
-    public static async getAllSubIdsByRemotePublisherFeed(RemoteFeedId: number, pubFeedId: number) {
+    public static async getRemotePublisherFeedData(RemoteFeedId: number, pubFeedId: number) {
         let token = await Common.getToken();
         let url = `${process.env.DOMAIN}/api/RemotePublisherFeed/?token=${token}&filters=remotefeed:${RemoteFeedId};publisherfeed:${pubFeedId}`;
         let remotePublisherFeed: any[] = await Common.getData(url);
+        return remotePublisherFeed;
+    }
+
+
+    // UPDATE DATA:
+    public static async updateSubIdsByRemotePublisherFeed(remotePublisherId: number, RemoteFeedId: number, pubFeedId: number, subIdListMode: string, subIdList: string[]) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/RemotePublisherFeed/${remotePublisherId}?token=${token}`;
+        let json: any = {};
+        json.remotefeed_id = RemoteFeedId;
+        json.feed_id = pubFeedId;
+        json.subidlist_mode = subIdListMode;
+        json.subidlist = subIdList;
+
+        let remotePublisherFeed: any[] = await Common.UpdateData(url, json);
         return remotePublisherFeed;
     }
 }

@@ -8,7 +8,8 @@ function test() {
     console.log('test running');
     let d = new Date();
     d.setDate(d.getDate() - 1);
-    let reportList = dist_1.XML.getAllSubIdsByRemotePublisherFeed(219388, 187893);
+    // let reportList = XML.getRemotePublisherFeedData(219388, 187893);
+    let reportList = dist_1.RTB.getZoneRemoteFeedData(84363, 220869);
     console.log('done');
 }
 //# sourceMappingURL=test.js.map
