@@ -1,6 +1,8 @@
 import * as request from 'request-promise-native';
+import { XmlImplementation } from './xmlImplementation';
+import { RtbImplementation } from './rtbImplementation';
 
-class Common {
+export class Common {
     static token: string;
     static yesterday: string = 'yesterday';
 
@@ -41,7 +43,7 @@ class Common {
         return bundlesReport;
     }
 
-    static sortListForUpdate(list: Set<string>) {
+    static cleanListForUpdate(list: Set<string>) {
         let blank = null;
         if (list.has('<blank>') || list.has('null') || list.has('')) {
             list.delete('<blank>');
@@ -112,215 +114,61 @@ export class RTB {
 
     // REPORTS:
 
-    public static async getZonesReport(from: Date, to: Date) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/zone`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
-        return reportList;
-    }
+    //RemoteFeeds reports
+    public static async getRemoteFeedsReport(from: Date, to: Date) { return RtbImplementation.getRemoteFeedsReport(from, to); }
+    public static async getRemoteFeedsReportByZone(from: Date, to: Date, zoneId: number) { return RtbImplementation.getRemoteFeedsReportByZone(from, to, zoneId); }
 
-    public static async getZonesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
-        return reportList;
-    }
-
-    public static async getRemoteFeedsReport(from: Date, to: Date) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
-        return reportList;
-    }
-
-    public static async getRemoteFeedsReportByZone(from: Date, to: Date, zoneId: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/zone=${zoneId}/remotefeed`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
-        return reportList;
-    }
-
-
+    //Zone reports
+    public static async getZonesReport(from: Date, to: Date) { return RtbImplementation.getZonesReport(from, to); }
+    public static async getZonesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number) { return RtbImplementation.getZonesReportByRemoteFeed(from, to, remoteFeedId); }
 
     //AppBundles reports:
-    public static async getAppBundlesReport(from: Date, to: Date, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/app_bundle`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getAppBundlesReportByZone(from: Date, to: Date, zoneId: number, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/zone=${zoneId}/app_bundle`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getAppBundlesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/app_bundle`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getAppBundlesReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/app_bundle`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-
+    public static async getAppBundlesReport(from: Date, to: Date, limit?: number) { return RtbImplementation.getAppBundlesReport(from, to, limit); }
+    public static async getAppBundlesReportByZone(from: Date, to: Date, zoneId: number, limit?: number) { return RtbImplementation.getAppBundlesReportByZone(from, to, zoneId, limit); }
+    public static async getAppBundlesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number) { return RtbImplementation.getAppBundlesReportByRemoteFeed(from, to, remoteFeedId, limit); }
+    public static async getAppBundlesReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number) { return RtbImplementation.getAppBundlesReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit); }
 
     //SiteDomains reports:
-    public static async getSiteDomainsReport(from: Date, to: Date, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/site_domain`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getSiteDomainsReportByZone(from: Date, to: Date, zoneId: number, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/zone=${zoneId}/site_domain`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getSiteDomainsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/site_domain`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getSiteDomainsReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, , limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/site_domain`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
+    public static async getSiteDomainsReport(from: Date, to: Date, limit?: number) { return RtbImplementation.getSiteDomainsReport(from, to, limit); }
+    public static async getSiteDomainsReportByZone(from: Date, to: Date, zoneId: number, limit?: number) { return RtbImplementation.getSiteDomainsReportByZone(from, to, zoneId, limit); }
+    public static async getSiteDomainsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number) { return RtbImplementation.getSiteDomainsReportByRemoteFeed(from, to, remoteFeedId, limit); }
+    public static async getSiteDomainsReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number) { return RtbImplementation.getSiteDomainsReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit); }
 
 
     //SspPublishers reports:
-    public static async getSspPublishersReport(from: Date, to: Date, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/ssp_publisher_id`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getSspPublishersReportByZone(from: Date, to: Date, zoneId: number, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/zone=${zoneId}/ssp_publisher_id`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getSspPublishersReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/ssp_publisher_id`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getSspPublishersReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/ssp_publisher_id`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
+    public static async getSspPublishersReport(from: Date, to: Date, limit?: number) { return RtbImplementation.getSspPublishersReport(from, to, limit); }
+    public static async getSspPublishersReportByZone(from: Date, to: Date, zoneId: number, limit?: number) { return RtbImplementation.getSspPublishersReportByZone(from, to, zoneId, limit); }
+    public static async getSspPublishersReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number) { return RtbImplementation.getSspPublishersReportByRemoteFeed(from, to, remoteFeedId, limit); }
+    public static async getSspPublishersReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number) { return RtbImplementation.getSspPublishersReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit); }
 
     // GET DATA:
-    public static async getZoneRemoteFeedData(remoteFeedId: number, zoneId: number) {
-        let token = await Common.getToken();
-        let url = `${process.env.DOMAIN}/api/ZoneRemoteFeed/?token=${token}&filters=remotefeed:${remoteFeedId};zone:${zoneId}`;
-        let remotePublisherFeed: any[] = await Common.getData(url);
-        return remotePublisherFeed;
-    }
+    public static async getZoneRemoteFeedData(remoteFeedId: number, zoneId: number) { return RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
 
     // UPDATE DATA:
-    public static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdListMode: string, publisherIdList: Set<string>) {
-        let token = await Common.getToken();
-        let url = `${process.env.DOMAIN}/api/ZoneRemoteFeed/${zoneRemoteFeedId}?token=${token}`;
-        let subIdString: string = Common.sortListForUpdate(publisherIdList);
-
-        let json: any = {};
-        json.remotefeed_id = remoteFeedId;
-        json.zone_id = zoneId;
-        json.publisher_id_list_mode = publisherIdListMode;
-        json.publisher_id_list = subIdString;
-
-        let status: any[] = await Common.UpdateData(url, json);
-        return status;
-    }
+    public static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdListMode: string, publisherIdList: Set<string>) { return RtbImplementation.updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId, remoteFeedId, zoneId, publisherIdListMode, publisherIdList); }
 }
 
 export class XML {
 
     // REPORTS:
 
-    public static async getRemoteFeedsReportByPubFeed(from: Date, to: Date, pubFeedId: number) {
-        let url = `${process.env.DOMAIN}/api/FeedReports/feed=${pubFeedId}/remotefeed`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
-        return reportList;
-    }
+    //RemoteFeeds reports
+    public static async getRemoteFeedsReport(from: Date, to: Date) { return XmlImplementation.getRemoteFeedsReport(from, to); }
+    public static async getRemoteFeedsReportByPubFeed(from: Date, to: Date, pubFeedId: number) { return XmlImplementation.getRemoteFeedsReportByPubFeed(from, to, pubFeedId); }
 
-    public static async getRemoteFeedsReport(from: Date, to: Date) {
-        let url = `${process.env.DOMAIN}/api/FeedReports/remotefeed`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
-        return reportList;
-    }
-
-    public static async getPubFeedsReportByRemoteFeed(from: Date, to: Date, RemoteFeedId: number) {
-        let url = `${process.env.DOMAIN}/api/FeedReports/remotefeed=${RemoteFeedId}/feed`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
-        return reportList;
-    }
-
-    public static async getPubFeedsReport(from: Date, to: Date) {
-        let url = `${process.env.DOMAIN}/api/FeedReports/feed`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
-        return reportList;
-    }
-
+    //PubFeeds report
+    public static async getPubFeedsReport(from: Date, to: Date) { return XmlImplementation.getPubFeedsReport(from, to); }
+    public static async getPubFeedsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number) { return XmlImplementation.getPubFeedsReportByRemoteFeed(from, to, remoteFeedId); }
 
     //SubIdS reports:
-    public static async getSubIdsReport(from: Date, to: Date, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/FeedReports/pubsubid`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getSubIdsReportByRemoteFeed(from: Date, to: Date, RemoteFeedId: number, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/FeedReports/remotefeed=${RemoteFeedId}/pubsubid`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getSubIdsReportByPublisherFeed(from: Date, to: Date, pubFeedId: number, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/FeedReports/feed=${pubFeedId}/pubsubid`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-    public static async getSubIdsReportByRemotePublisherFeed(from: Date, to: Date, RemoteFeedId: number, pubFeedId: number, limit?: number) {
-        let url = `${process.env.DOMAIN}/api/FeedReports/remotefeed=${RemoteFeedId}/feed=${pubFeedId}/pubsubid`;
-        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
-        return reportList;
-    }
-
-
+    public static async getSubIdsReport(from: Date, to: Date, limit?: number) { return XmlImplementation.getSubIdsReport(from, to, limit); }
+    public static async getSubIdsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number) { return XmlImplementation.getSubIdsReportByRemoteFeed(from, to, remoteFeedId, limit); }
+    public static async getSubIdsReportByPublisherFeed(from: Date, to: Date, pubFeedId: number, limit?: number) { return XmlImplementation.getSubIdsReportByPublisherFeed(from, to, pubFeedId, limit); }
+    public static async getSubIdsReportByRemotePublisherFeed(from: Date, to: Date, remoteFeedId: number, pubFeedId: number, limit?: number) { return XmlImplementation.getSubIdsReportByRemotePublisherFeed(from, to, remoteFeedId, pubFeedId, limit); }
 
     // GET DATA:
-    public static async getRemotePublisherFeedData(RemoteFeedId: number, pubFeedId: number) {
-        let token = await Common.getToken();
-        let url = `${process.env.DOMAIN}/api/RemotePublisherFeed/?token=${token}&filters=remotefeed:${RemoteFeedId};publisherfeed:${pubFeedId}`;
-        let remotePublisherFeed: any[] = await Common.getData(url);
-        return remotePublisherFeed;
-    }
-
+    public static async getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number) { return XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
 
     // UPDATE DATA:
-    public static async updateSubIdsByRemotePublisherFeed(remotePublisherId: number, RemoteFeedId: number, pubFeedId: number, subIdListMode: string, subIdList: Set<string>) {
-        let token = await Common.getToken();
-        let url = `${process.env.DOMAIN}/api/RemotePublisherFeed/${remotePublisherId}?token=${token}`;
-        let subIdString: string = Common.sortListForUpdate(subIdList);
-
-
-        let json: any = {};
-        json.remotefeed_id = RemoteFeedId;
-        json.feed_id = pubFeedId;
-        json.subidlist_mode = subIdListMode;
-        json.subidlist = subIdString;
-
-        let status: any[] = await Common.UpdateData(url, json);
-        return status;
-    }
+    public static async updateSubIdsByRemotePublisherFeed(remotePublisherId: number, RemoteFeedId: number, pubFeedId: number, subIdListMode: string, subIdList: Set<string>) { return XmlImplementation.updateSubIdsByRemotePublisherFeed(remotePublisherId, RemoteFeedId, pubFeedId, subIdListMode, subIdList); }
 }

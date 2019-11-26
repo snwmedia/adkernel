@@ -1,3 +1,14 @@
+export declare class Common {
+    static token: string;
+    static yesterday: string;
+    static getToken(): Promise<string>;
+    static getCustomDate(from: Date, to: Date): string;
+    static PrepareAPICallForReports(from: Date, to: Date, url: string, limit?: number): Promise<any[]>;
+    static sortListForUpdate(list: Set<string>): string;
+    static getReportListByRecursion(url: string, token: string, timeRange: string, startFrom: number, reportList: any[], limit?: number): Promise<any[]>;
+    static getData(url: string): Promise<any>;
+    static UpdateData(url: string, json: any): Promise<any>;
+}
 export declare class RTB {
     static getZonesReport(from: Date, to: Date): Promise<any[]>;
     static getZonesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number): Promise<any[]>;

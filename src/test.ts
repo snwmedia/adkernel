@@ -9,6 +9,7 @@ function test() {
     let d = new Date();
     d.setDate(d.getDate() - 1);
     // let reportList = XML.getRemotePublisherFeedData(219388, 187893);
-    let reportList = RTB.getZoneRemoteFeedData(84363, 220869);
+    // let reportList = RTB.getZoneRemoteFeedData(84363, 220869);
+    XML.getRemoteFeedsReport(d, d);
     console.log('done');
 }
