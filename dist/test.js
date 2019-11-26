@@ -8,7 +8,7 @@ function test() {
     console.log('test running');
     let d = new Date();
     d.setDate(d.getDate() - 1);
-    let reportList = dist_1.RTB.getAllAppBundlesByZoneRemoteFeed(d, d, 84363, 220869, 10);
+    let reportList = dist_1.XML.getAllSubIdsByRemotePublisherFeed(219388, 187893);
     console.log('done');
 }
 //# sourceMappingURL=test.js.map
