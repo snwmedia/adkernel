@@ -34,6 +34,21 @@ class Common {
         let bundlesReport = await Common.getReportListByRecursion(url, token, timeRange, 0, [], limit);
         return bundlesReport;
     }
+    static sortListForUpdate(list) {
+        let blank = null;
+        if (list.has('<blank>') || list.has('null') || list.has('')) {
+            list.delete('<blank>');
+            list.delete('null');
+            list.delete('');
+            blank = '<blank>';
+        }
+        let sortList = Array.from(list);
+        if (blank) {
+            sortList.unshift(blank);
+        }
+        let subIdString = sortList.join('\n');
+        return subIdString;
+    }
     //recursion
     static async getReportListByRecursion(url, token, timeRange, startFrom, reportList, limit) {
         let endTo = startFrom + 500;
@@ -118,7 +133,7 @@ class RTB {
         let reportList = await Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
     }
-    static async getAppBundlesReportByZoneRemoteFeed(from, to, zoneId, remoteFeedId, limit) {
+    static async getAppBundlesReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) {
         let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/app_bundle`;
         let reportList = await Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
@@ -139,7 +154,7 @@ class RTB {
         let reportList = await Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
     }
-    static async getSiteDomainsReportByZoneRemoteFeed(from, to, zoneId, remoteFeedId, limit) {
+    static async getSiteDomainsReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) {
         let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/site_domain`;
         let reportList = await Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
@@ -160,17 +175,30 @@ class RTB {
         let reportList = await Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
     }
-    static async getSspPublishersReportByZoneRemoteFeed(from, to, zoneId, remoteFeedId, limit) {
+    static async getSspPublishersReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) {
         let url = `${process.env.DOMAIN}/api/ZoneReports/remotefeed=${remoteFeedId}/zone=${zoneId}/ssp_publisher_id`;
         let reportList = await Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
     }
     // GET DATA:
-    static async getZoneRemoteFeedData(zoneId, RemoteFeedId) {
+    static async getZoneRemoteFeedData(remoteFeedId, zoneId) {
         let token = await Common.getToken();
-        let url = `${process.env.DOMAIN}/api/ZoneRemoteFeed/?token=${token}&filters=remotefeed:${RemoteFeedId};zone:${zoneId}`;
+        let url = `${process.env.DOMAIN}/api/ZoneRemoteFeed/?token=${token}&filters=remotefeed:${remoteFeedId};zone:${zoneId}`;
         let remotePublisherFeed = await Common.getData(url);
         return remotePublisherFeed;
+    }
+    // UPDATE DATA:
+    static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId, remoteFeedId, zoneId, publisherIdListMode, publisherIdList) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/ZoneRemoteFeed/${zoneRemoteFeedId}?token=${token}`;
+        let subIdString = Common.sortListForUpdate(publisherIdList);
+        let json = {};
+        json.remotefeed_id = remoteFeedId;
+        json.zone_id = zoneId;
+        json.publisher_id_list_mode = publisherIdListMode;
+        json.publisher_id_list = subIdString;
+        let status = await Common.UpdateData(url, json);
+        return status;
     }
 }
 exports.RTB = RTB;
@@ -228,13 +256,14 @@ class XML {
     static async updateSubIdsByRemotePublisherFeed(remotePublisherId, RemoteFeedId, pubFeedId, subIdListMode, subIdList) {
         let token = await Common.getToken();
         let url = `${process.env.DOMAIN}/api/RemotePublisherFeed/${remotePublisherId}?token=${token}`;
+        let subIdString = Common.sortListForUpdate(subIdList);
         let json = {};
         json.remotefeed_id = RemoteFeedId;
         json.feed_id = pubFeedId;
         json.subidlist_mode = subIdListMode;
-        json.subidlist = subIdList;
-        let remotePublisherFeed = await Common.UpdateData(url, json);
-        return remotePublisherFeed;
+        json.subidlist = subIdString;
+        let status = await Common.UpdateData(url, json);
+        return status;
     }
 }
 exports.XML = XML;
