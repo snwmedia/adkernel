@@ -67,7 +67,7 @@ class RtbUpdateFile {
             }
         }
         else {
-            console.error('Failed getAppListNames ', result.statusCode);
+            console.error('Failed getAppListNames ', result);
         }
     }
     static async getFileId(token, appListId, jsonName, apiType) {
@@ -83,7 +83,7 @@ class RtbUpdateFile {
                 return fileId;
             }
         }
-        console.error('Failed getIdFile', result.statusCode);
+        console.error('Failed getIdFile', result);
     }
     static async getOldList(token, fileId) {
         let result = await request({
@@ -94,7 +94,7 @@ class RtbUpdateFile {
             return result;
         }
         else {
-            console.error('Failed getOldList', result.statusCode);
+            console.error('Failed getOldList', result);
         }
     }
     static async uploadList(token, list) {
@@ -113,7 +113,7 @@ class RtbUpdateFile {
             return JSON.parse(result)['response'];
         }
         else {
-            console.error('Failed uploadList', result.statusCode);
+            console.error('Failed uploadList', result);
         }
     }
     static async updateList(token, listId, appListId, jsonName, apiType) {
@@ -132,7 +132,7 @@ class RtbUpdateFile {
                 return 'true';
             }
         }
-        console.error('Failed updateList', result.body);
+        console.error('Failed updateList', result);
         return 'false';
     }
     static async createReferrerList(token, listName, fileId, jsonName, apiType) {
@@ -151,7 +151,7 @@ class RtbUpdateFile {
             return result['response'];
         }
         else {
-            console.error('Failed createReferrerList', result.statusCode);
+            console.error('Failed createReferrerList', result);
         }
     }
     static async updateZoneRemoteFeed(token, ZoneRemoteFeedId, json) {
@@ -168,7 +168,7 @@ class RtbUpdateFile {
                 return 'true';
             }
         }
-        console.error('Failed updateZoneRemoteFeed', result.statusCode);
+        console.error('Failed updateZoneRemoteFeed', result);
         return 'false';
     }
 }

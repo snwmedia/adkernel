@@ -77,7 +77,7 @@ export class RtbUpdateFile {
                 }
             }
         } else {
-            console.error('Failed getAppListNames ', result.statusCode)
+            console.error('Failed getAppListNames ', result)
         }
     }
 
@@ -94,7 +94,7 @@ export class RtbUpdateFile {
                 return fileId;
             }
         }
-        console.error('Failed getIdFile', result.statusCode)
+        console.error('Failed getIdFile', result)
     }
 
     static async getOldList(token: string, fileId: string): Promise<any> {
@@ -105,7 +105,7 @@ export class RtbUpdateFile {
         if (result) {
             return result;
         } else {
-            console.error('Failed getOldList', result.statusCode)
+            console.error('Failed getOldList', result)
         }
     }
 
@@ -124,7 +124,7 @@ export class RtbUpdateFile {
         if (result) {
             return JSON.parse(result)['response'];
         } else {
-            console.error('Failed uploadList', result.statusCode)
+            console.error('Failed uploadList', result)
         }
     }
 
@@ -144,7 +144,7 @@ export class RtbUpdateFile {
                 return 'true';
             }
         }
-        console.error('Failed updateList', result.body);
+        console.error('Failed updateList', result);
         return 'false';
     }
 
@@ -163,7 +163,7 @@ export class RtbUpdateFile {
         if (result) {
             return result['response'];
         } else {
-            console.error('Failed createReferrerList', result.statusCode)
+            console.error('Failed createReferrerList', result)
         }
     }
 
@@ -182,7 +182,7 @@ export class RtbUpdateFile {
                 return 'true';
             }
         }
-        console.error('Failed updateZoneRemoteFeed', result.statusCode)
+        console.error('Failed updateZoneRemoteFeed', result)
         return 'false';
     }
 }
