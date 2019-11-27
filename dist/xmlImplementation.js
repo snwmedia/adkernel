@@ -55,7 +55,7 @@ class XmlImplementation {
     static async updateSubIdsByRemotePublisherFeed(remotePublisherId, RemoteFeedId, pubFeedId, subIdListMode, subIdList) {
         let token = await dist_1.Common.getToken();
         let url = `${XmlImplementation.urlAction}/${remotePublisherId}?token=${token}`;
-        let subIdString = dist_1.Common.sortListForUpdate(subIdList);
+        let subIdString = dist_1.Common.cleanListForUpdate(subIdList);
         let json = {};
         json.remotefeed_id = RemoteFeedId;
         json.feed_id = pubFeedId;

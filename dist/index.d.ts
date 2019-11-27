@@ -28,8 +28,8 @@ export declare class RTB {
     static getSspPublishersReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number): Promise<any[]>;
     static getZoneRemoteFeedData(remoteFeedId: number, zoneId: number): Promise<any[]>;
     static updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdListMode: string, publisherIdList: Set<string>): Promise<any[]>;
-    static updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>): Promise<boolean>;
-    static updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>): Promise<boolean>;
+    static updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<string>;
+    static updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<string>;
 }
 export declare class XML {
     static getRemoteFeedsReport(from: Date, to: Date): Promise<any[]>;
@@ -42,4 +42,8 @@ export declare class XML {
     static getSubIdsReportByRemotePublisherFeed(from: Date, to: Date, remoteFeedId: number, pubFeedId: number, limit?: number): Promise<any[]>;
     static getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number): Promise<any[]>;
     static updateSubIdsByRemotePublisherFeed(remotePublisherId: number, RemoteFeedId: number, pubFeedId: number, subIdListMode: string, subIdList: Set<string>): Promise<any[]>;
+}
+export declare enum Mode {
+    BLACKLIST = "BLACKLIST",
+    WHITELIST = "WHITELIST"
 }

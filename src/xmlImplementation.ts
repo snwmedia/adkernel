@@ -73,7 +73,7 @@ export class XmlImplementation {
     public static async updateSubIdsByRemotePublisherFeed(remotePublisherId: number, RemoteFeedId: number, pubFeedId: number, subIdListMode: string, subIdList: Set<string>) {
         let token = await Common.getToken();
         let url = `${XmlImplementation.urlAction}/${remotePublisherId}?token=${token}`;
-        let subIdString: string = Common.sortListForUpdate(subIdList);
+        let subIdString: string = Common.cleanListForUpdate(subIdList);
 
 
         let json: any = {};

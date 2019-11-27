@@ -92,6 +92,7 @@ class RtbImplementation {
         let token = await dist_1.Common.getToken();
         let url = `${RtbImplementation.urlAction}/?token=${token}&filters=remotefeed:${remoteFeedId};zone:${zoneId}`;
         let remotePublisherFeed = await dist_1.Common.getData(url);
+        console.log(remotePublisherFeed);
         return remotePublisherFeed;
     }
     // UPDATE DATA:
@@ -103,13 +104,13 @@ class RtbImplementation {
         let status = await dist_1.Common.UpdateData(url, json);
         return status;
     }
-    static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId) {
+    static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode) {
         let jsonFileType = { apiType: 'DomainList', jsonName: 'domains', mode: 'referrerlist_mode', jsonListName: 'referrer_list' };
-        return await rtbUpdateFile_1.RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType);
+        return await rtbUpdateFile_1.RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType, mode);
     }
-    static async updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId) {
+    static async updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode) {
         let jsonFileType = { apiType: 'AppList', jsonName: 'app_bundles', mode: 'applist_mode', jsonListName: 'app_lists' };
-        return await rtbUpdateFile_1.RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType);
+        return await rtbUpdateFile_1.RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType, mode);
     }
 }
 RtbImplementation.urlReport = `${process.env.DOMAIN}/api/ZoneReports`;

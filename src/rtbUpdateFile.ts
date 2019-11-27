@@ -1,46 +1,50 @@
 import * as request from 'request-promise-native';
-import { Common } from '../dist';
+import { Common, Mode } from '../dist';
 
 
 export class RtbUpdateFile {
 
-    public static async updateFile(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, jsonFileType: any): Promise<boolean> {
+    public static async updateFile(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, jsonFileType: any, mode: Mode): Promise<string> {
 
         let token = await Common.getToken();
         let appListIds = zoneRemoteObject.app_lists;
-        let [listExist, listId] = await RtbUpdateFile.getAppListIdIfExist(token, appListIds, listName, 'AppList');
+        let [listExist, listId] = await RtbUpdateFile.getAppListIdIfExist(token, appListIds, listName, jsonFileType.apiType);
 
         // exist already, update the list:
         if (listId) {
-            let fileId = await RtbUpdateFile.getFileId(token, listId, 'AppList');
+            //check if the the existing mode is no different from the new mode:
+            if (zoneRemoteObject[jsonFileType.mode] !== mode) {
+                return `The ${jsonFileType.mode} is already set as ${zoneRemoteObject[jsonFileType.mode]}`;
+            }
+
+            let fileId = await RtbUpdateFile.getFileId(token, listId, jsonFileType.jsonName, jsonFileType.apiType);
             let oldAppLists = await RtbUpdateFile.getOldList(token, fileId);
             let oldList: string[] = oldAppLists.split('\n');
             for (let old of oldList) {
                 appsId.add(old);
             }
-
-            let updatingAppsString: string = Array.from(appsId).join('\n');
+            let updatingAppsString: string = Common.cleanListForUpdate(appsId);
             let newFile = await RtbUpdateFile.uploadList(token, updatingAppsString);
             let newFileId = newFile.created;
-            return await RtbUpdateFile.updateList(token, listId, newFileId, 'app_bundles', 'AppList')
+            return await RtbUpdateFile.updateList(token, listId, newFileId, jsonFileType.jsonName, jsonFileType.apiType)
         }
 
         // not exist, create new list:
-        let listString: string = Array.from(appsId).join('\n');
+        let listString: string = Common.cleanListForUpdate(appsId);
         let newFile = await RtbUpdateFile.uploadList(token, listString);
         if (newFile) {
             let newFileId = newFile.created;
-            let newList = await RtbUpdateFile.createReferrerList(token, listName, newFileId, 'app_bundles', 'AppList');
+            let newList = await RtbUpdateFile.createReferrerList(token, listName, newFileId, jsonFileType.jsonName, jsonFileType.apiType);
             if (newList) {
                 let newListId = newList.created;
                 listExist.push(newListId);
                 let json: any = {};
-                json.applist_mode = 'BLACKLIST';
-                json.app_lists = listExist;
+                json[jsonFileType.mode] = mode;
+                json[jsonFileType.jsonListName] = listExist;
                 return await RtbUpdateFile.updateZoneRemoteFeed(token, zoneRemoteFeedId, json);
             }
         }
-        return false;
+        return 'false';
     }
 
 
@@ -51,11 +55,9 @@ export class RtbUpdateFile {
         let listId = null;
         for (let id of appListIds) {
             let appListDetails = await RtbUpdateFile.getAppListNames(token, apiType, id);
-            for (let detail in appListDetails) {
-                listExist.push(id);
-                if (listName === appListDetails[detail].name) {
-                    listId = id;
-                }
+            listExist.push(id);
+            if (listName === appListDetails.name) {
+                listId = id;
             }
         }
         return [listExist, listId];
@@ -67,22 +69,27 @@ export class RtbUpdateFile {
             method: 'GET',
             url: `${process.env.DOMAIN}/api/${apiType}/?token=${token}&filters=search:${appListId}`
         });
-        if (result.statusCode === 200) {
-            return JSON.parse(result)['response'];
+        if (result) {
+            let response = JSON.parse(result)['response'];
+            for (let data in response) {
+                if (response[data].id === appListId) {
+                    return response[data];
+                }
+            }
         } else {
             console.error('Failed getAppListNames ', result.statusCode)
         }
     }
 
-    static async  getFileId(token: string, appListId: number, apiType: string, ) {
+    static async  getFileId(token: string, appListId: number, jsonName: string, apiType: string, ) {
         let result: any = await request({
             method: 'GET',
             url: `${process.env.DOMAIN}/api/${apiType}/${appListId}?token=${token}`,
         });
-        if (result.statusCode === 200) {
+        if (result) {
             let listDetails = JSON.parse(result)['response'];
             for (let list in listDetails) {
-                let appBundlesName = listDetails[list][apiType];
+                let appBundlesName = listDetails[list][jsonName];
                 let fileId = appBundlesName.split('id ').pop();
                 return fileId;
             }
@@ -95,7 +102,7 @@ export class RtbUpdateFile {
             method: 'GET',
             url: `${process.env.DOMAIN}/api/files/${fileId}?token=${token}`
         });
-        if (result.statusCode === 200) {
+        if (result) {
             return result;
         } else {
             console.error('Failed getOldList', result.statusCode)
@@ -114,14 +121,14 @@ export class RtbUpdateFile {
                 content: listFile,
             },
         });
-        if (result.statusCode === 200) {
+        if (result) {
             return JSON.parse(result)['response'];
         } else {
             console.error('Failed uploadList', result.statusCode)
         }
     }
 
-    static async updateList(token: string, listId: number, appListId: string, jsonName: string, apiType: string): Promise<boolean> {
+    static async updateList(token: string, listId: number, appListId: string, jsonName: string, apiType: string): Promise<string> {
         let json: any = {};
         json[jsonName] = appListId;
         let result: any = await request({
@@ -132,13 +139,13 @@ export class RtbUpdateFile {
             },
             json: json
         });
-        if (result.statusCode === 200) {
+        if (result) {
             if (result.status) {
-                return true;
+                return 'true';
             }
         }
         console.error('Failed updateList', result.body);
-        return false;
+        return 'false';
     }
 
     static async createReferrerList(token: string, listName: string, fileId: string, jsonName: string, apiType: string): Promise<any> {
@@ -153,14 +160,14 @@ export class RtbUpdateFile {
             },
             json: json,
         });
-        if (result.statusCode === 200) {
+        if (result) {
             return result['response'];
         } else {
             console.error('Failed createReferrerList', result.statusCode)
         }
     }
 
-    static async updateZoneRemoteFeed(token: string, ZoneRemoteFeedId: number, json: any): Promise<boolean> {
+    static async updateZoneRemoteFeed(token: string, ZoneRemoteFeedId: number, json: any): Promise<string> {
 
         let result: any = await request({
             method: 'PUT',
@@ -170,12 +177,12 @@ export class RtbUpdateFile {
             },
             json: json
         });
-        if (result.statusCode === 200) {
+        if (result) {
             if (result.status) {
-                return true;
+                return 'true';
             }
         }
         console.error('Failed updateZoneRemoteFeed', result.statusCode)
-        return false;
+        return 'false';
     }
 }
