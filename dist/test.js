@@ -10,7 +10,8 @@ function test() {
     d.setDate(d.getDate() - 1);
     // let reportList = XML.getRemotePublisherFeedData(219388, 187893);
     // let reportList = RTB.getZoneRemoteFeedData(84363, 220869);
-    dist_1.XML.getRemoteFeedsReport(d, d);
+    // XML.getRemoteFeedsReport(d, d);
+    dist_1.RTB.updateSspSiteDomainsByZoneRemoteFeed(11, null, null, null);
     console.log('done');
 }
 //# sourceMappingURL=test.js.map

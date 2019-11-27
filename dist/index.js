@@ -125,6 +125,8 @@ class RTB {
     static async getZoneRemoteFeedData(remoteFeedId, zoneId) { return rtbImplementation_1.RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
     // UPDATE DATA:
     static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId, remoteFeedId, zoneId, publisherIdListMode, publisherIdList) { return rtbImplementation_1.RtbImplementation.updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId, remoteFeedId, zoneId, publisherIdListMode, publisherIdList); }
+    static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId) { return rtbImplementation_1.RtbImplementation.updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId); }
+    static async updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId) { return rtbImplementation_1.RtbImplementation.updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId); }
 }
 exports.RTB = RTB;
 class XML {

@@ -19,4 +19,6 @@ export declare class RtbImplementation {
     static getSspPublishersReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number): Promise<any[]>;
     static getZoneRemoteFeedData(remoteFeedId: number, zoneId: number): Promise<any[]>;
     static updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdListMode: string, publisherIdList: Set<string>): Promise<any[]>;
+    static updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>): Promise<boolean>;
+    static updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>): Promise<boolean>;
 }

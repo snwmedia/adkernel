@@ -1,3 +1,4 @@
+import { RtbUpdateFile } from "./rtbUpdateFile";
 import { Common } from "../dist";
 
 export class RtbImplementation {
@@ -123,15 +124,22 @@ export class RtbImplementation {
     public static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdListMode: string, publisherIdList: Set<string>) {
         let token = await Common.getToken();
         let url = `${RtbImplementation.urlAction}/${zoneRemoteFeedId}?token=${token}`;
-        let subIdString: string = Common.sortListForUpdate(publisherIdList);
-
-        let json: any = {};
-        json.remotefeed_id = remoteFeedId;
-        json.zone_id = zoneId;
-        json.publisher_id_list_mode = publisherIdListMode;
-        json.publisher_id_list = subIdString;
-
+        let subIdString: string = Common.cleanListForUpdate(publisherIdList);
+        let json: any = { remotefeed_id: remoteFeedId, zone_id: zoneId, publisher_id_list_mode: publisherIdListMode, publisher_id_list: subIdString };
         let status: any[] = await Common.UpdateData(url, json);
         return status;
     }
+
+    public static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>): Promise<boolean> {
+        let jsonFileType: any = { apiType: 'DomainList', jsonName: 'domains', mode: 'referrerlist_mode', jsonListName: 'referrer_list' };
+        return await RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType);
+    }
+
+    public static async updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>): Promise<boolean> {
+        let jsonFileType: any = { apiType: 'AppList', jsonName: 'app_bundles', mode: 'applist_mode', jsonListName: 'app_lists' };
+        return await RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType);
+    }
+
+
+
 }
