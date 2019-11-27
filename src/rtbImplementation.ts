@@ -117,14 +117,21 @@ export class RtbImplementation {
         let token = await Common.getToken();
         let url = `${RtbImplementation.urlAction}/?token=${token}&filters=remotefeed:${remoteFeedId};zone:${zoneId}`;
         let remotePublisherFeed: any[] = await Common.getData(url);
-        console.log(remotePublisherFeed)
-
         return remotePublisherFeed;
     }
 
     // UPDATE DATA:
-    public static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdListMode: string, publisherIdList: Set<string>) {
+    public static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode) {
         let token = await Common.getToken();
+
+        //check if the the existing mode is no different from the new mode:
+        let zoneRemoteFeed = await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
+        for (let data in zoneRemoteFeed) {
+            let modeExist = zoneRemoteFeed[data].publisher_id_list_mode;
+            if (modeExist && modeExist !== publisherIdListMode) {
+                return `The publisher_id_list_mode is already set as ${modeExist}`;
+            }
+        }
         let url = `${RtbImplementation.urlAction}/${zoneRemoteFeedId}?token=${token}`;
         let subIdString: string = Common.cleanListForUpdate(publisherIdList);
         let json: any = { remotefeed_id: remoteFeedId, zone_id: zoneId, publisher_id_list_mode: publisherIdListMode, publisher_id_list: subIdString };
@@ -134,12 +141,12 @@ export class RtbImplementation {
 
     public static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<string> {
         let jsonFileType: any = { apiType: 'DomainList', jsonName: 'domains', mode: 'referrerlist_mode', jsonListName: 'referrer_list' };
-        return await RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType,mode);
+        return await RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType, mode);
     }
 
     public static async updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<string> {
         let jsonFileType: any = { apiType: 'AppList', jsonName: 'app_bundles', mode: 'applist_mode', jsonListName: 'app_lists' };
-        return await RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType,mode);
+        return await RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType, mode);
     }
 
 

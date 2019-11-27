@@ -1,3 +1,4 @@
+import { Mode } from "../dist";
 export declare class XmlImplementation {
     static urlReport: string;
     static urlAction: string;
@@ -10,5 +11,5 @@ export declare class XmlImplementation {
     static getSubIdsReportByPublisherFeed(from: Date, to: Date, pubFeedId: number, limit?: number): Promise<any[]>;
     static getSubIdsReportByRemotePublisherFeed(from: Date, to: Date, remoteFeedId: number, pubFeedId: number, limit?: number): Promise<any[]>;
     static getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number): Promise<any[]>;
-    static updateSubIdsByRemotePublisherFeed(remotePublisherId: number, RemoteFeedId: number, pubFeedId: number, subIdListMode: string, subIdList: Set<string>): Promise<any[]>;
+    static updateSubIdsByRemotePublisherFeed(remotePublisherId: number, remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<string | any[]>;
 }

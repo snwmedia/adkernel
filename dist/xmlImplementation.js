@@ -52,15 +52,19 @@ class XmlImplementation {
         return remotePublisherFeed;
     }
     // UPDATE DATA:
-    static async updateSubIdsByRemotePublisherFeed(remotePublisherId, RemoteFeedId, pubFeedId, subIdListMode, subIdList) {
+    static async updateSubIdsByRemotePublisherFeed(remotePublisherId, remoteFeedId, pubFeedId, subIdList, subIdListMode) {
         let token = await dist_1.Common.getToken();
+        //check if the the existing mode is no different from the new mode:
+        let remotePublisherFeed = await XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId);
+        for (let data in remotePublisherFeed) {
+            let modeExist = remotePublisherFeed[data].subidlist_mode;
+            if (modeExist && modeExist !== subIdListMode) {
+                return `The subidlist_mode is already set as ${modeExist}`;
+            }
+        }
         let url = `${XmlImplementation.urlAction}/${remotePublisherId}?token=${token}`;
         let subIdString = dist_1.Common.cleanListForUpdate(subIdList);
-        let json = {};
-        json.remotefeed_id = RemoteFeedId;
-        json.feed_id = pubFeedId;
-        json.subidlist_mode = subIdListMode;
-        json.subidlist = subIdString;
+        let json = { remotefeed_id: remoteFeedId, feed_id: pubFeedId, subidlist_mode: subIdListMode, subidlist: subIdString };
         let status = await dist_1.Common.UpdateData(url, json);
         return status;
     }

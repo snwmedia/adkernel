@@ -93,7 +93,7 @@ class Common {
             },
             json: json,
         });
-        return result.body.status;
+        return result.status;
     }
 }
 Common.yesterday = 'yesterday';
@@ -124,7 +124,7 @@ class RTB {
     // GET DATA:
     static async getZoneRemoteFeedData(remoteFeedId, zoneId) { return rtbImplementation_1.RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
     // UPDATE DATA:
-    static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId, remoteFeedId, zoneId, publisherIdListMode, publisherIdList) { return rtbImplementation_1.RtbImplementation.updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId, remoteFeedId, zoneId, publisherIdListMode, publisherIdList); }
+    static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId, remoteFeedId, zoneId, publisherIdList, publisherIdListMode) { return rtbImplementation_1.RtbImplementation.updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId, remoteFeedId, zoneId, publisherIdList, publisherIdListMode); }
     static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode) { return rtbImplementation_1.RtbImplementation.updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode); }
     static async updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode) { return rtbImplementation_1.RtbImplementation.updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode); }
 }
@@ -145,7 +145,7 @@ class XML {
     // GET DATA:
     static async getRemotePublisherFeedData(remoteFeedId, pubFeedId) { return xmlImplementation_1.XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
     // UPDATE DATA:
-    static async updateSubIdsByRemotePublisherFeed(remotePublisherId, RemoteFeedId, pubFeedId, subIdListMode, subIdList) { return xmlImplementation_1.XmlImplementation.updateSubIdsByRemotePublisherFeed(remotePublisherId, RemoteFeedId, pubFeedId, subIdListMode, subIdList); }
+    static async updateSubIdsByRemotePublisherFeed(remotePublisherId, RemoteFeedId, pubFeedId, subIdList, subIdListMode) { return xmlImplementation_1.XmlImplementation.updateSubIdsByRemotePublisherFeed(remotePublisherId, RemoteFeedId, pubFeedId, subIdList, subIdListMode); }
 }
 exports.XML = XML;
 var Mode;

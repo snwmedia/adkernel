@@ -1,4 +1,4 @@
-import { Common } from "../dist";
+import { Common, Mode } from "../dist";
 
 export class XmlImplementation {
 
@@ -70,18 +70,20 @@ export class XmlImplementation {
 
 
     // UPDATE DATA:
-    public static async updateSubIdsByRemotePublisherFeed(remotePublisherId: number, RemoteFeedId: number, pubFeedId: number, subIdListMode: string, subIdList: Set<string>) {
+    public static async updateSubIdsByRemotePublisherFeed(remotePublisherId: number, remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode) {
         let token = await Common.getToken();
+
+        //check if the the existing mode is no different from the new mode:
+        let remotePublisherFeed = await XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId);
+        for (let data in remotePublisherFeed) {
+            let modeExist = remotePublisherFeed[data].subidlist_mode;
+            if (modeExist && modeExist !== subIdListMode) {
+                return `The subidlist_mode is already set as ${modeExist}`;
+            }
+        }
         let url = `${XmlImplementation.urlAction}/${remotePublisherId}?token=${token}`;
         let subIdString: string = Common.cleanListForUpdate(subIdList);
-
-
-        let json: any = {};
-        json.remotefeed_id = RemoteFeedId;
-        json.feed_id = pubFeedId;
-        json.subidlist_mode = subIdListMode;
-        json.subidlist = subIdString;
-
+        let json: any = { remotefeed_id: remoteFeedId, feed_id: pubFeedId, subidlist_mode: subIdListMode, subidlist: subIdString };
         let status: any[] = await Common.UpdateData(url, json);
         return status;
     }
