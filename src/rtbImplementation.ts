@@ -121,7 +121,7 @@ export class RtbImplementation {
     }
 
     // UPDATE DATA:
-    public static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode) {
+    public static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]> {
         let token = await Common.getToken();
 
         //check if the the existing mode is no different from the new mode:
@@ -129,14 +129,16 @@ export class RtbImplementation {
         for (let data in zoneRemoteFeed) {
             let modeExist = zoneRemoteFeed[data].publisher_id_list_mode;
             if (modeExist && modeExist !== publisherIdListMode) {
-                return `The publisher_id_list_mode is already set as ${modeExist}`;
+                return [false, `The publisher_id_list_mode is already set as ${modeExist}`];
             }
         }
         let url = `${RtbImplementation.urlAction}/${zoneRemoteFeedId}?token=${token}`;
         let subIdString: string = Common.cleanListForUpdate(publisherIdList);
         let json: any = { remotefeed_id: remoteFeedId, zone_id: zoneId, publisher_id_list_mode: publisherIdListMode, publisher_id_list: subIdString };
-        let status: any[] = await Common.UpdateData(url, json);
-        return status;
+        let status: string = await Common.UpdateData(url, json);
+        if (status === 'OK') {
+            return [true, status];
+        }
     }
 
     public static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]> {

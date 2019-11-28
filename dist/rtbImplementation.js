@@ -102,14 +102,16 @@ class RtbImplementation {
         for (let data in zoneRemoteFeed) {
             let modeExist = zoneRemoteFeed[data].publisher_id_list_mode;
             if (modeExist && modeExist !== publisherIdListMode) {
-                return `The publisher_id_list_mode is already set as ${modeExist}`;
+                return [false, `The publisher_id_list_mode is already set as ${modeExist}`];
             }
         }
         let url = `${RtbImplementation.urlAction}/${zoneRemoteFeedId}?token=${token}`;
         let subIdString = dist_1.Common.cleanListForUpdate(publisherIdList);
         let json = { remotefeed_id: remoteFeedId, zone_id: zoneId, publisher_id_list_mode: publisherIdListMode, publisher_id_list: subIdString };
         let status = await dist_1.Common.UpdateData(url, json);
-        return status;
+        if (status === 'OK') {
+            return [true, status];
+        }
     }
     static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode) {
         let jsonFileType = { apiType: 'DomainList', jsonName: 'domains', mode: 'referrerlist_mode', jsonListName: 'referrer_list' };

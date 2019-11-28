@@ -59,14 +59,16 @@ class XmlImplementation {
         for (let data in remotePublisherFeed) {
             let modeExist = remotePublisherFeed[data].subidlist_mode;
             if (modeExist && modeExist !== subIdListMode) {
-                return `The subidlist_mode is already set as ${modeExist}`;
+                return [false, `The subidlist_mode is already set as ${modeExist}`];
             }
         }
         let url = `${XmlImplementation.urlAction}/${remotePublisherId}?token=${token}`;
         let subIdString = dist_1.Common.cleanListForUpdate(subIdList);
         let json = { remotefeed_id: remoteFeedId, feed_id: pubFeedId, subidlist_mode: subIdListMode, subidlist: subIdString };
         let status = await dist_1.Common.UpdateData(url, json);
-        return status;
+        if (status === 'OK') {
+            return [true, status];
+        }
     }
 }
 XmlImplementation.urlReport = `${process.env.DOMAIN}/api/FeedReports`;
