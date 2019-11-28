@@ -5,13 +5,14 @@ const dist_1 = require("../dist");
 class RtbUpdateFile {
     static async updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType, mode) {
         let token = await dist_1.Common.getToken();
-        let appListIds = zoneRemoteObject.app_lists;
+        let zoneRemoteJson = Object.values(zoneRemoteObject)[0];
+        let appListIds = zoneRemoteJson[jsonFileType.jsonListName];
         let [listExist, listId] = await RtbUpdateFile.getAppListIdIfExist(token, appListIds, listName, jsonFileType.apiType);
         // exist already, update the list:
         if (listId) {
             //check if the the existing mode is no different from the new mode:
-            if (zoneRemoteObject[jsonFileType.mode] !== mode) {
-                return [false, `The ${jsonFileType.mode} is already set as ${zoneRemoteObject[jsonFileType.mode]}`];
+            if (zoneRemoteJson[jsonFileType.mode] !== mode) {
+                return [false, `The ${jsonFileType.mode} is already set as ${zoneRemoteJson[jsonFileType.mode]}`];
             }
             let fileId = await RtbUpdateFile.getFileId(token, listId, jsonFileType.jsonName, jsonFileType.apiType);
             let oldAppLists = await RtbUpdateFile.getOldList(token, fileId);

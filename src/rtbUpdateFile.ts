@@ -7,14 +7,16 @@ export class RtbUpdateFile {
     public static async updateFile(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, jsonFileType: any, mode: Mode): Promise<[boolean, string]> {
 
         let token = await Common.getToken();
-        let appListIds = zoneRemoteObject.app_lists;
+        let zoneRemoteJson: any = Object.values(zoneRemoteObject)[0]
+
+        let appListIds = zoneRemoteJson[jsonFileType.jsonListName];
         let [listExist, listId] = await RtbUpdateFile.getAppListIdIfExist(token, appListIds, listName, jsonFileType.apiType);
 
         // exist already, update the list:
         if (listId) {
             //check if the the existing mode is no different from the new mode:
-            if (zoneRemoteObject[jsonFileType.mode] !== mode) {
-                return [false, `The ${jsonFileType.mode} is already set as ${zoneRemoteObject[jsonFileType.mode]}`];
+            if (zoneRemoteJson[jsonFileType.mode] !== mode) {
+                return [false, `The ${jsonFileType.mode} is already set as ${zoneRemoteJson[jsonFileType.mode]}`];
             }
 
             let fileId = await RtbUpdateFile.getFileId(token, listId, jsonFileType.jsonName, jsonFileType.apiType);
