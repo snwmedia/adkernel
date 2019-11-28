@@ -146,8 +146,8 @@ export class RTB {
 
     // UPDATE DATA:
     public static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode) { return RtbImplementation.updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId, remoteFeedId, zoneId, publisherIdList, publisherIdListMode); }
-    public static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<string> { return RtbImplementation.updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode); }
-    public static async updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<string> { return RtbImplementation.updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode); }
+    public static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]> { return RtbImplementation.updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode); }
+    public static async updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]> { return RtbImplementation.updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode); }
 
 }
 
