@@ -11,7 +11,7 @@ class RtbUpdateFile {
         if (listId) {
             //check if the the existing mode is no different from the new mode:
             if (zoneRemoteObject[jsonFileType.mode] !== mode) {
-                return `The ${jsonFileType.mode} is already set as ${zoneRemoteObject[jsonFileType.mode]}`;
+                return [false, `The ${jsonFileType.mode} is already set as ${zoneRemoteObject[jsonFileType.mode]}`];
             }
             let fileId = await RtbUpdateFile.getFileId(token, listId, jsonFileType.jsonName, jsonFileType.apiType);
             let oldAppLists = await RtbUpdateFile.getOldList(token, fileId);
@@ -39,7 +39,7 @@ class RtbUpdateFile {
                 return await RtbUpdateFile.updateZoneRemoteFeed(token, zoneRemoteFeedId, json);
             }
         }
-        return 'false';
+        return [false, 'ERROR'];
     }
     static async getAppListIdIfExist(token, appListIds, listName, apiType) {
         let listExist = [];
@@ -129,11 +129,11 @@ class RtbUpdateFile {
         });
         if (result) {
             if (result.status) {
-                return 'true';
+                return [true, 'OK'];
             }
         }
         console.error('Failed updateList', result);
-        return 'false';
+        return [false, `ERROR updateList ${result}`];
     }
     static async createReferrerList(token, listName, fileId, jsonName, apiType) {
         let json = {};
@@ -165,11 +165,11 @@ class RtbUpdateFile {
         });
         if (result) {
             if (result.status) {
-                return 'true';
+                return [true, `OK`];
             }
         }
         console.error('Failed updateZoneRemoteFeed', result);
-        return 'false';
+        return [false, `ERROR updateZoneRemoteFeed ${result}`];
     }
 }
 exports.RtbUpdateFile = RtbUpdateFile;

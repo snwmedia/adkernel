@@ -4,7 +4,7 @@ import { Common, Mode } from '../dist';
 
 export class RtbUpdateFile {
 
-    public static async updateFile(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, jsonFileType: any, mode: Mode): Promise<string> {
+    public static async updateFile(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, jsonFileType: any, mode: Mode): Promise<[boolean, string]> {
 
         let token = await Common.getToken();
         let appListIds = zoneRemoteObject.app_lists;
@@ -14,7 +14,7 @@ export class RtbUpdateFile {
         if (listId) {
             //check if the the existing mode is no different from the new mode:
             if (zoneRemoteObject[jsonFileType.mode] !== mode) {
-                return `The ${jsonFileType.mode} is already set as ${zoneRemoteObject[jsonFileType.mode]}`;
+                return [false, `The ${jsonFileType.mode} is already set as ${zoneRemoteObject[jsonFileType.mode]}`];
             }
 
             let fileId = await RtbUpdateFile.getFileId(token, listId, jsonFileType.jsonName, jsonFileType.apiType);
@@ -26,7 +26,7 @@ export class RtbUpdateFile {
             let updatingAppsString: string = Common.cleanListForUpdate(appsId);
             let newFile = await RtbUpdateFile.uploadList(token, updatingAppsString);
             let newFileId = newFile.created;
-            return await RtbUpdateFile.updateList(token, listId, newFileId, jsonFileType.jsonName, jsonFileType.apiType)
+            return await RtbUpdateFile.updateList(token, listId, newFileId, jsonFileType.jsonName, jsonFileType.apiType);
         }
 
         // not exist, create new list:
@@ -44,7 +44,7 @@ export class RtbUpdateFile {
                 return await RtbUpdateFile.updateZoneRemoteFeed(token, zoneRemoteFeedId, json);
             }
         }
-        return 'false';
+        return [false, 'ERROR'];
     }
 
 
@@ -128,7 +128,7 @@ export class RtbUpdateFile {
         }
     }
 
-    static async updateList(token: string, listId: number, appListId: string, jsonName: string, apiType: string): Promise<string> {
+    static async updateList(token: string, listId: number, appListId: string, jsonName: string, apiType: string): Promise<[boolean, string]> {
         let json: any = {};
         json[jsonName] = appListId;
         let result: any = await request({
@@ -141,11 +141,11 @@ export class RtbUpdateFile {
         });
         if (result) {
             if (result.status) {
-                return 'true';
+                return [true, 'OK'];
             }
         }
         console.error('Failed updateList', result);
-        return 'false';
+        return [false, `ERROR updateList ${result}`];
     }
 
     static async createReferrerList(token: string, listName: string, fileId: string, jsonName: string, apiType: string): Promise<any> {
@@ -167,7 +167,7 @@ export class RtbUpdateFile {
         }
     }
 
-    static async updateZoneRemoteFeed(token: string, ZoneRemoteFeedId: number, json: any): Promise<string> {
+    static async updateZoneRemoteFeed(token: string, ZoneRemoteFeedId: number, json: any): Promise<[boolean, string]> {
 
         let result: any = await request({
             method: 'PUT',
@@ -179,10 +179,10 @@ export class RtbUpdateFile {
         });
         if (result) {
             if (result.status) {
-                return 'true';
+                return [true, `OK`];
             }
         }
         console.error('Failed updateZoneRemoteFeed', result)
-        return 'false';
+        return [false, `ERROR updateZoneRemoteFeed ${result}`];
     }
 }
