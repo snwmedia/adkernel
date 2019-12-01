@@ -71,7 +71,7 @@ export class XmlImplementation {
 
     // UPDATE DATA:
     public static async updateSubIdsByRemotePublisherFeed(remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]> {
-        if (!subIdList.size) { return [false, `The list "subIdList" is empty!`]; }
+        if (!subIdList || !subIdList.size) { return [false, `The list "subIdList" is empty!`]; }
         let token = await Common.getToken();
 
         //check if the the existing mode is no different from the new mode:

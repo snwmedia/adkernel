@@ -1,6 +1,6 @@
 {
   "name": "@snwmedia/adkernel",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "adkernel sdk",
   "main": "dist/index.js",
   "scripts": {

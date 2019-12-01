@@ -96,13 +96,13 @@ class RtbImplementation {
     }
     // UPDATE DATA:
     static async updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode) {
-        if (!publisherIdList.size) {
+        if (!publisherIdList || !publisherIdList.size) {
             return [false, `The list "publisherIdList" is empty!`];
         }
         let token = await dist_1.Common.getToken();
         //check if the the existing mode is no different from the new mode:
         let zoneRemoteFeed = await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
-        let zoneRemoteFeedId = Object.keys(zoneRemoteFeed)[0];
+        let zoneRemoteFeedId = Number(Object.keys(zoneRemoteFeed)[0]);
         for (let data in zoneRemoteFeed) {
             let modeExist = zoneRemoteFeed[data].publisher_id_list_mode;
             if (modeExist && modeExist !== publisherIdListMode) {
@@ -117,19 +117,19 @@ class RtbImplementation {
             return [true, status];
         }
     }
-    static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode) {
-        if (!appsId.size) {
+    static async updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode) {
+        if (!appsId || !appsId.size) {
             return [false, `The list "appsId" is empty!`];
         }
         let jsonFileType = { apiType: 'DomainList', jsonName: 'domains', mode: 'referrerlist_mode', jsonListName: 'referrer_list' };
-        return await rtbUpdateFile_1.RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType, mode);
+        return await rtbUpdateFile_1.RtbUpdateFile.updateFile(remoteFeedId, zoneId, listName, appsId, jsonFileType, mode);
     }
-    static async updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode) {
-        if (!appsId.size) {
+    static async updateSspApplicationsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode) {
+        if (!appsId || !appsId.size) {
             return [false, `The list "appsId" is empty!`];
         }
         let jsonFileType = { apiType: 'AppList', jsonName: 'app_bundles', mode: 'applist_mode', jsonListName: 'app_lists' };
-        return await rtbUpdateFile_1.RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType, mode);
+        return await rtbUpdateFile_1.RtbUpdateFile.updateFile(remoteFeedId, zoneId, listName, appsId, jsonFileType, mode);
     }
 }
 RtbImplementation.urlReport = `${process.env.DOMAIN}/api/ZoneReports`;

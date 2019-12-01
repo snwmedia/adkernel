@@ -1,13 +1,16 @@
 import * as request from 'request-promise-native';
 import { Common, Mode } from '../dist';
+import { RtbImplementation } from './rtbImplementation';
 
 
 export class RtbUpdateFile {
 
-    public static async updateFile(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, jsonFileType: any, mode: Mode): Promise<[boolean, string]> {
+    public static async updateFile(remoteFeedId: number, zoneId: number, listName: string, appsId: Set<string>, jsonFileType: any, mode: Mode): Promise<[boolean, string]> {
 
         let token = await Common.getToken();
-        let zoneRemoteJson: any = Object.values(zoneRemoteObject)[0]
+        let zoneRemoteFeed = await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
+        let zoneRemoteJson: any = Object.values(zoneRemoteFeed)[0]
+        let zoneRemoteFeedId = Number(Object.keys(zoneRemoteFeed)[0]);
 
         let appListIds = zoneRemoteJson[jsonFileType.jsonListName];
         let [listExist, listId] = await RtbUpdateFile.getAppListIdIfExist(token, appListIds, listName, jsonFileType.apiType);

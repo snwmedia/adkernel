@@ -2,10 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const request = require("request-promise-native");
 const dist_1 = require("../dist");
+const rtbImplementation_1 = require("./rtbImplementation");
 class RtbUpdateFile {
-    static async updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType, mode) {
+    static async updateFile(remoteFeedId, zoneId, listName, appsId, jsonFileType, mode) {
         let token = await dist_1.Common.getToken();
-        let zoneRemoteJson = Object.values(zoneRemoteObject)[0];
+        let zoneRemoteFeed = await rtbImplementation_1.RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
+        let zoneRemoteJson = Object.values(zoneRemoteFeed)[0];
+        let zoneRemoteFeedId = Number(Object.keys(zoneRemoteFeed)[0]);
         let appListIds = zoneRemoteJson[jsonFileType.jsonListName];
         let [listExist, listId] = await RtbUpdateFile.getAppListIdIfExist(token, appListIds, listName, jsonFileType.apiType);
         // exist already, update the list:

@@ -53,7 +53,7 @@ class XmlImplementation {
     }
     // UPDATE DATA:
     static async updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode) {
-        if (!subIdList.size) {
+        if (!subIdList || !subIdList.size) {
             return [false, `The list "subIdList" is empty!`];
         }
         let token = await dist_1.Common.getToken();
