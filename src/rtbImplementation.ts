@@ -121,11 +121,14 @@ export class RtbImplementation {
     }
 
     // UPDATE DATA:
-    public static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]> {
+    public static async updateSspPublishersByZoneRemoteFeed(remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]> {
+        if (!publisherIdList.size) { return [false, `The list "publisherIdList" is empty!`]; }
         let token = await Common.getToken();
 
         //check if the the existing mode is no different from the new mode:
         let zoneRemoteFeed = await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
+        let zoneRemoteFeedId = Object.keys(zoneRemoteFeed)[0];
+
         for (let data in zoneRemoteFeed) {
             let modeExist = zoneRemoteFeed[data].publisher_id_list_mode;
             if (modeExist && modeExist !== publisherIdListMode) {
@@ -142,11 +145,13 @@ export class RtbImplementation {
     }
 
     public static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]> {
+        if (!appsId.size) { return [false, `The list "appsId" is empty!`]; }
         let jsonFileType: any = { apiType: 'DomainList', jsonName: 'domains', mode: 'referrerlist_mode', jsonListName: 'referrer_list' };
         return await RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType, mode);
     }
 
     public static async updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]> {
+        if (!appsId.size) { return [false, `The list "appsId" is empty!`]; }
         let jsonFileType: any = { apiType: 'AppList', jsonName: 'app_bundles', mode: 'applist_mode', jsonListName: 'app_lists' };
         return await RtbUpdateFile.updateFile(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, jsonFileType, mode);
     }

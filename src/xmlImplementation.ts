@@ -70,11 +70,14 @@ export class XmlImplementation {
 
 
     // UPDATE DATA:
-    public static async updateSubIdsByRemotePublisherFeed(remotePublisherId: number, remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]> {
+    public static async updateSubIdsByRemotePublisherFeed(remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]> {
+        if (!subIdList.size) { return [false, `The list "subIdList" is empty!`]; }
         let token = await Common.getToken();
 
         //check if the the existing mode is no different from the new mode:
         let remotePublisherFeed = await XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId);
+        let remotePublisherId = Object.keys(remotePublisherFeed)[0];
+
         for (let data in remotePublisherFeed) {
             let modeExist = remotePublisherFeed[data].subidlist_mode;
             if (modeExist && modeExist !== subIdListMode) {

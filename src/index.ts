@@ -145,7 +145,7 @@ export class RTB {
     public static async getZoneRemoteFeedData(remoteFeedId: number, zoneId: number) { return RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
 
     // UPDATE DATA:
-    public static async updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId: number, remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]> { return RtbImplementation.updateSspPublishersByZoneRemoteFeed(zoneRemoteFeedId, remoteFeedId, zoneId, publisherIdList, publisherIdListMode); }
+    public static async updateSspPublishersByZoneRemoteFeed(remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]> { return RtbImplementation.updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode); }
     public static async updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]> { return RtbImplementation.updateSspSiteDomainsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode); }
     public static async updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId: number, zoneRemoteObject: any, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]> { return RtbImplementation.updateSspApplicationsByZoneRemoteFeed(zoneRemoteFeedId, zoneRemoteObject, listName, appsId, mode); }
 
@@ -173,7 +173,7 @@ export class XML {
     public static async getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number) { return XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
 
     // UPDATE DATA:
-    public static async updateSubIdsByRemotePublisherFeed(remotePublisherId: number, RemoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]> { return XmlImplementation.updateSubIdsByRemotePublisherFeed(remotePublisherId, RemoteFeedId, pubFeedId, subIdList, subIdListMode); }
+    public static async updateSubIdsByRemotePublisherFeed(RemoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]> { return XmlImplementation.updateSubIdsByRemotePublisherFeed(RemoteFeedId, pubFeedId, subIdList, subIdListMode); }
 }
 
 

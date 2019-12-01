@@ -52,10 +52,14 @@ class XmlImplementation {
         return remotePublisherFeed;
     }
     // UPDATE DATA:
-    static async updateSubIdsByRemotePublisherFeed(remotePublisherId, remoteFeedId, pubFeedId, subIdList, subIdListMode) {
+    static async updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode) {
+        if (!subIdList.size) {
+            return [false, `The list "subIdList" is empty!`];
+        }
         let token = await dist_1.Common.getToken();
         //check if the the existing mode is no different from the new mode:
         let remotePublisherFeed = await XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId);
+        let remotePublisherId = Object.keys(remotePublisherFeed)[0];
         for (let data in remotePublisherFeed) {
             let modeExist = remotePublisherFeed[data].subidlist_mode;
             if (modeExist && modeExist !== subIdListMode) {
