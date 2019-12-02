@@ -93,8 +93,8 @@ class Common {
         return result.status;
     }
 }
-Common.yesterday = 'yesterday';
 exports.Common = Common;
+Common.yesterday = 'yesterday';
 class RTB {
     // REPORTS:
     //RemoteFeeds reports

@@ -75,7 +75,7 @@ class XmlImplementation {
         }
     }
 }
+exports.XmlImplementation = XmlImplementation;
 XmlImplementation.urlReport = `${process.env.DOMAIN}/api/FeedReports`;
 XmlImplementation.urlAction = `${process.env.DOMAIN}/api/RemotePublisherFeed`;
-exports.XmlImplementation = XmlImplementation;
 //# sourceMappingURL=xmlImplementation.js.map

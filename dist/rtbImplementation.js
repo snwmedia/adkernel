@@ -132,7 +132,7 @@ class RtbImplementation {
         return await rtbUpdateFile_1.RtbUpdateFile.updateFile(remoteFeedId, zoneId, listName, appsId, jsonFileType, mode);
     }
 }
+exports.RtbImplementation = RtbImplementation;
 RtbImplementation.urlReport = `${process.env.DOMAIN}/api/ZoneReports`;
 RtbImplementation.urlAction = `${process.env.DOMAIN}/api/ZoneRemoteFeed`;
-exports.RtbImplementation = RtbImplementation;
 //# sourceMappingURL=rtbImplementation.js.map
