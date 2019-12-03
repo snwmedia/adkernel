@@ -146,7 +146,7 @@ export class RtbUpdateFile {
         });
         if (result) {
             if (result.status) {
-                return [true, 'OK'];
+                return [true, Common.OK];
             }
         }
         console.error('Failed updateList', result);

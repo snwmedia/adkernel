@@ -70,9 +70,11 @@ class XmlImplementation {
         let subIdString = dist_1.Common.cleanListForUpdate(subIdList);
         let json = { remotefeed_id: remoteFeedId, feed_id: pubFeedId, subidlist_mode: subIdListMode, subidlist: subIdString };
         let status = await dist_1.Common.UpdateData(url, json);
-        if (status === 'OK') {
+        if (status === dist_1.Common.OK) {
             return [true, status];
         }
+        console.error('Failed updateSubIdsByRemotePublisherFeed', status);
+        return [false, `ERROR updateSubIdsByRemotePublisherFeed ${status}`];
     }
 }
 exports.XmlImplementation = XmlImplementation;

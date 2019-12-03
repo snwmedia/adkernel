@@ -94,55 +94,56 @@ class Common {
     }
 }
 exports.Common = Common;
-Common.yesterday = 'yesterday';
+Common.OK = 'OK';
 class RTB {
     // REPORTS:
     //RemoteFeeds reports
-    static async getRemoteFeedsReport(from, to) { return rtbImplementation_1.RtbImplementation.getRemoteFeedsReport(from, to); }
-    static async getRemoteFeedsReportByZone(from, to, zoneId) { return rtbImplementation_1.RtbImplementation.getRemoteFeedsReportByZone(from, to, zoneId); }
+    static async getRemoteFeedsReport(from, to) { return await rtbImplementation_1.RtbImplementation.getRemoteFeedsReport(from, to); }
+    static async getRemoteFeedsReportByZone(from, to, zoneId) { return await rtbImplementation_1.RtbImplementation.getRemoteFeedsReportByZone(from, to, zoneId); }
     //Zone reports
-    static async getZonesReport(from, to) { return rtbImplementation_1.RtbImplementation.getZonesReport(from, to); }
-    static async getZonesReportByRemoteFeed(from, to, remoteFeedId) { return rtbImplementation_1.RtbImplementation.getZonesReportByRemoteFeed(from, to, remoteFeedId); }
+    static async getZonesReport(from, to) { return await rtbImplementation_1.RtbImplementation.getZonesReport(from, to); }
+    static async getZonesReportByRemoteFeed(from, to, remoteFeedId) { return await rtbImplementation_1.RtbImplementation.getZonesReportByRemoteFeed(from, to, remoteFeedId); }
     //AppBundles reports:
-    static async getAppBundlesReport(from, to, limit) { return rtbImplementation_1.RtbImplementation.getAppBundlesReport(from, to, limit); }
-    static async getAppBundlesReportByZone(from, to, zoneId, limit) { return rtbImplementation_1.RtbImplementation.getAppBundlesReportByZone(from, to, zoneId, limit); }
-    static async getAppBundlesReportByRemoteFeed(from, to, remoteFeedId, limit) { return rtbImplementation_1.RtbImplementation.getAppBundlesReportByRemoteFeed(from, to, remoteFeedId, limit); }
-    static async getAppBundlesReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) { return rtbImplementation_1.RtbImplementation.getAppBundlesReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit); }
+    static async getAppBundlesReport(from, to, limit) { return await rtbImplementation_1.RtbImplementation.getAppBundlesReport(from, to, limit); }
+    static async getAppBundlesReportByZone(from, to, zoneId, limit) { return await rtbImplementation_1.RtbImplementation.getAppBundlesReportByZone(from, to, zoneId, limit); }
+    static async getAppBundlesReportByRemoteFeed(from, to, remoteFeedId, limit) { return await rtbImplementation_1.RtbImplementation.getAppBundlesReportByRemoteFeed(from, to, remoteFeedId, limit); }
+    static async getAppBundlesReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) { return await rtbImplementation_1.RtbImplementation.getAppBundlesReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit); }
     //SiteDomains reports:
-    static async getSiteDomainsReport(from, to, limit) { return rtbImplementation_1.RtbImplementation.getSiteDomainsReport(from, to, limit); }
-    static async getSiteDomainsReportByZone(from, to, zoneId, limit) { return rtbImplementation_1.RtbImplementation.getSiteDomainsReportByZone(from, to, zoneId, limit); }
-    static async getSiteDomainsReportByRemoteFeed(from, to, remoteFeedId, limit) { return rtbImplementation_1.RtbImplementation.getSiteDomainsReportByRemoteFeed(from, to, remoteFeedId, limit); }
-    static async getSiteDomainsReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) { return rtbImplementation_1.RtbImplementation.getSiteDomainsReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit); }
+    static async getSiteDomainsReport(from, to, limit) { return await rtbImplementation_1.RtbImplementation.getSiteDomainsReport(from, to, limit); }
+    static async getSiteDomainsReportByZone(from, to, zoneId, limit) { return await rtbImplementation_1.RtbImplementation.getSiteDomainsReportByZone(from, to, zoneId, limit); }
+    static async getSiteDomainsReportByRemoteFeed(from, to, remoteFeedId, limit) { return await rtbImplementation_1.RtbImplementation.getSiteDomainsReportByRemoteFeed(from, to, remoteFeedId, limit); }
+    static async getSiteDomainsReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) { return await rtbImplementation_1.RtbImplementation.getSiteDomainsReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit); }
     //SspPublishers reports:
-    static async getSspPublishersReport(from, to, limit) { return rtbImplementation_1.RtbImplementation.getSspPublishersReport(from, to, limit); }
-    static async getSspPublishersReportByZone(from, to, zoneId, limit) { return rtbImplementation_1.RtbImplementation.getSspPublishersReportByZone(from, to, zoneId, limit); }
-    static async getSspPublishersReportByRemoteFeed(from, to, remoteFeedId, limit) { return rtbImplementation_1.RtbImplementation.getSspPublishersReportByRemoteFeed(from, to, remoteFeedId, limit); }
-    static async getSspPublishersReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) { return rtbImplementation_1.RtbImplementation.getSspPublishersReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit); }
+    static async getSspPublishersReport(from, to, limit) { return await rtbImplementation_1.RtbImplementation.getSspPublishersReport(from, to, limit); }
+    static async getSspPublishersReportByZone(from, to, zoneId, limit) { return await rtbImplementation_1.RtbImplementation.getSspPublishersReportByZone(from, to, zoneId, limit); }
+    static async getSspPublishersReportByRemoteFeed(from, to, remoteFeedId, limit) { return await rtbImplementation_1.RtbImplementation.getSspPublishersReportByRemoteFeed(from, to, remoteFeedId, limit); }
+    static async getSspPublishersReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) { return await rtbImplementation_1.RtbImplementation.getSspPublishersReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit); }
     // GET DATA:
-    static async getZoneRemoteFeedData(remoteFeedId, zoneId) { return rtbImplementation_1.RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
+    static async getZoneRemoteFeedData(remoteFeedId, zoneId) { return await rtbImplementation_1.RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
     // UPDATE DATA:
-    static async updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode) { return rtbImplementation_1.RtbImplementation.updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode); }
-    static async updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode) { return rtbImplementation_1.RtbImplementation.updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode); }
-    static async updateSspApplicationsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode) { return rtbImplementation_1.RtbImplementation.updateSspApplicationsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode); }
+    static async updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode) { return await rtbImplementation_1.RtbImplementation.updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode); }
+    static async updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode) { return await rtbImplementation_1.RtbImplementation.updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode); }
+    static async updateSspApplicationsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode) { return await rtbImplementation_1.RtbImplementation.updateSspApplicationsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode); }
+    static async resetZoneRemoteFeed(remoteFeedId, zoneId, affshare) { return await rtbImplementation_1.RtbImplementation.resetZoneRemoteFeed(remoteFeedId, zoneId, affshare); }
 }
 exports.RTB = RTB;
 class XML {
     // REPORTS:
     //RemoteFeeds reports
-    static async getRemoteFeedsReport(from, to) { return xmlImplementation_1.XmlImplementation.getRemoteFeedsReport(from, to); }
-    static async getRemoteFeedsReportByPubFeed(from, to, pubFeedId) { return xmlImplementation_1.XmlImplementation.getRemoteFeedsReportByPubFeed(from, to, pubFeedId); }
+    static async getRemoteFeedsReport(from, to) { return await xmlImplementation_1.XmlImplementation.getRemoteFeedsReport(from, to); }
+    static async getRemoteFeedsReportByPubFeed(from, to, pubFeedId) { return await xmlImplementation_1.XmlImplementation.getRemoteFeedsReportByPubFeed(from, to, pubFeedId); }
     //PubFeeds report
-    static async getPubFeedsReport(from, to) { return xmlImplementation_1.XmlImplementation.getPubFeedsReport(from, to); }
-    static async getPubFeedsReportByRemoteFeed(from, to, remoteFeedId) { return xmlImplementation_1.XmlImplementation.getPubFeedsReportByRemoteFeed(from, to, remoteFeedId); }
+    static async getPubFeedsReport(from, to) { return await xmlImplementation_1.XmlImplementation.getPubFeedsReport(from, to); }
+    static async getPubFeedsReportByRemoteFeed(from, to, remoteFeedId) { return await xmlImplementation_1.XmlImplementation.getPubFeedsReportByRemoteFeed(from, to, remoteFeedId); }
     //SubIdS reports:
-    static async getSubIdsReport(from, to, limit) { return xmlImplementation_1.XmlImplementation.getSubIdsReport(from, to, limit); }
-    static async getSubIdsReportByRemoteFeed(from, to, remoteFeedId, limit) { return xmlImplementation_1.XmlImplementation.getSubIdsReportByRemoteFeed(from, to, remoteFeedId, limit); }
-    static async getSubIdsReportByPublisherFeed(from, to, pubFeedId, limit) { return xmlImplementation_1.XmlImplementation.getSubIdsReportByPublisherFeed(from, to, pubFeedId, limit); }
-    static async getSubIdsReportByRemotePublisherFeed(from, to, remoteFeedId, pubFeedId, limit) { return xmlImplementation_1.XmlImplementation.getSubIdsReportByRemotePublisherFeed(from, to, remoteFeedId, pubFeedId, limit); }
+    static async getSubIdsReport(from, to, limit) { return await xmlImplementation_1.XmlImplementation.getSubIdsReport(from, to, limit); }
+    static async getSubIdsReportByRemoteFeed(from, to, remoteFeedId, limit) { return await xmlImplementation_1.XmlImplementation.getSubIdsReportByRemoteFeed(from, to, remoteFeedId, limit); }
+    static async getSubIdsReportByPublisherFeed(from, to, pubFeedId, limit) { return await xmlImplementation_1.XmlImplementation.getSubIdsReportByPublisherFeed(from, to, pubFeedId, limit); }
+    static async getSubIdsReportByRemotePublisherFeed(from, to, remoteFeedId, pubFeedId, limit) { return await xmlImplementation_1.XmlImplementation.getSubIdsReportByRemotePublisherFeed(from, to, remoteFeedId, pubFeedId, limit); }
     // GET DATA:
-    static async getRemotePublisherFeedData(remoteFeedId, pubFeedId) { return xmlImplementation_1.XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
+    static async getRemotePublisherFeedData(remoteFeedId, pubFeedId) { return await xmlImplementation_1.XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
     // UPDATE DATA:
-    static async updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode) { return xmlImplementation_1.XmlImplementation.updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode); }
+    static async updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode) { return await xmlImplementation_1.XmlImplementation.updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode); }
 }
 exports.XML = XML;
 var Mode;

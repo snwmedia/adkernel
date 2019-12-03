@@ -133,7 +133,7 @@ class RtbUpdateFile {
         });
         if (result) {
             if (result.status) {
-                return [true, 'OK'];
+                return [true, dist_1.Common.OK];
             }
         }
         console.error('Failed updateList', result);

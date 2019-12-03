@@ -1,6 +1,6 @@
 export declare class Common {
     static token: string;
-    static yesterday: string;
+    static OK: string;
     static getToken(): Promise<string>;
     static getCustomDate(from: Date, to: Date): string;
     static PrepareAPICallForReports(from: Date, to: Date, url: string, limit?: number): Promise<any[]>;
@@ -30,6 +30,7 @@ export declare class RTB {
     static updateSspPublishersByZoneRemoteFeed(remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]>;
     static updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId: number, zoneId: number, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]>;
     static updateSspApplicationsByZoneRemoteFeed(remoteFeedId: number, zoneId: number, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]>;
+    static resetZoneRemoteFeed(remoteFeedId: number, zoneId: number, affshare: Number): Promise<[boolean, string]>;
 }
 export declare class XML {
     static getRemoteFeedsReport(from: Date, to: Date): Promise<any[]>;

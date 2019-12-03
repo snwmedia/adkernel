@@ -88,8 +88,11 @@ export class XmlImplementation {
         let subIdString: string = Common.cleanListForUpdate(subIdList);
         let json: any = { remotefeed_id: remoteFeedId, feed_id: pubFeedId, subidlist_mode: subIdListMode, subidlist: subIdString };
         let status: string = await Common.UpdateData(url, json);
-        if (status === 'OK') {
+        if (status === Common.OK) {
             return [true, status];
         }
+        console.error('Failed updateSubIdsByRemotePublisherFeed', status)
+        return [false, `ERROR updateSubIdsByRemotePublisherFeed ${status}`]
+
     }
 }
