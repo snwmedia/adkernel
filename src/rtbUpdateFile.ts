@@ -7,49 +7,52 @@ export class RtbUpdateFile {
 
     public static async updateFile(remoteFeedId: number, zoneId: number, listName: string, appsId: Set<string>, jsonFileType: any, mode: Mode): Promise<[boolean, string]> {
 
-        let token = await Common.getToken();
+        let token = await Common.getToken(0);
         let zoneRemoteFeed = await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
-        let zoneRemoteJson: any = Object.values(zoneRemoteFeed)[0]
-        let zoneRemoteFeedId = Number(Object.keys(zoneRemoteFeed)[0]);
 
-        let appListIds = zoneRemoteJson[jsonFileType.jsonListName];
-        let [listExist, listId] = await RtbUpdateFile.getAppListIdIfExist(token, appListIds, listName, jsonFileType.apiType);
+        if (zoneRemoteFeed) {
+            let zoneRemoteJson: any = Object.values(zoneRemoteFeed)[0]
+            let zoneRemoteFeedId = Number(Object.keys(zoneRemoteFeed)[0]);
 
-        // exist already, update the list:
-        if (listId) {
-            //check if the the existing mode is no different from the new mode:
-            if (zoneRemoteJson[jsonFileType.mode] !== mode) {
-                return [false, `The ${jsonFileType.mode} is already set as ${zoneRemoteJson[jsonFileType.mode]}`];
+            let appListIds = zoneRemoteJson[jsonFileType.jsonListName];
+            let [listExist, listId] = await RtbUpdateFile.getAppListIdIfExist(token, appListIds, listName, jsonFileType.apiType);
+
+            // exist already, update the list:
+            if (listId) {
+                //check if the the existing mode is no different from the new mode:
+                if (zoneRemoteJson[jsonFileType.mode] !== mode) {
+                    return [false, `The ${jsonFileType.mode} is already set as ${zoneRemoteJson[jsonFileType.mode]}`];
+                }
+
+                let fileId = await RtbUpdateFile.getFileId(token, listId, jsonFileType.jsonName, jsonFileType.apiType);
+                let oldAppLists = await RtbUpdateFile.getOldList(token, fileId);
+                let oldList: string[] = oldAppLists.split('\n');
+                for (let old of oldList) {
+                    appsId.add(old);
+                }
+                let updatingAppsString: string = Common.cleanListForUpdate(appsId);
+                let newFile = await RtbUpdateFile.uploadList(token, updatingAppsString);
+                let newFileId = newFile.created;
+                return await RtbUpdateFile.updateList(token, listId, newFileId, jsonFileType.jsonName, jsonFileType.apiType);
             }
 
-            let fileId = await RtbUpdateFile.getFileId(token, listId, jsonFileType.jsonName, jsonFileType.apiType);
-            let oldAppLists = await RtbUpdateFile.getOldList(token, fileId);
-            let oldList: string[] = oldAppLists.split('\n');
-            for (let old of oldList) {
-                appsId.add(old);
+            // not exist, create new list:
+            let listString: string = Common.cleanListForUpdate(appsId);
+            let newFile = await RtbUpdateFile.uploadList(token, listString);
+            if (newFile) {
+                let newFileId = newFile.created;
+                let newList = await RtbUpdateFile.createReferrerList(token, listName, newFileId, jsonFileType.jsonName, jsonFileType.apiType);
+                if (newList) {
+                    let newListId = newList.created;
+                    listExist.push(newListId);
+                    let json: any = {};
+                    json[jsonFileType.mode] = mode;
+                    json[jsonFileType.jsonListName] = listExist;
+                    return await RtbUpdateFile.updateZoneRemoteFeed(token, zoneRemoteFeedId, json);
+                }
             }
-            let updatingAppsString: string = Common.cleanListForUpdate(appsId);
-            let newFile = await RtbUpdateFile.uploadList(token, updatingAppsString);
-            let newFileId = newFile.created;
-            return await RtbUpdateFile.updateList(token, listId, newFileId, jsonFileType.jsonName, jsonFileType.apiType);
         }
-
-        // not exist, create new list:
-        let listString: string = Common.cleanListForUpdate(appsId);
-        let newFile = await RtbUpdateFile.uploadList(token, listString);
-        if (newFile) {
-            let newFileId = newFile.created;
-            let newList = await RtbUpdateFile.createReferrerList(token, listName, newFileId, jsonFileType.jsonName, jsonFileType.apiType);
-            if (newList) {
-                let newListId = newList.created;
-                listExist.push(newListId);
-                let json: any = {};
-                json[jsonFileType.mode] = mode;
-                json[jsonFileType.jsonListName] = listExist;
-                return await RtbUpdateFile.updateZoneRemoteFeed(token, zoneRemoteFeedId, json);
-            }
-        }
-        return [false, 'ERROR'];
+        return [false, `ERROR updateFile, remoteFeedId ${remoteFeedId}, zoneId ${zoneId}`];
     }
 
 

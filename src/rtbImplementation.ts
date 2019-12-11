@@ -114,36 +114,39 @@ export class RtbImplementation {
 
     // GET DATA:
     public static async getZoneRemoteFeedData(remoteFeedId: number, zoneId: number) {
-        let token = await Common.getToken();
+        let token = await Common.getToken(0);
         let url = `${RtbImplementation.urlAction}/?token=${token}&filters=remotefeed:${remoteFeedId};zone:${zoneId}`;
-        let remotePublisherFeed: any[] = await Common.getData(url);
+        let remotePublisherFeed: any[] = await Common.getData(url, 0);
         return remotePublisherFeed;
     }
 
     // UPDATE DATA:
     public static async updateSspPublishersByZoneRemoteFeed(remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]> {
         if (!publisherIdList || !publisherIdList.size) { return [false, `The list "publisherIdList" is empty!`]; }
-        let token = await Common.getToken();
+        let token = await Common.getToken(0);
 
         //check if the the existing mode is no different from the new mode:
         let zoneRemoteFeed = await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
-        let zoneRemoteFeedId = Number(Object.keys(zoneRemoteFeed)[0]);
 
-        for (let data in zoneRemoteFeed) {
-            let modeExist = zoneRemoteFeed[data].publisher_id_list_mode;
-            if (modeExist && modeExist !== publisherIdListMode) {
-                return [false, `The publisher_id_list_mode is already set as ${modeExist}`];
+        if (zoneRemoteFeed) {
+            let zoneRemoteFeedId = Number(Object.keys(zoneRemoteFeed)[0]);
+
+            for (let data in zoneRemoteFeed) {
+                let modeExist = zoneRemoteFeed[data].publisher_id_list_mode;
+                if (modeExist && modeExist !== publisherIdListMode) {
+                    return [false, `The publisher_id_list_mode is already set as ${modeExist}`];
+                }
+            }
+            let url = `${RtbImplementation.urlAction}/${zoneRemoteFeedId}?token=${token}`;
+            let subIdString: string = Common.cleanListForUpdate(publisherIdList);
+            let json: any = { remotefeed_id: remoteFeedId, zone_id: zoneId, publisher_id_list_mode: publisherIdListMode, publisher_id_list: subIdString };
+            let status: string = await Common.updateData(url, json, 0);
+            if (status && status === Common.OK) {
+                return [true, status];
             }
         }
-        let url = `${RtbImplementation.urlAction}/${zoneRemoteFeedId}?token=${token}`;
-        let subIdString: string = Common.cleanListForUpdate(publisherIdList);
-        let json: any = { remotefeed_id: remoteFeedId, zone_id: zoneId, publisher_id_list_mode: publisherIdListMode, publisher_id_list: subIdString };
-        let status: string = await Common.UpdateData(url, json);
-        if (status === Common.OK) {
-            return [true, status];
-        }
-        console.error('Failed updateSspPublishersByZoneRemoteFeed', status)
-        return [false, `ERROR updateSspPublishersByZoneRemoteFeed ${status}`]
+        console.error('Failed updateSspPublishersByZoneRemoteFeed', `remoteFeedId ${remoteFeedId}`, `zoneId ${zoneId}`);
+        return [false, `ERROR updateSspPublishersByZoneRemoteFeed, remoteFeedId ${remoteFeedId}, zoneId ${zoneId}`];
 
     }
 
@@ -161,24 +164,27 @@ export class RtbImplementation {
 
 
     public static async resetZoneRemoteFeed(remoteFeedId: number, zoneId: number, affshare: Number): Promise<[boolean, string]> {
-        let token = await Common.getToken();
+        let token = await Common.getToken(0);
         let zoneRemoteFeed = await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
-        let zoneRemoteFeedId = Number(Object.keys(zoneRemoteFeed)[0]);
 
-        let json: any = {
-            remotefeed_id: remoteFeedId,
-            zone_id: zoneId,
-            publisher_id_list_mode: null,
-            applist_mode: null,
-            referrerlist_mode: null,
-            affshare: affshare
-        };
-        let url = `${RtbImplementation.urlAction}/${zoneRemoteFeedId}?token=${token}`;
-        let status: string = await Common.UpdateData(url, json);
-        if (status === Common.OK) {
-            return [true, status];
+        if (zoneRemoteFeed) {
+            let zoneRemoteFeedId = Number(Object.keys(zoneRemoteFeed)[0]);
+
+            let json: any = {
+                remotefeed_id: remoteFeedId,
+                zone_id: zoneId,
+                publisher_id_list_mode: null,
+                applist_mode: null,
+                referrerlist_mode: null,
+                affshare: affshare
+            };
+            let url = `${RtbImplementation.urlAction}/${zoneRemoteFeedId}?token=${token}`;
+            let status: string = await Common.updateData(url, json, 0);
+            if (status && status === Common.OK) {
+                return [true, status];
+            }
         }
-        console.error('Failed resetZoneRemoteFeed', status)
-        return [false, `ERROR resetZoneRemoteFeed ${status}`]
+        console.error('Failed resetZoneRemoteFeed', `remoteFeedId ${remoteFeedId}`, `zoneId ${zoneId}`)
+        return [false, `ERROR resetZoneRemoteFeed, remoteFeedId ${remoteFeedId}, zoneId ${zoneId}`]
     }
 }

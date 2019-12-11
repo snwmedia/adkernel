@@ -6,26 +6,44 @@ export class Common {
     static token: string;
     static OK: string = 'OK';
 
-    static async getToken() {
+    static sleep(ms: number) {
+        console.log(`Sleeping for ${ms} milliseconds`);
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    static async getToken(tryAgain: number): Promise<string> {
         if (Common.token) return Common.token;
 
         if (!process.env.DOMAIN || !process.env.USER || !process.env.PASS) {
             throw (`Set environment variables:\n
             "env": {"DOMAIN": "https://login.adservme.com/admin", "USER":"oded", "PASS":"123"}`)
         }
-
-        let result: any = await request({
-            method: 'GET',
-            url: `${process.env.DOMAIN}/auth?login=${process.env.USER}&password=${process.env.PASS}`
-        });
-        if (result) {
-            Common.token = result;
-            return Common.token;
-        } else {
-            throw ('AdKernel authentication error');
+        try {
+            let result: any = await request({
+                method: 'GET',
+                url: `${process.env.DOMAIN}/auth?login=${process.env.USER}&password=${process.env.PASS}`
+            });
+            if (result) {
+                Common.token = result;
+                return Common.token;
+            } else {
+                console.error('AdKernel authentication error');
+                await Common.tryAgainToken(tryAgain);
+            }
+        } catch (e) {
+            console.error(`Try number ${tryAgain} - ${e}`);
+            await Common.tryAgainToken(tryAgain);
         }
     }
 
+    static async tryAgainToken(tryAgain: number) {
+        tryAgain++;
+        if (tryAgain < 10) {
+            await Common.sleep(60000);
+            return await Common.getToken(tryAgain);
+        }
+        throw ('AdKernel authentication error');
+    }
 
 
     static getCustomDate(from: Date, to: Date) {
@@ -36,8 +54,8 @@ export class Common {
 
     static async PrepareAPICallForReports(from: Date, to: Date, url: string, limit?: number) {
         let timeRange: string = Common.getCustomDate(from, to);
-        let token = await Common.getToken();
-        let bundlesReport: any[] = await Common.getReportListByRecursion(url, token, timeRange, 0, [], limit);
+        let token = await Common.getToken(0);
+        let bundlesReport: any[] = await Common.getReportListByRecursion(url, token, timeRange, 0, [], 0, limit);
         return bundlesReport;
     }
 
@@ -58,52 +76,82 @@ export class Common {
     }
 
     //recursion
-    static async getReportListByRecursion(url: string, token: string, timeRange: string, startFrom: number, reportList: any[], limit?: number): Promise<any[]> {
+    static async getReportListByRecursion(url: string, token: string, timeRange: string, startFrom: number, reportList: any[], tryAgain: number, limit?: number): Promise<any[]> {
         let endTo = startFrom + 500;
         if (limit && limit < endTo) {
             endTo = limit;
         }
-
-        let result: any = await request({
-            method: 'GET',
-            url: `${url}?token=${token}&filters=date:${timeRange}&range=${startFrom}-${endTo}`,
-        });
-        if (JSON.parse(result)['response'] && JSON.parse(result)['response'].list) {
-            let allData = JSON.parse(result)['response'].list;
-            if (Object.keys(allData).length) {
-                for (let item in allData) {
-                    if (!limit || (limit && reportList.length < limit)) {
-                        let object = allData[item];
-                        reportList.push(object);
+        try {
+            let result: any = await request({
+                method: 'GET',
+                url: `${url}?token=${token}&filters=date:${timeRange}&range=${startFrom}-${endTo}`,
+            });
+            if (JSON.parse(result)['response'] && JSON.parse(result)['response'].list) {
+                let allData = JSON.parse(result)['response'].list;
+                if (Object.keys(allData).length) {
+                    for (let item in allData) {
+                        if (!limit || (limit && reportList.length < limit)) {
+                            let object = allData[item];
+                            reportList.push(object);
+                        }
+                    }
+                    if (!limit || limit !== endTo) {
+                        return await Common.getReportListByRecursion(url, token, timeRange, endTo, reportList, 0, limit);
                     }
                 }
-                if (!limit || limit !== endTo) {
-                    return await Common.getReportListByRecursion(url, token, timeRange, endTo, reportList, limit);
-                }
             }
+        } catch (e) {
+            tryAgain++;
+            console.error(`Try number ${tryAgain} - ${e}`);
+            if (tryAgain < 3) {
+                await Common.sleep(60000);
+                endTo = startFrom;
+                return await Common.getReportListByRecursion(url, token, timeRange, endTo, reportList, tryAgain, limit);
+            }
+            return reportList;
         }
         return reportList;
     }
 
-    static async getData(url: string) {
-        let result: any = await request({
-            method: 'GET',
-            url: url,
-        });
-        return JSON.parse(result)['response'];
+    static async getData(url: string, tryAgain: number): Promise<any> {
+        try {
+            let result: any = await request({
+                method: 'GET',
+                url: url,
+            });
+            return JSON.parse(result)['response'];
+        } catch (e) {
+            tryAgain++;
+            console.error(`Try number ${tryAgain} - ${e}`);
+            if (tryAgain < 3) {
+                await Common.sleep(60000);
+                return await Common.getData(url, tryAgain);
+            }
+            return null;
+        }
     }
 
 
-    static async UpdateData(url: string, json: any) {
-        let result: any = await request({
-            method: 'PUT',
-            url: url,
-            headers: {
-                'Content-Types': 'application/json',
-            },
-            json: json,
-        });
-        return result.status;
+    static async updateData(url: string, json: any, tryAgain: number): Promise<any> {
+        try {
+            let result: any = await request({
+                method: 'PUT',
+                url: url,
+                headers: {
+                    'Content-Types': 'application/json',
+                },
+                json: json,
+            });
+            return result.status;
+        } catch (e) {
+            tryAgain++;
+            console.error(`Try number ${tryAgain} - ${e}`);
+            if (tryAgain < 3) {
+                await Common.sleep(60000);
+                return await Common.updateData(url, json, tryAgain);
+            }
+            return null;
+        }
     }
 }
 
