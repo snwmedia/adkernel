@@ -94,6 +94,18 @@ class RtbImplementation {
         let remotePublisherFeed = await dist_1.Common.getData(url, 0);
         return remotePublisherFeed;
     }
+    static async getZoneData(zoneId) {
+        let token = await dist_1.Common.getToken(0);
+        let url = `${process.env.DOMAIN}/api/CpmRtbZone/?token=${token}&filters=search:${zoneId}`;
+        let remotePublisherFeed = await dist_1.Common.getData(url, 0);
+        for (let zone in remotePublisherFeed) {
+            let zoneObject = remotePublisherFeed[zone];
+            if (zoneObject.id === zoneId) {
+                return remotePublisherFeed;
+            }
+        }
+        return null;
+    }
     // UPDATE DATA:
     static async updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode) {
         if (!publisherIdList || !publisherIdList.size) {
@@ -156,6 +168,40 @@ class RtbImplementation {
         }
         console.error('Failed resetZoneRemoteFeed', `remoteFeedId ${remoteFeedId}`, `zoneId ${zoneId}`);
         return [false, `ERROR resetZoneRemoteFeed, remoteFeedId ${remoteFeedId}, zoneId ${zoneId}`];
+    }
+    static async removeRemoteFeedsFromZone(zoneId, remotefeedsForRemove) {
+        let zoneObject = await RtbImplementation.getZoneData(zoneId);
+        if (zoneObject) {
+            let zone = Object.values(zoneObject)[0];
+            if (zone) {
+                let oldRemoteFeeds = new Set(zone.ad_sources);
+                for (let remoteFeed of remotefeedsForRemove) {
+                    if (oldRemoteFeeds.has(remoteFeed)) {
+                        oldRemoteFeeds.delete(remoteFeed);
+                    }
+                }
+                let newRemoteFeed = Array.from(oldRemoteFeeds);
+                return await RtbImplementation.updateRemoteFeedListByZone(zoneId, newRemoteFeed);
+            }
+        }
+        console.error('Failed removeRemoteFeedsFromZone', `zoneId ${zoneId}`);
+        return [false, `ERROR removeRemoteFeedsFromZone, zoneId ${zoneId}`];
+    }
+    static async updateRemoteFeedListByZone(zoneId, remotefeeds) {
+        let token = await dist_1.Common.getToken(0);
+        let zone = await RtbImplementation.getZoneData(zoneId);
+        let json = {
+            id: zoneId,
+            name: zone.name,
+            ad_sources: remotefeeds,
+        };
+        let url = `${process.env.DOMAIN}/api/CpmRtbZone/${zoneId}?token=${token}`;
+        let status = await dist_1.Common.updateData(url, json, 0);
+        if (status && status === dist_1.Common.OK) {
+            return [true, status];
+        }
+        console.error('Failed updateRemoteFeedListByZone', `zoneId ${zoneId}`);
+        return [false, `ERROR updateRemoteFeedListByZone, zoneId ${zoneId}`];
     }
 }
 exports.RtbImplementation = RtbImplementation;

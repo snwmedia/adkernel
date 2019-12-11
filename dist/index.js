@@ -173,11 +173,14 @@ class RTB {
     static async getSspPublishersReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) { return await rtbImplementation_1.RtbImplementation.getSspPublishersReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit); }
     // GET DATA:
     static async getZoneRemoteFeedData(remoteFeedId, zoneId) { return await rtbImplementation_1.RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
+    static async getZoneData(zoneId) { return await rtbImplementation_1.RtbImplementation.getZoneData(zoneId); }
     // UPDATE DATA:
     static async updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode) { return await rtbImplementation_1.RtbImplementation.updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode); }
     static async updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode) { return await rtbImplementation_1.RtbImplementation.updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode); }
     static async updateSspApplicationsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode) { return await rtbImplementation_1.RtbImplementation.updateSspApplicationsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode); }
     static async resetZoneRemoteFeed(remoteFeedId, zoneId, affshare) { return await rtbImplementation_1.RtbImplementation.resetZoneRemoteFeed(remoteFeedId, zoneId, affshare); }
+    static async updateRemoteFeedListByZone(zoneId, remotefeedsForRemove) { return await rtbImplementation_1.RtbImplementation.updateRemoteFeedListByZone(zoneId, remotefeedsForRemove); }
+    static async removeRemoteFeedsFromZone(zoneId, remotefeedsForRemove) { return await rtbImplementation_1.RtbImplementation.removeRemoteFeedsFromZone(zoneId, remotefeedsForRemove); }
 }
 exports.RTB = RTB;
 class XML {

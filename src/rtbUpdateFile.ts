@@ -11,7 +11,7 @@ export class RtbUpdateFile {
         let zoneRemoteFeed = await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
 
         if (zoneRemoteFeed) {
-            let zoneRemoteJson: any = Object.values(zoneRemoteFeed)[0]
+            let zoneRemoteJson: any = Object.values(zoneRemoteFeed)[0];
             let zoneRemoteFeedId = Number(Object.keys(zoneRemoteFeed)[0]);
 
             let appListIds = zoneRemoteJson[jsonFileType.jsonListName];
