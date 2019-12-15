@@ -80,7 +80,7 @@ export class Common {
 
     //recursion
     static async getReportListByRecursion(url: string, token: string, timeRange: string, startFrom: number, reportList: any[], tryAgain: number, limit?: number): Promise<any[]> {
-        console.log('getReportListByRecursion')
+        console.log('getReportListByRecursion ')
         let endTo = startFrom + 500;
         if (limit && limit < endTo) {
             endTo = limit;
