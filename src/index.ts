@@ -100,7 +100,7 @@ export class Common {
                             reportList.push(object);
                         }
                     }
-                    if (!limit || limit !== endTo) {
+                    if ((limit && limit !== endTo) || (!limit && reportList.length === endTo)) {
                         return await Common.getReportListByRecursion(url, token, timeRange, endTo, reportList, 0, limit);
                     }
                 }
