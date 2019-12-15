@@ -72,7 +72,7 @@ class Common {
     }
     //recursion
     static async getReportListByRecursion(url, token, timeRange, startFrom, reportList, tryAgain, limit) {
-        console.log('getReportListByRecursion ');
+        console.log('getReportListByRecursion');
         let endTo = startFrom + 500;
         if (limit && limit < endTo) {
             endTo = limit;
