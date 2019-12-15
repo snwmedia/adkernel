@@ -5,7 +5,9 @@ const dist_1 = require("../dist");
 class RtbImplementation {
     // REPORTS:
     static async getZonesReport(from, to) {
+        console.log('RtbImplementation getZonesReport');
         let url = `${RtbImplementation.urlReport}/zone`;
+        console.log(`url ${url}`);
         let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);
         return reportList;
     }
