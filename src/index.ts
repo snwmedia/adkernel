@@ -61,8 +61,11 @@ export class Common {
         }
 
         let finalUrl = `${url}?token=${token}&filters=date:${timeRange}&range=${startFrom}-${endTo}`;
+        let options: any = {};
+        options.method = 'GET';
+        options.url = finalUrl;
         let msgError = `Failed getReportListByRecursion - ${finalUrl}`;
-        let result = await RetryRequest.getRequest('GET', finalUrl, msgError);
+        let result = await RetryRequest.snwRequest(options, msgError);
         if (result && JSON.parse(result)['response'] && JSON.parse(result)['response'].list) {
             let allData = JSON.parse(result)['response'].list;
             if (Object.keys(allData).length) {
@@ -82,15 +85,23 @@ export class Common {
     }
 
     static async getData(url: string): Promise<any> {
+        let options: any = {};
+        options.method = 'GET';
+        options.url = url;
         let msgError = `Failed getData - ${url}`;
-        let result = await RetryRequest.getRequest('GET', url, msgError);
+        let result = await RetryRequest.snwRequest(options, msgError);
         return JSON.parse(result)['response'];
     }
 
 
     static async updateData(url: string, json: any): Promise<any> {
+        let options: any = {};
+        options.method = 'PUT';
+        options.url = url;
+        options.headers = { 'Content-Types': 'application/json' };
+        options.json = json;
         let msgError = `Failed updateData - ${url}`;
-        let result = await RetryRequest.updateRequest('PUT', url, json, msgError);
+        let result = await RetryRequest.snwRequest(options, msgError);
         return result.status;
     }
 }

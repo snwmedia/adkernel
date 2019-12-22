@@ -30,55 +30,27 @@ class RetryRequest {
             return null;
         }
     }
+    static async snwRequest(options, msgError, tryAgain) {
+        if (!tryAgain) {
+            tryAgain = 0;
+        }
+        try {
+            let result = await request(options);
+            return result;
+        }
+        catch (e) {
+            tryAgain++;
+            console.error(`Try number ${tryAgain} - ${e}`);
+            if (tryAgain < 3) {
+                await RetryRequest.sleep(60000);
+                return await RetryRequest.snwRequest(options, msgError, tryAgain);
+            }
+        }
+        return null;
+    }
     static sleep(ms) {
         console.log(`Sleeping for ${ms} milliseconds`);
         return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    static async getRequest(type, url, msgError, tryAgain) {
-        if (!tryAgain) {
-            tryAgain = 0;
-        }
-        try {
-            let result = await request({
-                method: type,
-                url: url
-            });
-            return result;
-        }
-        catch (e) {
-            tryAgain++;
-            console.error(`Try number ${tryAgain} - ${e}`);
-            if (tryAgain < 3) {
-                await RetryRequest.sleep(60000);
-                return await RetryRequest.getRequest('GET', url, msgError, tryAgain);
-            }
-        }
-        return null;
-    }
-    static async updateRequest(type, url, json, msgError, tryAgain) {
-        if (!tryAgain) {
-            tryAgain = 0;
-        }
-        try {
-            let result = await request({
-                method: type,
-                url: url,
-                headers: {
-                    'Content-Types': 'application/json',
-                },
-                json: json,
-            });
-            return result;
-        }
-        catch (e) {
-            tryAgain++;
-            console.error(`Try number ${tryAgain} - ${e}`);
-            if (tryAgain < 3) {
-                await RetryRequest.sleep(60000);
-                return await RetryRequest.updateRequest('GET', url, json, msgError, tryAgain);
-            }
-        }
-        return null;
     }
 }
 exports.RetryRequest = RetryRequest;
