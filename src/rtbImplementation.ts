@@ -116,16 +116,16 @@ export class RtbImplementation {
 
     // GET DATA:
     public static async getZoneRemoteFeedData(remoteFeedId: number, zoneId: number) {
-        let token = await Common.getToken(0);
+        let token = await Common.getToken();
         let url = `${RtbImplementation.urlAction}/?token=${token}&filters=remotefeed:${remoteFeedId};zone:${zoneId}`;
-        let remotePublisherFeed: any[] = await Common.getData(url, 0);
+        let remotePublisherFeed: any[] = await Common.getData(url);
         return remotePublisherFeed;
     }
 
     public static async getZoneData(zoneId: number) {
-        let token = await Common.getToken(0);
+        let token = await Common.getToken();
         let url = `${process.env.DOMAIN}/api/CpmRtbZone/?token=${token}&filters=search:${zoneId}`;
-        let remotePublisherFeed: any[] = await Common.getData(url, 0);
+        let remotePublisherFeed: any[] = await Common.getData(url);
         for (let zone in remotePublisherFeed) {
             let zoneObject = remotePublisherFeed[zone];
             if (zoneObject.id === zoneId) {
@@ -139,7 +139,7 @@ export class RtbImplementation {
     // UPDATE DATA:
     public static async updateSspPublishersByZoneRemoteFeed(remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]> {
         if (!publisherIdList || !publisherIdList.size) { return [false, `The list "publisherIdList" is empty!`]; }
-        let token = await Common.getToken(0);
+        let token = await Common.getToken();
 
         //check if the the existing mode is no different from the new mode:
         let zoneRemoteFeed = await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
@@ -156,7 +156,7 @@ export class RtbImplementation {
             let url = `${RtbImplementation.urlAction}/${zoneRemoteFeedId}?token=${token}`;
             let subIdString: string = Common.cleanListForUpdate(publisherIdList);
             let json: any = { remotefeed_id: remoteFeedId, zone_id: zoneId, publisher_id_list_mode: publisherIdListMode, publisher_id_list: subIdString };
-            let status: string = await Common.updateData(url, json, 0);
+            let status: string = await Common.updateData(url, json);
             if (status && status === Common.OK) {
                 return [true, status];
             }
@@ -180,7 +180,7 @@ export class RtbImplementation {
 
 
     public static async resetZoneRemoteFeed(remoteFeedId: number, zoneId: number, affshare: Number): Promise<[boolean, string]> {
-        let token = await Common.getToken(0);
+        let token = await Common.getToken();
         let zoneRemoteFeed = await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
 
         if (zoneRemoteFeed) {
@@ -195,7 +195,7 @@ export class RtbImplementation {
                 affshare: affshare
             };
             let url = `${RtbImplementation.urlAction}/${zoneRemoteFeedId}?token=${token}`;
-            let status: string = await Common.updateData(url, json, 0);
+            let status: string = await Common.updateData(url, json);
             if (status && status === Common.OK) {
                 return [true, status];
             }
@@ -233,7 +233,7 @@ export class RtbImplementation {
 
 
     public static async updateRemoteFeedListByZone(zoneId: number, remotefeeds: Number[]): Promise<[boolean, string]> {
-        let token = await Common.getToken(0);
+        let token = await Common.getToken();
         let zone: any = await RtbImplementation.getZoneData(zoneId);
 
         let json: any = {
@@ -242,7 +242,7 @@ export class RtbImplementation {
             ad_sources: remotefeeds,
         };
         let url = `${process.env.DOMAIN}/api/CpmRtbZone/${zoneId}?token=${token}`;
-        let status: string = await Common.updateData(url, json, 0);
+        let status: string = await Common.updateData(url, json);
         if (status && status === Common.OK) {
             return [true, status];
         }

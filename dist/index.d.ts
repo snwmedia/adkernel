@@ -1,15 +1,12 @@
 export declare class Common {
-    static token: string;
     static OK: string;
-    static sleep(ms: number): Promise<unknown>;
-    static getToken(tryAgain: number): Promise<string>;
-    static tryAgainToken(tryAgain: number): Promise<string>;
+    static getToken(): Promise<string>;
     static getCustomDate(from: Date, to: Date): string;
     static PrepareAPICallForReports(from: Date, to: Date, url: string, limit?: number): Promise<any[]>;
     static cleanListForUpdate(list: Set<string>): string;
-    static getReportListByRecursion(url: string, token: string, timeRange: string, startFrom: number, reportList: any[], tryAgain: number, limit?: number): Promise<any[]>;
-    static getData(url: string, tryAgain: number): Promise<any>;
-    static updateData(url: string, json: any, tryAgain: number): Promise<any>;
+    static getReportListByRecursion(url: string, token: string, timeRange: string, startFrom: number, reportList: any[], limit?: number): Promise<any[]>;
+    static getData(url: string): Promise<any>;
+    static updateData(url: string, json: any): Promise<any>;
 }
 export declare class RTB {
     static getRemoteFeedsReport(from: Date, to: Date): Promise<any[]>;

@@ -62,9 +62,9 @@ export class XmlImplementation {
 
     // GET DATA:
     public static async getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number) {
-        let token = await Common.getToken(0);
+        let token = await Common.getToken();
         let url = `${XmlImplementation.urlAction}/?token=${token}&filters=remotefeed:${remoteFeedId};publisherfeed:${pubFeedId}`;
-        let remotePublisherFeed: any[] = await Common.getData(url, 0);
+        let remotePublisherFeed: any[] = await Common.getData(url);
         return remotePublisherFeed;
     }
 
@@ -72,7 +72,7 @@ export class XmlImplementation {
     // UPDATE DATA:
     public static async updateSubIdsByRemotePublisherFeed(remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]> {
         if (!subIdList || !subIdList.size) { return [false, `The list "subIdList" is empty!`]; }
-        let token = await Common.getToken(0);
+        let token = await Common.getToken();
 
         //check if the the existing mode is no different from the new mode:
         let remotePublisherFeed = await XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId);
@@ -89,7 +89,7 @@ export class XmlImplementation {
             let url = `${XmlImplementation.urlAction}/${remotePublisherId}?token=${token}`;
             let subIdString: string = Common.cleanListForUpdate(subIdList);
             let json: any = { remotefeed_id: remoteFeedId, feed_id: pubFeedId, subidlist_mode: subIdListMode, subidlist: subIdString };
-            let status: string = await Common.updateData(url, json, 0);
+            let status: string = await Common.updateData(url, json);
             if (status && status === Common.OK) {
                 return [true, status];
             }

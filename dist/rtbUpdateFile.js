@@ -5,7 +5,7 @@ const dist_1 = require("../dist");
 const rtbImplementation_1 = require("./rtbImplementation");
 class RtbUpdateFile {
     static async updateFile(remoteFeedId, zoneId, listName, appsId, jsonFileType, mode) {
-        let token = await dist_1.Common.getToken(0);
+        let token = await dist_1.Common.getToken();
         let zoneRemoteFeed = await rtbImplementation_1.RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
         if (zoneRemoteFeed) {
             let zoneRemoteJson = Object.values(zoneRemoteFeed)[0];

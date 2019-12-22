@@ -7,7 +7,7 @@ export class RtbUpdateFile {
 
     public static async updateFile(remoteFeedId: number, zoneId: number, listName: string, appsId: Set<string>, jsonFileType: any, mode: Mode): Promise<[boolean, string]> {
 
-        let token = await Common.getToken(0);
+        let token = await Common.getToken();
         let zoneRemoteFeed = await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId);
 
         if (zoneRemoteFeed) {
