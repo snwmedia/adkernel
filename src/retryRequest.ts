@@ -3,10 +3,8 @@ import * as request from 'request-promise-native';
 
 export class RetryRequest {
 
-    static async tokenRequest(type: string, url: string, msgError: string, tryAgain?: number): Promise<any> {
-        if (!tryAgain) {
-            tryAgain = 0;
-        }
+    static async tokenRequest(type: string, url: string, msgError: string, tryAgain = 0): Promise<any> {
+
         try {
             let result: any = await request({
                 method: type,
@@ -30,10 +28,8 @@ export class RetryRequest {
         }
     }
 
-    static async snwRequest(options: any, msgError: string, tryAgain?: number): Promise<any> {
-        if (!tryAgain) {
-            tryAgain = 0;
-        }
+    static async snwRequest(options: any, msgError: string, tryAgain = 0): Promise<any> {
+
         try {
             let result: any = await request(options);
             return result;

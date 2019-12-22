@@ -2,10 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const request = require("request-promise-native");
 class RetryRequest {
-    static async tokenRequest(type, url, msgError, tryAgain) {
-        if (!tryAgain) {
-            tryAgain = 0;
-        }
+    static async tokenRequest(type, url, msgError, tryAgain = 0) {
         try {
             let result = await request({
                 method: type,
@@ -30,10 +27,7 @@ class RetryRequest {
             return null;
         }
     }
-    static async snwRequest(options, msgError, tryAgain) {
-        if (!tryAgain) {
-            tryAgain = 0;
-        }
+    static async snwRequest(options, msgError, tryAgain = 0) {
         try {
             let result = await request(options);
             return result;
