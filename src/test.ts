@@ -18,6 +18,6 @@ function test() {
     // let reportList = RTB.getZoneRemoteFeedData( 220869,84363);
     // RTB.resetZoneRemoteFeed(225986, 65261, 70);
     // RTB.removeZonesFromRemoteFeed(232444,[])
-    RTB.removeRemoteFeedsFromZone(84363,[])
+    // RTB.removeRemoteFeedsFromZone(84363,[])
 
 }

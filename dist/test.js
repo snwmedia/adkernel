@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const dist_1 = require("../dist");
 test();
 // RTB.getAllAppBundlesByZone(d, d, 84363, 1030);
 // RTB.getAllAppBundles(d, d, 1030);
@@ -16,6 +15,6 @@ function test() {
     // let reportList = RTB.getZoneRemoteFeedData( 220869,84363);
     // RTB.resetZoneRemoteFeed(225986, 65261, 70);
     // RTB.removeZonesFromRemoteFeed(232444,[])
-    dist_1.RTB.removeRemoteFeedsFromZone(84363, []);
+    // RTB.removeRemoteFeedsFromZone(84363,[])
 }
 //# sourceMappingURL=test.js.map
