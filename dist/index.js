@@ -18,11 +18,8 @@ class Common {
         return dateUrl;
     }
     static async PrepareAPICallForReports(from, to, url, limit) {
-        console.log('PrepareAPICallForReports');
         let timeRange = Common.getCustomDate(from, to);
-        console.log('timeRange ' + timeRange);
         let token = await Common.getToken();
-        console.log('token ' + token);
         let bundlesReport = await Common.getReportListByRecursion(url, token, timeRange, 0, [], limit);
         return bundlesReport;
     }
@@ -67,7 +64,6 @@ class Common {
                 }
             }
         }
-        console.log(`reportList.length ${reportList.length}`);
         return reportList;
     }
     static async getData(url) {
@@ -97,7 +93,7 @@ class RTB {
     static async getRemoteFeedsReport(from, to) { return await rtbImplementation_1.RtbImplementation.getRemoteFeedsReport(from, to); }
     static async getRemoteFeedsReportByZone(from, to, zoneId) { return await rtbImplementation_1.RtbImplementation.getRemoteFeedsReportByZone(from, to, zoneId); }
     //Zone reports
-    static async getZonesReport(from, to) { console.log('RTB getZonesReport'); return await rtbImplementation_1.RtbImplementation.getZonesReport(from, to); }
+    static async getZonesReport(from, to) { return await rtbImplementation_1.RtbImplementation.getZonesReport(from, to); }
     static async getZonesReportByRemoteFeed(from, to, remoteFeedId) { return await rtbImplementation_1.RtbImplementation.getZonesReportByRemoteFeed(from, to, remoteFeedId); }
     //AppBundles reports:
     static async getAppBundlesReport(from, to, limit) { return await rtbImplementation_1.RtbImplementation.getAppBundlesReport(from, to, limit); }

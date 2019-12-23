@@ -28,11 +28,8 @@ export class Common {
 
 
     static async PrepareAPICallForReports(from: Date, to: Date, url: string, limit?: number) {
-        console.log('PrepareAPICallForReports')
         let timeRange: string = Common.getCustomDate(from, to);
-        console.log('timeRange ' + timeRange)
         let token = await Common.getToken();
-        console.log('token ' + token)
         let bundlesReport: any[] = await Common.getReportListByRecursion(url, token, timeRange, 0, [], limit);
         return bundlesReport;
     }
@@ -80,7 +77,6 @@ export class Common {
                 }
             }
         }
-        console.log(`reportList.length ${reportList.length}`)
         return reportList;
     }
 
@@ -116,7 +112,7 @@ export class RTB {
     public static async getRemoteFeedsReportByZone(from: Date, to: Date, zoneId: number) { return await RtbImplementation.getRemoteFeedsReportByZone(from, to, zoneId); }
 
     //Zone reports
-    public static async getZonesReport(from: Date, to: Date) { console.log('RTB getZonesReport'); return await RtbImplementation.getZonesReport(from, to); }
+    public static async getZonesReport(from: Date, to: Date) { return await RtbImplementation.getZonesReport(from, to); }
     public static async getZonesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number) { return await RtbImplementation.getZonesReportByRemoteFeed(from, to, remoteFeedId); }
 
     //AppBundles reports:

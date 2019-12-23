@@ -8,9 +8,7 @@ export class RtbImplementation {
 
     // REPORTS:
     public static async getZonesReport(from: Date, to: Date) {
-        console.log('RtbImplementation getZonesReport')
         let url = `${RtbImplementation.urlReport}/zone`;
-        console.log(`url ${url}`)
         let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
         return reportList;
     }
