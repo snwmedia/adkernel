@@ -133,6 +133,19 @@ export class RtbImplementation {
         return null;
     }
 
+    public static async getRemoteFeedData(remoteFeedId: number) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/AdSource/?token=${token}&filters=search:${remoteFeedId}`;
+        let remotePublisherFeed: any[] = await Common.getData(url);
+        for (let remoteFeed in remotePublisherFeed) {
+            let remoteFeedObject = remotePublisherFeed[remoteFeed];
+            if (remoteFeedObject.id === remoteFeedId) {
+                return remotePublisherFeed;
+            }
+        }
+        return null;
+    }
+
 
     // UPDATE DATA:
     public static async updateSspPublishersByZoneRemoteFeed(remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]> {
@@ -232,7 +245,8 @@ export class RtbImplementation {
 
     public static async updateRemoteFeedListByZone(zoneId: number, remotefeeds: Number[]): Promise<[boolean, string]> {
         let token = await Common.getToken();
-        let zone: any = await RtbImplementation.getZoneData(zoneId);
+        let zoneObject: any = await RtbImplementation.getZoneData(zoneId);
+        let zone: any = Object.values(zoneObject)[0];
 
         let json: any = {
             id: zoneId,
@@ -247,5 +261,50 @@ export class RtbImplementation {
 
         console.error('Failed updateRemoteFeedListByZone', `zoneId ${zoneId}`)
         return [false, `ERROR updateRemoteFeedListByZone, zoneId ${zoneId}`]
+    }
+
+
+
+
+
+
+
+    public static async removeZonesFromRemoteFeed(remotefeedId: number, zonesForRemove: number[]): Promise<[boolean, string]> {
+        let remoteFeedObject: any = await RtbImplementation.getRemoteFeedData(remotefeedId);
+        if (remoteFeedObject) {
+            let remoteFeed: any = Object.values(remoteFeedObject)[0]
+            if (remoteFeed) {
+                let oldZones: Set<number> = new Set(remoteFeed.zones);
+                for (let zone of zonesForRemove) {
+                    if (oldZones.has(zone)) {
+                        oldZones.delete(zone);
+                    }
+                }
+                let newZone = Array.from(oldZones);
+                return await RtbImplementation.updateZoneListByRemoteFeed(remotefeedId, newZone);
+            }
+        }
+        console.error('Failed removeZonesFromRemoteFeed', `remotefeedId ${remotefeedId}`);
+        return [false, `ERROR removeZonesFromRemoteFeed, remotefeedId ${remotefeedId}`];
+    }
+
+
+    public static async updateZoneListByRemoteFeed(remotefeedId: number, zonesForRemove: number[]): Promise<[boolean, string]> {
+        let token = await Common.getToken();
+        let remoteFeedObject: any = await RtbImplementation.getRemoteFeedData(remotefeedId);
+        let remoteFeed: any = Object.values(remoteFeedObject)[0];
+        let json: any = {
+            id: remotefeedId,
+            name: remoteFeed.name,
+            zones: zonesForRemove,
+        };
+        let url = `${process.env.DOMAIN}/api/AdSource/${remotefeedId}?token=${token}`;
+        let status: string = await Common.updateData(url, json);
+        if (status && status === Common.OK) {
+            return [true, status];
+        }
+
+        console.error('Failed updateZoneListByRemoteFeed', `remotefeedId ${remotefeedId}`)
+        return [false, `ERROR updateZoneListByRemoteFeed, remotefeedId ${remotefeedId}`]
     }
 }

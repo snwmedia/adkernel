@@ -137,6 +137,7 @@ export class RTB {
     // GET DATA:
     public static async getZoneRemoteFeedData(remoteFeedId: number, zoneId: number) { return await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
     public static async getZoneData(zoneId: number) { return await RtbImplementation.getZoneData(zoneId); }
+    public static async getRemoteFeedData(remoteFeedId: number) { return await RtbImplementation.getRemoteFeedData(remoteFeedId); }
 
     // UPDATE DATA:
     public static async updateSspPublishersByZoneRemoteFeed(remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]> { return await RtbImplementation.updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode); }
@@ -146,6 +147,9 @@ export class RTB {
 
     public static async updateRemoteFeedListByZone(zoneId: number, remotefeedsForRemove: number[]): Promise<[boolean, string]> { return await RtbImplementation.updateRemoteFeedListByZone(zoneId, remotefeedsForRemove); }
     public static async removeRemoteFeedsFromZone(zoneId: number, remotefeedsForRemove: number[]): Promise<[boolean, string]> { return await RtbImplementation.removeRemoteFeedsFromZone(zoneId, remotefeedsForRemove); }
+
+    public static async updateZoneListByRemoteFeed(remotefeedId: number, zonesForRemove: number[]): Promise<[boolean, string]> { return await RtbImplementation.updateZoneListByRemoteFeed(remotefeedId, zonesForRemove); }
+    public static async removeZonesFromRemoteFeed(remotefeedId: number, zonesForRemove: number[]): Promise<[boolean, string]> { return await RtbImplementation.removeZonesFromRemoteFeed(remotefeedId, zonesForRemove); }
 }
 
 export class XML {

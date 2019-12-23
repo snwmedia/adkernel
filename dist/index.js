@@ -113,6 +113,7 @@ class RTB {
     // GET DATA:
     static async getZoneRemoteFeedData(remoteFeedId, zoneId) { return await rtbImplementation_1.RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
     static async getZoneData(zoneId) { return await rtbImplementation_1.RtbImplementation.getZoneData(zoneId); }
+    static async getRemoteFeedData(remoteFeedId) { return await rtbImplementation_1.RtbImplementation.getRemoteFeedData(remoteFeedId); }
     // UPDATE DATA:
     static async updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode) { return await rtbImplementation_1.RtbImplementation.updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode); }
     static async updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode) { return await rtbImplementation_1.RtbImplementation.updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId, zoneId, listName, appsId, mode); }
@@ -120,6 +121,8 @@ class RTB {
     static async resetZoneRemoteFeed(remoteFeedId, zoneId, affshare) { return await rtbImplementation_1.RtbImplementation.resetZoneRemoteFeed(remoteFeedId, zoneId, affshare); }
     static async updateRemoteFeedListByZone(zoneId, remotefeedsForRemove) { return await rtbImplementation_1.RtbImplementation.updateRemoteFeedListByZone(zoneId, remotefeedsForRemove); }
     static async removeRemoteFeedsFromZone(zoneId, remotefeedsForRemove) { return await rtbImplementation_1.RtbImplementation.removeRemoteFeedsFromZone(zoneId, remotefeedsForRemove); }
+    static async updateZoneListByRemoteFeed(remotefeedId, zonesForRemove) { return await rtbImplementation_1.RtbImplementation.updateZoneListByRemoteFeed(remotefeedId, zonesForRemove); }
+    static async removeZonesFromRemoteFeed(remotefeedId, zonesForRemove) { return await rtbImplementation_1.RtbImplementation.removeZonesFromRemoteFeed(remotefeedId, zonesForRemove); }
 }
 exports.RTB = RTB;
 class XML {
