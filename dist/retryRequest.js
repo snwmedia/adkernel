@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const request = require("request-promise-native");
+const dist_1 = require("../dist");
 class RetryRequest {
     static async tokenRequest(type, url, msgError, tryAgain = 0) {
         try {
@@ -9,6 +10,7 @@ class RetryRequest {
                 url: url
             });
             if (result) {
+                dist_1.Common.token = new dist_1.Token(result);
                 return result;
             }
             else {
@@ -21,7 +23,7 @@ class RetryRequest {
             tryAgain++;
             console.error(`Try number ${tryAgain} - ${e}`);
             if (tryAgain < 3) {
-                await RetryRequest.sleep(60000);
+                await RetryRequest.sleep(RetryRequest._1_Minute);
                 return await RetryRequest.tokenRequest('GET', url, msgError, tryAgain);
             }
             return null;
@@ -36,7 +38,7 @@ class RetryRequest {
             tryAgain++;
             console.error(`Try number ${tryAgain} - ${e}`);
             if (tryAgain < 3) {
-                await RetryRequest.sleep(60000);
+                await RetryRequest.sleep(RetryRequest._1_Minute);
                 return await RetryRequest.snwRequest(options, msgError, tryAgain);
             }
         }
@@ -48,4 +50,5 @@ class RetryRequest {
     }
 }
 exports.RetryRequest = RetryRequest;
+RetryRequest._1_Minute = 60000;
 //# sourceMappingURL=retryRequest.js.map

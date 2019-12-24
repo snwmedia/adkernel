@@ -4,13 +4,23 @@ import { RetryRequest } from './retryRequest';
 
 export class Common {
     static OK: string = 'OK';
-
+    static token: Token;
+    static _10_Minutes: number = 600000;
 
 
     static async getToken(): Promise<string> {
         if (!process.env.DOMAIN || !process.env.USER || !process.env.PASS) {
             throw (`Set environment variables:\n
             "env": {"DOMAIN": "https://login.adservme.com/admin", "USER":"oded", "PASS":"123"}`)
+        }
+
+        if (Common.token) {
+            let lastRenewalToken = Common.token.date.getTime();
+            let thisTime = new Date().getTime();
+            let difference = thisTime - lastRenewalToken;
+            if (difference < Common._10_Minutes) {
+                return Common.token.token;
+            }
         }
 
         let msgError = 'AdKernel authentication error';
@@ -177,6 +187,15 @@ export class XML {
     public static async updateSubIdsByRemotePublisherFeed(remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]> { return await XmlImplementation.updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode); }
 }
 
+
+export class Token {
+    token: string;
+    date: Date;
+    constructor(token: string) {
+        this.token = token;
+        this.date = new Date();
+    }
+}
 
 export enum Mode {
     BLACKLIST = 'BLACKLIST',

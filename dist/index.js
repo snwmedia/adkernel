@@ -9,6 +9,14 @@ class Common {
             throw (`Set environment variables:\n
             "env": {"DOMAIN": "https://login.adservme.com/admin", "USER":"oded", "PASS":"123"}`);
         }
+        if (Common.token) {
+            let lastRenewalToken = Common.token.date.getTime();
+            let thisTime = new Date().getTime();
+            let difference = thisTime - lastRenewalToken;
+            if (difference < Common._10_Minutes) {
+                return Common.token.token;
+            }
+        }
         let msgError = 'AdKernel authentication error';
         let url = `${process.env.DOMAIN}/auth?login=${process.env.USER}&password=${process.env.PASS}`;
         return await retryRequest_1.RetryRequest.tokenRequest('GET', url, msgError);
@@ -87,6 +95,7 @@ class Common {
 }
 exports.Common = Common;
 Common.OK = 'OK';
+Common._10_Minutes = 600000;
 class RTB {
     // REPORTS:
     //RemoteFeeds reports
@@ -144,6 +153,13 @@ class XML {
     static async updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode) { return await xmlImplementation_1.XmlImplementation.updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode); }
 }
 exports.XML = XML;
+class Token {
+    constructor(token) {
+        this.token = token;
+        this.date = new Date();
+    }
+}
+exports.Token = Token;
 var Mode;
 (function (Mode) {
     Mode["BLACKLIST"] = "BLACKLIST";

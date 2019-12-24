@@ -1,7 +1,10 @@
 import * as request from 'request-promise-native';
+import { Common, Token } from "../dist";
 
 
 export class RetryRequest {
+
+    static _1_Minute: number = 60000;
 
     static async tokenRequest(type: string, url: string, msgError: string, tryAgain = 0): Promise<any> {
 
@@ -11,6 +14,7 @@ export class RetryRequest {
                 url: url
             });
             if (result) {
+                Common.token = new Token(result);
                 return result;
             } else {
                 console.error(msgError);
@@ -21,7 +25,7 @@ export class RetryRequest {
             tryAgain++;
             console.error(`Try number ${tryAgain} - ${e}`);
             if (tryAgain < 3) {
-                await RetryRequest.sleep(60000);
+                await RetryRequest.sleep(RetryRequest._1_Minute);
                 return await RetryRequest.tokenRequest('GET', url, msgError, tryAgain);
             }
             return null;
@@ -37,7 +41,7 @@ export class RetryRequest {
             tryAgain++;
             console.error(`Try number ${tryAgain} - ${e}`);
             if (tryAgain < 3) {
-                await RetryRequest.sleep(60000);
+                await RetryRequest.sleep(RetryRequest._1_Minute);
                 return await RetryRequest.snwRequest(options, msgError, tryAgain);
             }
         }

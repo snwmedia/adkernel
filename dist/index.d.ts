@@ -1,5 +1,7 @@
 export declare class Common {
     static OK: string;
+    static token: Token;
+    static _10_Minutes: number;
     static getToken(): Promise<string>;
     static getCustomDate(from: Date, to: Date): string;
     static PrepareAPICallForReports(from: Date, to: Date, url: string, limit?: number): Promise<any[]>;
@@ -48,6 +50,11 @@ export declare class XML {
     static getSubIdsReportByRemotePublisherFeed(from: Date, to: Date, remoteFeedId: number, pubFeedId: number, limit?: number): Promise<any[]>;
     static getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number): Promise<any[]>;
     static updateSubIdsByRemotePublisherFeed(remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]>;
+}
+export declare class Token {
+    token: string;
+    date: Date;
+    constructor(token: string);
 }
 export declare enum Mode {
     BLACKLIST = "BLACKLIST",
