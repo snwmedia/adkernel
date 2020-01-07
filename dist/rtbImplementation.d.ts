@@ -25,6 +25,7 @@ export declare class RtbImplementation {
     static updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId: number, zoneId: number, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]>;
     static updateSspApplicationsByZoneRemoteFeed(remoteFeedId: number, zoneId: number, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]>;
     static resetZoneRemoteFeed(remoteFeedId: number, zoneId: number, affshare: Number): Promise<[boolean, string]>;
+    static updateAppList(listName: string, bundles: Set<string>): Promise<[boolean, string]>;
     static removeRemoteFeedsFromZone(zoneId: number, remotefeedsForRemove: number[]): Promise<[boolean, string]>;
     static updateRemoteFeedListByZone(zoneId: number, remotefeeds: Number[]): Promise<[boolean, string]>;
     static removeZonesFromRemoteFeed(remotefeedId: number, zonesForRemove: number[]): Promise<[boolean, string]>;

@@ -181,6 +181,28 @@ class RtbImplementation {
         console.error('Failed resetZoneRemoteFeed', `remoteFeedId ${remoteFeedId}`, `zoneId ${zoneId}`);
         return [false, `ERROR resetZoneRemoteFeed, remoteFeedId ${remoteFeedId}, zoneId ${zoneId}`];
     }
+    static async updateAppList(listName, bundles) {
+        let token = await dist_1.Common.getToken();
+        if (!bundles || !bundles.size) {
+            return [false, `There is no bundles!`];
+        }
+        let type = 'AppList';
+        let appList = await rtbUpdateFile_1.RtbUpdateFile.getAppListByNames(token, type, listName);
+        if (!appList) {
+            return [false, `There is no appList "${listName}"!`];
+        }
+        let listId = appList.id;
+        let fileId = appList.app_bundles.split('id ').pop();
+        let oldAppLists = await rtbUpdateFile_1.RtbUpdateFile.getOldList(token, fileId);
+        let oldList = oldAppLists.split('\n');
+        for (let old of oldList) {
+            bundles.add(old);
+        }
+        let updatingAppsString = dist_1.Common.cleanListForUpdate(bundles);
+        let newFile = await rtbUpdateFile_1.RtbUpdateFile.uploadList(token, updatingAppsString);
+        let newFileId = newFile.created;
+        return await rtbUpdateFile_1.RtbUpdateFile.updateList(token, listId, newFileId, 'app_bundles', type);
+    }
     static async removeRemoteFeedsFromZone(zoneId, remotefeedsForRemove) {
         let zoneObject = await RtbImplementation.getZoneData(zoneId);
         if (zoneObject) {

@@ -177,6 +177,25 @@ class RtbUpdateFile {
         console.error('Failed updateZoneRemoteFeed', result);
         return [false, `ERROR updateZoneRemoteFeed ${result}`];
     }
+    // get specific list:
+    static async getAppListByNames(token, apiType, appListName) {
+        let result = await request({
+            method: 'GET',
+            url: `${process.env.DOMAIN}/api/${apiType}/?token=${token}&filters=search:${appListName}`
+        });
+        if (result) {
+            let response = JSON.parse(result)['response'];
+            for (let data in response) {
+                if (response[data].name === appListName) {
+                    return response[data];
+                }
+            }
+        }
+        else {
+            console.error('Failed getAppListNames ', result);
+            return null;
+        }
+    }
 }
 exports.RtbUpdateFile = RtbUpdateFile;
 //# sourceMappingURL=rtbUpdateFile.js.map

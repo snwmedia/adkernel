@@ -215,7 +215,24 @@ export class RtbImplementation {
         return [false, `ERROR resetZoneRemoteFeed, remoteFeedId ${remoteFeedId}, zoneId ${zoneId}`]
     }
 
-
+    public static async updateAppList(listName: string, bundles: Set<string>): Promise<[boolean, string]> {
+        let token = await Common.getToken();
+        if (!bundles || !bundles.size) { return [false, `There is no bundles!`]; }
+        let type = 'AppList';
+        let appList = await RtbUpdateFile.getAppListByNames(token, type, listName);
+        if (!appList) { return [false, `There is no appList "${listName}"!`]; }
+        let listId = appList.id;
+        let fileId = appList.app_bundles.split('id ').pop();
+        let oldAppLists = await RtbUpdateFile.getOldList(token, fileId);
+        let oldList: string[] = oldAppLists.split('\n');
+        for (let old of oldList) {
+            bundles.add(old);
+        }
+        let updatingAppsString: string = Common.cleanListForUpdate(bundles);
+        let newFile = await RtbUpdateFile.uploadList(token, updatingAppsString);
+        let newFileId = newFile.created;
+        return await RtbUpdateFile.updateList(token, listId, newFileId, 'app_bundles', type);
+    }
 
 
 
