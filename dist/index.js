@@ -92,6 +92,16 @@ class Common {
         let result = await retryRequest_1.RetryRequest.snwRequest(options, msgError);
         return result.status;
     }
+    static async createData(url, json) {
+        let options = {};
+        options.method = 'POST';
+        options.url = url;
+        options.headers = { 'Content-Types': 'application/json' };
+        options.json = json;
+        let msgError = `Failed createData - ${url}`;
+        let result = await retryRequest_1.RetryRequest.snwRequest(options, msgError);
+        return result.status;
+    }
 }
 exports.Common = Common;
 Common.OK = 'OK';

@@ -9,6 +9,7 @@ export declare class Common {
     static getReportListByRecursion(url: string, token: string, timeRange: string, startFrom: number, reportList: any[], limit?: number): Promise<any[]>;
     static getData(url: string): Promise<any>;
     static updateData(url: string, json: any): Promise<any>;
+    static createData(url: string, json: any): Promise<any>;
 }
 export declare class RTB {
     static getRemoteFeedsReport(from: Date, to: Date): Promise<any[]>;

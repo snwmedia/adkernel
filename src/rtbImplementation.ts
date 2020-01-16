@@ -133,6 +133,18 @@ export class RtbImplementation {
         return null;
     }
 
+
+    static async createZone(zone: any) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/CpmRtbZone/?token=${token}`;
+        let status: string = await Common.createData(url, zone);
+        if (status && status === Common.OK) {
+            return [true, status];
+        }
+    }
+
+
+
     public static async getRemoteFeedData(remoteFeedId: number) {
         let token = await Common.getToken();
         let url = `${process.env.DOMAIN}/api/AdSource/?token=${token}&filters=search:${remoteFeedId}`;

@@ -110,6 +110,19 @@ export class Common {
         let result = await RetryRequest.snwRequest(options, msgError);
         return result.status;
     }
+
+    static async createData(url: string, json: any): Promise<any> {
+        let options: any = {};
+        options.method = 'POST';
+        options.url = url;
+        options.headers = { 'Content-Types': 'application/json' };
+        options.json = json;
+        let msgError = `Failed createData - ${url}`;
+        let result = await RetryRequest.snwRequest(options, msgError);
+        return result.status;
+    }
+
+
 }
 
 
