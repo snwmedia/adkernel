@@ -143,6 +143,7 @@ class RTB {
     static async removeRemoteFeedsFromZone(zoneId, remotefeedsForRemove) { return await rtbImplementation_1.RtbImplementation.removeRemoteFeedsFromZone(zoneId, remotefeedsForRemove); }
     static async updateZoneListByRemoteFeed(remotefeedId, zonesForRemove) { return await rtbImplementation_1.RtbImplementation.updateZoneListByRemoteFeed(remotefeedId, zonesForRemove); }
     static async removeZonesFromRemoteFeed(remotefeedId, zonesForRemove) { return await rtbImplementation_1.RtbImplementation.removeZonesFromRemoteFeed(remotefeedId, zonesForRemove); }
+    static async createZone(zoneData) { return await rtbImplementation_1.RtbImplementation.createZone(zoneData); }
 }
 exports.RTB = RTB;
 class XML {

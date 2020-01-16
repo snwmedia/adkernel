@@ -40,6 +40,7 @@ export declare class RTB {
     static removeRemoteFeedsFromZone(zoneId: number, remotefeedsForRemove: number[]): Promise<[boolean, string]>;
     static updateZoneListByRemoteFeed(remotefeedId: number, zonesForRemove: number[]): Promise<[boolean, string]>;
     static removeZonesFromRemoteFeed(remotefeedId: number, zonesForRemove: number[]): Promise<[boolean, string]>;
+    static createZone(zoneData: any): Promise<[boolean, string]>;
 }
 export declare class XML {
     static getRemoteFeedsReport(from: Date, to: Date): Promise<any[]>;

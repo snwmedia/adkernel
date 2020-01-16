@@ -174,6 +174,9 @@ export class RTB {
 
     public static async updateZoneListByRemoteFeed(remotefeedId: number, zonesForRemove: number[]): Promise<[boolean, string]> { return await RtbImplementation.updateZoneListByRemoteFeed(remotefeedId, zonesForRemove); }
     public static async removeZonesFromRemoteFeed(remotefeedId: number, zonesForRemove: number[]): Promise<[boolean, string]> { return await RtbImplementation.removeZonesFromRemoteFeed(remotefeedId, zonesForRemove); }
+
+    public static async createZone(zoneData: any): Promise<[boolean, string]> { return await RtbImplementation.createZone(zoneData); }
+
 }
 
 export class XML {

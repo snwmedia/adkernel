@@ -134,7 +134,7 @@ export class RtbImplementation {
     }
 
 
-    static async createZone(zone: any) {
+    public static async createZone(zone: any): Promise<[boolean, string]> {
         let token = await Common.getToken();
         let url = `${process.env.DOMAIN}/api/CpmRtbZone/?token=${token}`;
         let status: string = await Common.createData(url, zone);
