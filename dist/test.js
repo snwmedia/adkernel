@@ -8,6 +8,7 @@ function test() {
     let d = new Date();
     d.setDate(d.getDate() - 1);
     dist_1.RTB.getZonesReport(d, d);
+    // RTB.getPublisherData(34653)
     // let bundlesSet: Set<string> = new Set(['com.apalon.myclockfree', "com.qcdroid.android.qcdroid", "com.pe.fakegps"]);
     // RTB.updateAppList('avt_auto', bundlesSet);
     // let url = `${process.env.DOMAIN}/api/ZoneRemoteFeed/333333?token=96DBFcHq9BnOLDf30gip`;

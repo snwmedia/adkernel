@@ -161,6 +161,7 @@ export class RTB {
     public static async getZoneRemoteFeedData(remoteFeedId: number, zoneId: number) { return await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
     public static async getZoneData(zoneId: number) { return await RtbImplementation.getZoneData(zoneId); }
     public static async getRemoteFeedData(remoteFeedId: number) { return await RtbImplementation.getRemoteFeedData(remoteFeedId); }
+    public static async getPublisherData(publisherId: number) { return await RtbImplementation.getPublisherData(publisherId); }
 
     // UPDATE DATA:
     public static async updateSspPublishersByZoneRemoteFeed(remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]> { return await RtbImplementation.updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode); }

@@ -126,6 +126,18 @@ class RtbImplementation {
         }
         return null;
     }
+    static async getPublisherData(publisherId) {
+        let token = await dist_1.Common.getToken();
+        let url = `${process.env.DOMAIN}/api/Publisher/?token=${token}&filters=search:${publisherId}`;
+        let publisherFeed = await dist_1.Common.getData(url);
+        for (let remoteFeed in publisherFeed) {
+            let publisherObject = publisherFeed[remoteFeed];
+            if (publisherObject.id === publisherId) {
+                return publisherObject;
+            }
+        }
+        return null;
+    }
     // UPDATE DATA:
     static async updateSspPublishersByZoneRemoteFeed(remoteFeedId, zoneId, publisherIdList, publisherIdListMode) {
         if (!publisherIdList || !publisherIdList.size) {

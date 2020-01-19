@@ -22,6 +22,7 @@ export declare class RtbImplementation {
     static getZoneData(zoneId: number): Promise<any[]>;
     static createZone(zone: any): Promise<[boolean, string]>;
     static getRemoteFeedData(remoteFeedId: number): Promise<any[]>;
+    static getPublisherData(publisherId: number): Promise<any>;
     static updateSspPublishersByZoneRemoteFeed(remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]>;
     static updateSspSiteDomainsByZoneRemoteFeed(remoteFeedId: number, zoneId: number, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]>;
     static updateSspApplicationsByZoneRemoteFeed(remoteFeedId: number, zoneId: number, listName: string, appsId: Set<string>, mode: Mode): Promise<[boolean, string]>;
