@@ -4,6 +4,11 @@ const rtbUpdateFile_1 = require("./rtbUpdateFile");
 const dist_1 = require("../dist");
 class RtbImplementation {
     // REPORTS:
+    static async getPublisherReport(from, to) {
+        let url = `${RtbImplementation.urlReport}/publisher`;
+        let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);
+        return reportList;
+    }
     static async getZonesReport(from, to) {
         let url = `${RtbImplementation.urlReport}/zone`;
         let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);
@@ -42,6 +47,11 @@ class RtbImplementation {
     }
     static async getAppBundlesReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit) {
         let url = `${RtbImplementation.urlReport}/remotefeed=${remoteFeedId}/zone=${zoneId}/app_bundle`;
+        let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url, limit);
+        return reportList;
+    }
+    static async getAppBundlesReportByPublisher(from, to, publisherId, limit) {
+        let url = `${RtbImplementation.urlReport}/publisher=${publisherId}/app_bundle`;
         let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
     }

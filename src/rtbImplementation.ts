@@ -7,6 +7,12 @@ export class RtbImplementation {
     static urlAction: string = `${process.env.DOMAIN}/api/ZoneRemoteFeed`;
 
     // REPORTS:
+    public static async getPublisherReport(from: Date, to: Date) {
+        let url = `${RtbImplementation.urlReport}/publisher`;
+        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
+        return reportList;
+    }
+
     public static async getZonesReport(from: Date, to: Date) {
         let url = `${RtbImplementation.urlReport}/zone`;
         let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
@@ -58,6 +64,11 @@ export class RtbImplementation {
         return reportList;
     }
 
+    public static async getAppBundlesReportByPublisher(from: Date, to: Date, publisherId: number, limit?: number) {
+        let url = `${RtbImplementation.urlReport}/publisher=${publisherId}/app_bundle`;
+        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
+        return reportList;
+    }
 
 
     //SiteDomains reports:

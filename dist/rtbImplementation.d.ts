@@ -2,6 +2,7 @@ import { Mode } from "../dist";
 export declare class RtbImplementation {
     static urlReport: string;
     static urlAction: string;
+    static getPublisherReport(from: Date, to: Date): Promise<any[]>;
     static getZonesReport(from: Date, to: Date): Promise<any[]>;
     static getZonesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number): Promise<any[]>;
     static getRemoteFeedsReport(from: Date, to: Date): Promise<any[]>;
@@ -10,6 +11,7 @@ export declare class RtbImplementation {
     static getAppBundlesReportByZone(from: Date, to: Date, zoneId: number, limit?: number): Promise<any[]>;
     static getAppBundlesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number): Promise<any[]>;
     static getAppBundlesReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number): Promise<any[]>;
+    static getAppBundlesReportByPublisher(from: Date, to: Date, publisherId: number, limit?: number): Promise<any[]>;
     static getSiteDomainsReport(from: Date, to: Date, limit?: number): Promise<any[]>;
     static getSiteDomainsReportByZone(from: Date, to: Date, zoneId: number, limit?: number): Promise<any[]>;
     static getSiteDomainsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number): Promise<any[]>;

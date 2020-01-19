@@ -138,11 +138,15 @@ export class RTB {
     public static async getZonesReport(from: Date, to: Date) { return await RtbImplementation.getZonesReport(from, to); }
     public static async getZonesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number) { return await RtbImplementation.getZonesReportByRemoteFeed(from, to, remoteFeedId); }
 
+    //Publusher reports
+    public static async getPublisherReport(from: Date, to: Date) { return await RtbImplementation.getPublisherReport(from, to); }
+
     //AppBundles reports:
     public static async getAppBundlesReport(from: Date, to: Date, limit?: number) { return await RtbImplementation.getAppBundlesReport(from, to, limit); }
     public static async getAppBundlesReportByZone(from: Date, to: Date, zoneId: number, limit?: number) { return await RtbImplementation.getAppBundlesReportByZone(from, to, zoneId, limit); }
     public static async getAppBundlesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number) { return await RtbImplementation.getAppBundlesReportByRemoteFeed(from, to, remoteFeedId, limit); }
     public static async getAppBundlesReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number) { return await RtbImplementation.getAppBundlesReportByZoneRemoteFeed(from, to, remoteFeedId, zoneId, limit); }
+    public static async getAppBundlesReportByPublisher(from: Date, to: Date, publisherId: number, limit?: number) { return await RtbImplementation.getAppBundlesReportByPublisher(from, to, publisherId, limit); }
 
     //SiteDomains reports:
     public static async getSiteDomainsReport(from: Date, to: Date, limit?: number) { return await RtbImplementation.getSiteDomainsReport(from, to, limit); }

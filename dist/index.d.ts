@@ -16,10 +16,12 @@ export declare class RTB {
     static getRemoteFeedsReportByZone(from: Date, to: Date, zoneId: number): Promise<any[]>;
     static getZonesReport(from: Date, to: Date): Promise<any[]>;
     static getZonesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number): Promise<any[]>;
+    static getPublisherReport(from: Date, to: Date): Promise<any[]>;
     static getAppBundlesReport(from: Date, to: Date, limit?: number): Promise<any[]>;
     static getAppBundlesReportByZone(from: Date, to: Date, zoneId: number, limit?: number): Promise<any[]>;
     static getAppBundlesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number): Promise<any[]>;
     static getAppBundlesReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number): Promise<any[]>;
+    static getAppBundlesReportByPublisher(from: Date, to: Date, publisherId: number, limit?: number): Promise<any[]>;
     static getSiteDomainsReport(from: Date, to: Date, limit?: number): Promise<any[]>;
     static getSiteDomainsReportByZone(from: Date, to: Date, zoneId: number, limit?: number): Promise<any[]>;
     static getSiteDomainsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number): Promise<any[]>;
