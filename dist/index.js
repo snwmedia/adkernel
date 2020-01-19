@@ -114,6 +114,7 @@ class RTB {
     //Zone reports
     static async getZonesReport(from, to) { return await rtbImplementation_1.RtbImplementation.getZonesReport(from, to); }
     static async getZonesReportByRemoteFeed(from, to, remoteFeedId) { return await rtbImplementation_1.RtbImplementation.getZonesReportByRemoteFeed(from, to, remoteFeedId); }
+    static async getZonesReportByPublisher(from, to, publisherID) { return await rtbImplementation_1.RtbImplementation.getZonesReportByPublisher(from, to, publisherID); }
     //Publusher reports
     static async getPublisherReport(from, to) { return await rtbImplementation_1.RtbImplementation.getPublisherReport(from, to); }
     //AppBundles reports:

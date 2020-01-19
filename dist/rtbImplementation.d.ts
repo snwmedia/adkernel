@@ -3,6 +3,7 @@ export declare class RtbImplementation {
     static urlReport: string;
     static urlAction: string;
     static getPublisherReport(from: Date, to: Date): Promise<any[]>;
+    static getZonesReportByPublisher(from: Date, to: Date, publisherID: number): Promise<any[]>;
     static getZonesReport(from: Date, to: Date): Promise<any[]>;
     static getZonesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number): Promise<any[]>;
     static getRemoteFeedsReport(from: Date, to: Date): Promise<any[]>;

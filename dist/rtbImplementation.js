@@ -9,6 +9,11 @@ class RtbImplementation {
         let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);
         return reportList;
     }
+    static async getZonesReportByPublisher(from, to, publisherID) {
+        let url = `${RtbImplementation.urlReport}/publisher=${publisherID}/zone`;
+        let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);
+        return reportList;
+    }
     static async getZonesReport(from, to) {
         let url = `${RtbImplementation.urlReport}/zone`;
         let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);

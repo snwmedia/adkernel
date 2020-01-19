@@ -137,6 +137,7 @@ export class RTB {
     //Zone reports
     public static async getZonesReport(from: Date, to: Date) { return await RtbImplementation.getZonesReport(from, to); }
     public static async getZonesReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number) { return await RtbImplementation.getZonesReportByRemoteFeed(from, to, remoteFeedId); }
+    public static async getZonesReportByPublisher(from: Date, to: Date, publisherID: number) { return await RtbImplementation.getZonesReportByPublisher(from, to, publisherID); }
 
     //Publusher reports
     public static async getPublisherReport(from: Date, to: Date) { return await RtbImplementation.getPublisherReport(from, to); }

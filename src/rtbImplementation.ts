@@ -13,6 +13,12 @@ export class RtbImplementation {
         return reportList;
     }
 
+    public static async getZonesReportByPublisher(from: Date, to: Date, publisherID: number) {
+        let url = `${RtbImplementation.urlReport}/publisher=${publisherID}/zone`;
+        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
+        return reportList;
+    }
+
     public static async getZonesReport(from: Date, to: Date) {
         let url = `${RtbImplementation.urlReport}/zone`;
         let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
