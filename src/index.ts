@@ -165,6 +165,7 @@ export class RTB {
     // GET DATA:
     public static async getZoneRemoteFeedData(remoteFeedId: number, zoneId: number) { return await RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
     public static async getZoneData(zoneId: number) { return await RtbImplementation.getZoneData(zoneId); }
+    public static async getZoneDataByName(zoneName: string) { return await RtbImplementation.getZoneDataByName(zoneName); }
     public static async getRemoteFeedData(remoteFeedId: number) { return await RtbImplementation.getRemoteFeedData(remoteFeedId); }
     public static async getPublisherData(publisherId: number) { return await RtbImplementation.getPublisherData(publisherId); }
 

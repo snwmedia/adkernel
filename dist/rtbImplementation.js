@@ -121,6 +121,18 @@ class RtbImplementation {
         }
         return null;
     }
+    static async getZoneDataByName(zoneName) {
+        let token = await dist_1.Common.getToken();
+        let url = `${process.env.DOMAIN}/api/CpmRtbZone/?token=${token}&filters=search:${zoneName}`;
+        let remotePublisherFeed = await dist_1.Common.getData(url);
+        for (let zone in remotePublisherFeed) {
+            let zoneObject = remotePublisherFeed[zone];
+            if (zoneObject.name === zoneName) {
+                return remotePublisherFeed;
+            }
+        }
+        return null;
+    }
     static async createZone(zone) {
         let token = await dist_1.Common.getToken();
         let url = `${process.env.DOMAIN}/api/CpmRtbZone/?token=${token}`;

@@ -150,6 +150,18 @@ export class RtbImplementation {
         return null;
     }
 
+    public static async getZoneDataByName(zoneName: string) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/CpmRtbZone/?token=${token}&filters=search:${zoneName}`;
+        let remotePublisherFeed: any[] = await Common.getData(url);
+        for (let zone in remotePublisherFeed) {
+            let zoneObject = remotePublisherFeed[zone];
+            if (zoneObject.name === zoneName) {
+                return remotePublisherFeed;
+            }
+        }
+        return null;
+    }
 
     public static async createZone(zone: any): Promise<[boolean, string]> {
         let token = await Common.getToken();

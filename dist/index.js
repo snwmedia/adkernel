@@ -136,6 +136,7 @@ class RTB {
     // GET DATA:
     static async getZoneRemoteFeedData(remoteFeedId, zoneId) { return await rtbImplementation_1.RtbImplementation.getZoneRemoteFeedData(remoteFeedId, zoneId); }
     static async getZoneData(zoneId) { return await rtbImplementation_1.RtbImplementation.getZoneData(zoneId); }
+    static async getZoneDataByName(zoneName) { return await rtbImplementation_1.RtbImplementation.getZoneDataByName(zoneName); }
     static async getRemoteFeedData(remoteFeedId) { return await rtbImplementation_1.RtbImplementation.getRemoteFeedData(remoteFeedId); }
     static async getPublisherData(publisherId) { return await rtbImplementation_1.RtbImplementation.getPublisherData(publisherId); }
     // UPDATE DATA:

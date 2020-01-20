@@ -33,6 +33,7 @@ export declare class RTB {
     static getSspPublishersReportByZoneRemoteFeed(from: Date, to: Date, remoteFeedId: number, zoneId: number, limit?: number): Promise<any[]>;
     static getZoneRemoteFeedData(remoteFeedId: number, zoneId: number): Promise<any[]>;
     static getZoneData(zoneId: number): Promise<any[]>;
+    static getZoneDataByName(zoneName: string): Promise<any[]>;
     static getRemoteFeedData(remoteFeedId: number): Promise<any[]>;
     static getPublisherData(publisherId: number): Promise<any>;
     static updateSspPublishersByZoneRemoteFeed(remoteFeedId: number, zoneId: number, publisherIdList: Set<string>, publisherIdListMode: Mode): Promise<[boolean, string]>;

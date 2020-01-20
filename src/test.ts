@@ -9,7 +9,7 @@ function test() {
     d.setDate(d.getDate() - 1);
 
     RTB.getZonesReport(d, d);
-    // RTB.getPublisherData(34653)
+    // RTB.getZoneDataByName( "GothamAds (RTB)_app_WL_2020-01-20_test")
     // let bundlesSet: Set<string> = new Set(['com.apalon.myclockfree', "com.qcdroid.android.qcdroid", "com.pe.fakegps"]);
     // RTB.updateAppList('avt_auto', bundlesSet);
     // let url = `${process.env.DOMAIN}/api/ZoneRemoteFeed/333333?token=96DBFcHq9BnOLDf30gip`;
