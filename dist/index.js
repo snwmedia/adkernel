@@ -48,7 +48,7 @@ class Common {
     }
     //recursion
     static async getReportListByRecursion(url, token, timeRange, startFrom, reportList, limit) {
-        let endTo = startFrom + 500;
+        let endTo = startFrom + 1000;
         if (limit && limit < endTo) {
             endTo = limit;
         }
