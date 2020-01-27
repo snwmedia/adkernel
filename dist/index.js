@@ -167,8 +167,10 @@ class XML {
     static async getSubIdsReportByRemotePublisherFeed(from, to, remoteFeedId, pubFeedId, limit) { return await xmlImplementation_1.XmlImplementation.getSubIdsReportByRemotePublisherFeed(from, to, remoteFeedId, pubFeedId, limit); }
     // GET DATA:
     static async getRemotePublisherFeedData(remoteFeedId, pubFeedId) { return await xmlImplementation_1.XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
+    static async getRemoteFeedData(remoteFeedId) { return await xmlImplementation_1.XmlImplementation.getRemoteFeedData(remoteFeedId); }
     // UPDATE DATA:
     static async updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode) { return await xmlImplementation_1.XmlImplementation.updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode); }
+    static async disabledOrEnabledRemoteFeed(remoteFeedId, is_active) { return await xmlImplementation_1.XmlImplementation.disabledOrEnabledRemoteFeed(remoteFeedId, is_active); }
 }
 exports.XML = XML;
 class Token {

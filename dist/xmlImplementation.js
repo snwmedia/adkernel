@@ -51,6 +51,18 @@ class XmlImplementation {
         let remotePublisherFeed = await dist_1.Common.getData(url);
         return remotePublisherFeed;
     }
+    static async getRemoteFeedData(remoteFeedId) {
+        let token = await dist_1.Common.getToken();
+        let url = `${process.env.DOMAIN}/api/RemoteFeed/?token=${token}&filters=search:${remoteFeedId}`;
+        let remotePublisherFeed = await dist_1.Common.getData(url);
+        for (let remoteFeed in remotePublisherFeed) {
+            let remoteFeedObject = remotePublisherFeed[remoteFeed];
+            if (remoteFeedObject.id === remoteFeedId) {
+                return remotePublisherFeed;
+            }
+        }
+        return null;
+    }
     // UPDATE DATA:
     static async updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode) {
         if (!subIdList || !subIdList.size) {
@@ -77,6 +89,26 @@ class XmlImplementation {
         }
         console.error('Failed updateSubIdsByRemotePublisherFeed', `remoteFeedId ${remoteFeedId}`, `pubFeedId ${pubFeedId}`);
         return [false, `ERROR updateSubIdsByRemotePublisherFeed, remoteFeedId ${remoteFeedId}, pubFeedId ${pubFeedId}`];
+    }
+    static async disabledOrEnabledRemoteFeed(remoteFeedId, is_active) {
+        let token = await dist_1.Common.getToken();
+        let remoteFeed = await XmlImplementation.getRemoteFeedData(remoteFeedId);
+        if (remoteFeed) {
+            let remoteFeedData = Object.values(remoteFeed)[0];
+            let json = {
+                id: remoteFeedId,
+                name: remoteFeedData.name,
+                is_active: is_active,
+                ad_provider_id: remoteFeedData.ad_provider_id
+            };
+            let url = `${process.env.DOMAIN}/api/RemoteFeed/${remoteFeedId}?token=${token}`;
+            let status = await dist_1.Common.updateData(url, json);
+            if (status && status === dist_1.Common.OK) {
+                return [true, status];
+            }
+        }
+        console.error('Failed disabledOrEnabledRemoteFeed', `remoteFeedId ${remoteFeedId}`);
+        return [false, `ERROR disabledOrEnabledRemoteFeed, remoteFeedId ${remoteFeedId}`];
     }
 }
 exports.XmlImplementation = XmlImplementation;

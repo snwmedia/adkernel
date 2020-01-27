@@ -206,9 +206,12 @@ export class XML {
 
     // GET DATA:
     public static async getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number) { return await XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
+    public static async getRemoteFeedData(remoteFeedId: number) { return await XmlImplementation.getRemoteFeedData(remoteFeedId); }
 
     // UPDATE DATA:
     public static async updateSubIdsByRemotePublisherFeed(remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]> { return await XmlImplementation.updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode); }
+    public static async disabledOrEnabledRemoteFeed(remoteFeedId: number, is_active: boolean): Promise<[boolean, string]> { return await XmlImplementation.disabledOrEnabledRemoteFeed(remoteFeedId, is_active); }
+
 }
 
 

@@ -10,7 +10,8 @@ function test() {
     let from = new Date();
     from.setDate(from.getDate() - 15);
 
-    // RTB.getZonesReport(d, d);
+    // XML.getRemoteFeedData(217419);
+    // XML.disabledOrEnabledRemoteFeed(217419, true);
     // RTB.getAppBundlesReportByPublisher(from, to, 40542)
 
     // RTB.getZoneDataByName( "GothamAds (RTB)_app_WL_2020-01-20_test")

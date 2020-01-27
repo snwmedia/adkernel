@@ -69,6 +69,21 @@ export class XmlImplementation {
     }
 
 
+    public static async getRemoteFeedData(remoteFeedId: number) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/RemoteFeed/?token=${token}&filters=search:${remoteFeedId}`;
+        let remotePublisherFeed: any[] = await Common.getData(url);
+        for (let remoteFeed in remotePublisherFeed) {
+            let remoteFeedObject = remotePublisherFeed[remoteFeed];
+            if (remoteFeedObject.id === remoteFeedId) {
+                return remotePublisherFeed;
+            }
+        }
+        return null;
+    }
+
+
+
     // UPDATE DATA:
     public static async updateSubIdsByRemotePublisherFeed(remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]> {
         if (!subIdList || !subIdList.size) { return [false, `The list "subIdList" is empty!`]; }
@@ -97,5 +112,28 @@ export class XmlImplementation {
         console.error('Failed updateSubIdsByRemotePublisherFeed', `remoteFeedId ${remoteFeedId}`, `pubFeedId ${pubFeedId}`)
         return [false, `ERROR updateSubIdsByRemotePublisherFeed, remoteFeedId ${remoteFeedId}, pubFeedId ${pubFeedId}`]
 
+    }
+
+    public static async disabledOrEnabledRemoteFeed(remoteFeedId: number, is_active: boolean): Promise<[boolean, string]> {
+        let token = await Common.getToken();
+
+        let remoteFeed = await XmlImplementation.getRemoteFeedData(remoteFeedId);
+        if (remoteFeed) {
+            let remoteFeedData: any = Object.values(remoteFeed)[0];
+
+            let json: any = {
+                id: remoteFeedId,
+                name: remoteFeedData.name,
+                is_active: is_active,
+                ad_provider_id: remoteFeedData.ad_provider_id
+            };
+            let url = `${process.env.DOMAIN}/api/RemoteFeed/${remoteFeedId}?token=${token}`;
+            let status: string = await Common.updateData(url, json);
+            if (status && status === Common.OK) {
+                return [true, status];
+            }
+        }
+        console.error('Failed disabledOrEnabledRemoteFeed', `remoteFeedId ${remoteFeedId}`)
+        return [false, `ERROR disabledOrEnabledRemoteFeed, remoteFeedId ${remoteFeedId}`]
     }
 }

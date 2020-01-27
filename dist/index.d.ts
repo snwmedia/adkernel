@@ -57,7 +57,9 @@ export declare class XML {
     static getSubIdsReportByPublisherFeed(from: Date, to: Date, pubFeedId: number, limit?: number): Promise<any[]>;
     static getSubIdsReportByRemotePublisherFeed(from: Date, to: Date, remoteFeedId: number, pubFeedId: number, limit?: number): Promise<any[]>;
     static getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number): Promise<any[]>;
+    static getRemoteFeedData(remoteFeedId: number): Promise<any[]>;
     static updateSubIdsByRemotePublisherFeed(remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]>;
+    static disabledOrEnabledRemoteFeed(remoteFeedId: number, is_active: boolean): Promise<[boolean, string]>;
 }
 export declare class Token {
     token: string;
