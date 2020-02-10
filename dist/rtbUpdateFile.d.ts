@@ -10,4 +10,5 @@ export declare class RtbUpdateFile {
     static createReferrerList(token: string, listName: string, fileId: string, jsonName: string, apiType: string): Promise<any>;
     static updateZoneRemoteFeed(token: string, ZoneRemoteFeedId: number, json: any): Promise<[boolean, string]>;
     static getAppListByNames(token: string, apiType: string, appListName: string): Promise<any>;
+    static deleteReferrerList(token: string, apiType: string, oldList: any): Promise<any>;
 }

@@ -42,6 +42,11 @@ export class RtbUpdateFile {
             if (newFile) {
                 let newFileId = newFile.created;
                 let newList = await RtbUpdateFile.createReferrerList(token, listName, newFileId, jsonFileType.jsonName, jsonFileType.apiType);
+                if (!newList) {//if list exist but unassign
+                    let oldList = await RtbUpdateFile.getAppListByNames(token, jsonFileType.apiType, listName);
+                    await RtbUpdateFile.deleteReferrerList(token, jsonFileType.apiType, oldList);
+                    newList = await RtbUpdateFile.createReferrerList(token, listName, newFileId, jsonFileType.jsonName, jsonFileType.apiType);
+                }
                 if (newList) {
                     let newListId = newList.created;
                     listExist.push(newListId);
@@ -175,6 +180,11 @@ export class RtbUpdateFile {
         }
     }
 
+
+
+
+
+
     static async updateZoneRemoteFeed(token: string, ZoneRemoteFeedId: number, json: any): Promise<[boolean, string]> {
 
         let result: any = await request({
@@ -212,6 +222,23 @@ export class RtbUpdateFile {
         } else {
             console.error('Failed getAppListNames ', result);
             return null;
+        }
+    }
+
+    static async deleteReferrerList(token: string, apiType: string, oldList: any): Promise<any> {
+        if (oldList?.id) {
+            let result: any = await request({
+                method: 'DELETE',
+                url: `${process.env.DOMAIN}/api/${apiType}/${oldList.id}?token=${token}`,
+                headers: {
+                    'content-type': 'application/json',
+                },
+            });
+            if (result) {
+                return result['response'];
+            } else {
+                console.error('Failed createReferrerList', result)
+            }
         }
     }
 

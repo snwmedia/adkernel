@@ -3,6 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 test();
 // RTB.getAllAppBundlesByZone(d, d, 84363, 1030);
 // RTB.getAllAppBundles(d, d, 1030);
+// let sspsId: Set<string> = new Set();
+// sspsId.add('com.zplay.idlelandmarks');
+// sspsId.add('pl.org.chmiel.harmonogram4');
+// RtbImplementation.updateSspApplicationsByZoneRemoteFeed(254877, 61021, 'zoneRemoteFeedId 31038411 Ssp Applications BL', sspsId, Mode.BLACKLIST);
 function test() {
     let to = new Date();
     to.setDate(to.getDate() - 2);

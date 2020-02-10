@@ -35,6 +35,11 @@ class RtbUpdateFile {
             if (newFile) {
                 let newFileId = newFile.created;
                 let newList = await RtbUpdateFile.createReferrerList(token, listName, newFileId, jsonFileType.jsonName, jsonFileType.apiType);
+                if (!newList) { //if list exist but unassign
+                    let oldList = await RtbUpdateFile.getAppListByNames(token, jsonFileType.apiType, listName);
+                    await RtbUpdateFile.deleteReferrerList(token, jsonFileType.apiType, oldList);
+                    newList = await RtbUpdateFile.createReferrerList(token, listName, newFileId, jsonFileType.jsonName, jsonFileType.apiType);
+                }
                 if (newList) {
                     let newListId = newList.created;
                     listExist.push(newListId);
@@ -194,6 +199,24 @@ class RtbUpdateFile {
         else {
             console.error('Failed getAppListNames ', result);
             return null;
+        }
+    }
+    static async deleteReferrerList(token, apiType, oldList) {
+        var _a;
+        if ((_a = oldList) === null || _a === void 0 ? void 0 : _a.id) {
+            let result = await request({
+                method: 'DELETE',
+                url: `${process.env.DOMAIN}/api/${apiType}/${oldList.id}?token=${token}`,
+                headers: {
+                    'content-type': 'application/json',
+                },
+            });
+            if (result) {
+                return result['response'];
+            }
+            else {
+                console.error('Failed createReferrerList', result);
+            }
         }
     }
 }
