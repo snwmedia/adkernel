@@ -1,11 +1,5 @@
 # adkernel
 
-login:
-- npm login --registry=https://npm.pkg.github.com --scope=@snwmedia:
-- userName - {odedUser}
-- password - {odedPassword}
-- userEmail - {odedEmail}
-
 update/publish:
 - npm publish
 
