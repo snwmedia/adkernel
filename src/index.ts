@@ -197,9 +197,11 @@ export class XML {
     //PubFeeds report
     public static async getPubFeedsReport(from: Date, to: Date) { return await XmlImplementation.getPubFeedsReport(from, to); }
     public static async getPubFeedsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number) { return await XmlImplementation.getPubFeedsReportByRemoteFeed(from, to, remoteFeedId); }
+    public static async getPubFeedsReportByPublisher(from: Date, to: Date, publisherID: number) { return await XmlImplementation.getPubFeedsReportByPublisher(from, to, publisherID); }
 
-     //Publusher reports
-     public static async getPublisherReport(from: Date, to: Date) { return await XmlImplementation.getPublisherReport(from, to); }
+
+    //Publusher reports
+    public static async getPublisherReport(from: Date, to: Date) { return await XmlImplementation.getPublisherReport(from, to); }
 
     //SubIdS reports:
     public static async getSubIdsReport(from: Date, to: Date, limit?: number) { return await XmlImplementation.getSubIdsReport(from, to, limit); }

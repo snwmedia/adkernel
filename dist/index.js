@@ -160,6 +160,7 @@ class XML {
     //PubFeeds report
     static async getPubFeedsReport(from, to) { return await xmlImplementation_1.XmlImplementation.getPubFeedsReport(from, to); }
     static async getPubFeedsReportByRemoteFeed(from, to, remoteFeedId) { return await xmlImplementation_1.XmlImplementation.getPubFeedsReportByRemoteFeed(from, to, remoteFeedId); }
+    static async getPubFeedsReportByPublisher(from, to, publisherID) { return await xmlImplementation_1.XmlImplementation.getPubFeedsReportByPublisher(from, to, publisherID); }
     //Publusher reports
     static async getPublisherReport(from, to) { return await xmlImplementation_1.XmlImplementation.getPublisherReport(from, to); }
     //SubIdS reports:

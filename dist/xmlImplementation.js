@@ -23,6 +23,11 @@ class XmlImplementation {
         let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);
         return reportList;
     }
+    static async getPubFeedsReportByPublisher(from, to, publisherID) {
+        let url = `${XmlImplementation.urlReport}/publisher=${publisherID}/feed`;
+        let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);
+        return reportList;
+    }
     static async getPubFeedsReport(from, to) {
         let url = `${XmlImplementation.urlReport}/feed`;
         let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);

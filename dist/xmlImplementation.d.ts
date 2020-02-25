@@ -6,6 +6,7 @@ export declare class XmlImplementation {
     static getRemoteFeedsReportByPubFeed(from: Date, to: Date, pubFeedId: number): Promise<any[]>;
     static getRemoteFeedsReport(from: Date, to: Date): Promise<any[]>;
     static getPubFeedsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number): Promise<any[]>;
+    static getPubFeedsReportByPublisher(from: Date, to: Date, publisherID: number): Promise<any[]>;
     static getPubFeedsReport(from: Date, to: Date): Promise<any[]>;
     static getSubIdsReport(from: Date, to: Date, limit?: number): Promise<any[]>;
     static getSubIdsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number): Promise<any[]>;
