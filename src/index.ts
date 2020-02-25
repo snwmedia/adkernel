@@ -198,6 +198,9 @@ export class XML {
     public static async getPubFeedsReport(from: Date, to: Date) { return await XmlImplementation.getPubFeedsReport(from, to); }
     public static async getPubFeedsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number) { return await XmlImplementation.getPubFeedsReportByRemoteFeed(from, to, remoteFeedId); }
 
+     //Publusher reports
+     public static async getPublisherReport(from: Date, to: Date) { return await XmlImplementation.getPublisherReport(from, to); }
+
     //SubIdS reports:
     public static async getSubIdsReport(from: Date, to: Date, limit?: number) { return await XmlImplementation.getSubIdsReport(from, to, limit); }
     public static async getSubIdsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number) { return await XmlImplementation.getSubIdsReportByRemoteFeed(from, to, remoteFeedId, limit); }

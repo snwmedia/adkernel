@@ -3,6 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dist_1 = require("../dist");
 class XmlImplementation {
     // REPORTS:
+    static async getPublisherReport(from, to) {
+        let url = `${XmlImplementation.urlReport}/publisher`;
+        let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);
+        return reportList;
+    }
     static async getRemoteFeedsReportByPubFeed(from, to, pubFeedId) {
         let url = `${XmlImplementation.urlReport}/feed=${pubFeedId}/remotefeed`;
         let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);

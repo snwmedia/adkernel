@@ -7,6 +7,11 @@ export class XmlImplementation {
 
 
     // REPORTS:
+    public static async getPublisherReport(from: Date, to: Date) {
+        let url = `${XmlImplementation.urlReport}/publisher`;
+        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
+        return reportList;
+    }
 
     public static async getRemoteFeedsReportByPubFeed(from: Date, to: Date, pubFeedId: number) {
         let url = `${XmlImplementation.urlReport}/feed=${pubFeedId}/remotefeed`;

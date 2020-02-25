@@ -2,6 +2,7 @@ import { Mode } from "../dist";
 export declare class XmlImplementation {
     static urlReport: string;
     static urlAction: string;
+    static getPublisherReport(from: Date, to: Date): Promise<any[]>;
     static getRemoteFeedsReportByPubFeed(from: Date, to: Date, pubFeedId: number): Promise<any[]>;
     static getRemoteFeedsReport(from: Date, to: Date): Promise<any[]>;
     static getPubFeedsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number): Promise<any[]>;
