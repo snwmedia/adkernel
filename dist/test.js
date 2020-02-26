@@ -13,7 +13,8 @@ function test() {
     to.setDate(to.getDate() - 2);
     let from = new Date();
     from.setDate(from.getDate() - 15);
-    dist_1.XML.getPubFeedsReportByPublisher(from, to, 35152);
+    dist_1.XML.getSubIdsByOfferData(1867035);
+    // XML.getPubFeedsReportByPublisher(from, to,35152)
     // XML.getRemoteFeedData(217419);
     // XML.disabledOrEnabledRemoteFeed(217419, true);
     // RTB.getAppBundlesReportByPublisher(from, to, 40542)

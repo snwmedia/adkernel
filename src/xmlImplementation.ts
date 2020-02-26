@@ -37,6 +37,11 @@ export class XmlImplementation {
         return reportList;
     }
 
+    public static async getPubFeedsReportByCampaign(from: Date, to: Date, campaignId: number) {
+        let url = `${process.env.DOMAIN}/api/AdvertiserReports/campaign=${campaignId}/feed`;
+        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url);
+        return reportList;
+    }
 
     public static async getPubFeedsReport(from: Date, to: Date) {
         let url = `${XmlImplementation.urlReport}/feed`;
@@ -72,6 +77,7 @@ export class XmlImplementation {
 
 
 
+
     // GET DATA:
     public static async getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number) {
         let token = await Common.getToken();
@@ -93,6 +99,50 @@ export class XmlImplementation {
         }
         return null;
     }
+
+
+    public static async getCampaignDAta(campaignId: number) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/Campaign/?token=${token}&filters=search:${campaignId}`;
+        let campaignData: any = await Common.getData(url);
+        for (let campaign in campaignData) {
+            let campaignObject = campaignData[campaign];
+            if (campaignObject.id === campaignId) {
+                return campaignObject;
+            }
+        }
+        return null;
+    }
+
+
+    public static async getOffersByCampaign(campaignId: number) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/OfferNew/?token=${token}&filters=campaign:${campaignId};is_active:true`;
+        let offerData: any = await Common.getData(url);
+        let offers: any[] = [];
+        for (let offer in offerData) {
+            offers.push(offerData[offer])
+        }
+        return offers;
+    }
+
+
+    public static async getSubIdsByOfferData(offerId: number) {
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/OfferNew/PublisherSubIds/${offerId}?token=${token}`;
+        let offerData: any = await Common.getData(url);
+        let allSubIds: any[] = [];
+        for (let offer in offerData) {
+            let subIds = offerData[offer];
+            for (let subId in subIds) {
+                allSubIds.push(subIds[subId])
+            }
+        }
+        return allSubIds;
+    }
+
+
+
 
 
 
@@ -147,5 +197,30 @@ export class XmlImplementation {
         }
         console.error('Failed disabledOrEnabledRemoteFeed', `remoteFeedId ${remoteFeedId}`)
         return [false, `ERROR disabledOrEnabledRemoteFeed, remoteFeedId ${remoteFeedId}`]
+    }
+
+
+    public static async updateOfferBids(offerId: number, pubFeedId: number, subIdsNameAndBid: Map<string, number>): Promise<[boolean, string]> {
+        let create: any[] = [];
+        for (let [subid, bid] of subIdsNameAndBid) {
+            if (subid !== '<blank>') {
+                let subIdToUpdate: any = { "pub_feed_id": pubFeedId, "subid": subid, "enabled": true, bid_adjustment: bid }
+                create.push(subIdToUpdate);
+            }
+        }
+
+        let json: any = {};
+        json.mode = "UPDATE";
+        json.create = create;
+
+        let token = await Common.getToken();
+        let url = `${process.env.DOMAIN}/api/OfferNew/PublisherSubIds/${offerId}?token=${token}`;
+        let status: string = await Common.updateData(url, json);
+        if (status && status === Common.OK) {
+            return [true, status];
+        }
+        console.error('Failed updateOfferBids', `offerId ${offerId}`, `pubFeedId ${pubFeedId}`)
+        return [false, `ERROR updateOfferBids, offerId ${offerId}, pubFeedId ${pubFeedId}`]
+
     }
 }

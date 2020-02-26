@@ -28,6 +28,11 @@ class XmlImplementation {
         let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);
         return reportList;
     }
+    static async getPubFeedsReportByCampaign(from, to, campaignId) {
+        let url = `${process.env.DOMAIN}/api/AdvertiserReports/campaign=${campaignId}/feed`;
+        let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);
+        return reportList;
+    }
     static async getPubFeedsReport(from, to) {
         let url = `${XmlImplementation.urlReport}/feed`;
         let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url);
@@ -72,6 +77,41 @@ class XmlImplementation {
             }
         }
         return null;
+    }
+    static async getCampaignDAta(campaignId) {
+        let token = await dist_1.Common.getToken();
+        let url = `${process.env.DOMAIN}/api/Campaign/?token=${token}&filters=search:${campaignId}`;
+        let campaignData = await dist_1.Common.getData(url);
+        for (let campaign in campaignData) {
+            let campaignObject = campaignData[campaign];
+            if (campaignObject.id === campaignId) {
+                return campaignObject;
+            }
+        }
+        return null;
+    }
+    static async getOffersByCampaign(campaignId) {
+        let token = await dist_1.Common.getToken();
+        let url = `${process.env.DOMAIN}/api/OfferNew/?token=${token}&filters=campaign:${campaignId};is_active:true`;
+        let offerData = await dist_1.Common.getData(url);
+        let offers = [];
+        for (let offer in offerData) {
+            offers.push(offerData[offer]);
+        }
+        return offers;
+    }
+    static async getSubIdsByOfferData(offerId) {
+        let token = await dist_1.Common.getToken();
+        let url = `${process.env.DOMAIN}/api/OfferNew/PublisherSubIds/${offerId}?token=${token}`;
+        let offerData = await dist_1.Common.getData(url);
+        let allSubIds = [];
+        for (let offer in offerData) {
+            let subIds = offerData[offer];
+            for (let subId in subIds) {
+                allSubIds.push(subIds[subId]);
+            }
+        }
+        return allSubIds;
     }
     // UPDATE DATA:
     static async updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode) {
@@ -119,6 +159,26 @@ class XmlImplementation {
         }
         console.error('Failed disabledOrEnabledRemoteFeed', `remoteFeedId ${remoteFeedId}`);
         return [false, `ERROR disabledOrEnabledRemoteFeed, remoteFeedId ${remoteFeedId}`];
+    }
+    static async updateOfferBids(offerId, pubFeedId, subIdsNameAndBid) {
+        let create = [];
+        for (let [subid, bid] of subIdsNameAndBid) {
+            if (subid !== '<blank>') {
+                let subIdToUpdate = { "pub_feed_id": pubFeedId, "subid": subid, "enabled": true, bid_adjustment: bid };
+                create.push(subIdToUpdate);
+            }
+        }
+        let json = {};
+        json.mode = "UPDATE";
+        json.create = create;
+        let token = await dist_1.Common.getToken();
+        let url = `${process.env.DOMAIN}/api/OfferNew/PublisherSubIds/${offerId}?token=${token}`;
+        let status = await dist_1.Common.updateData(url, json);
+        if (status && status === dist_1.Common.OK) {
+            return [true, status];
+        }
+        console.error('Failed updateOfferBids', `offerId ${offerId}`, `pubFeedId ${pubFeedId}`);
+        return [false, `ERROR updateOfferBids, offerId ${offerId}, pubFeedId ${pubFeedId}`];
     }
 }
 exports.XmlImplementation = XmlImplementation;

@@ -161,6 +161,7 @@ class XML {
     static async getPubFeedsReport(from, to) { return await xmlImplementation_1.XmlImplementation.getPubFeedsReport(from, to); }
     static async getPubFeedsReportByRemoteFeed(from, to, remoteFeedId) { return await xmlImplementation_1.XmlImplementation.getPubFeedsReportByRemoteFeed(from, to, remoteFeedId); }
     static async getPubFeedsReportByPublisher(from, to, publisherID) { return await xmlImplementation_1.XmlImplementation.getPubFeedsReportByPublisher(from, to, publisherID); }
+    static async getPubFeedsReportByCampaign(from, to, campaignId) { return await xmlImplementation_1.XmlImplementation.getPubFeedsReportByCampaign(from, to, campaignId); }
     //Publusher reports
     static async getPublisherReport(from, to) { return await xmlImplementation_1.XmlImplementation.getPublisherReport(from, to); }
     //SubIdS reports:
@@ -171,9 +172,13 @@ class XML {
     // GET DATA:
     static async getRemotePublisherFeedData(remoteFeedId, pubFeedId) { return await xmlImplementation_1.XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
     static async getRemoteFeedData(remoteFeedId) { return await xmlImplementation_1.XmlImplementation.getRemoteFeedData(remoteFeedId); }
+    static async getCampaignDAta(campaignId) { return await xmlImplementation_1.XmlImplementation.getCampaignDAta(campaignId); }
+    static async getOffersByCampaign(campaignId) { return await xmlImplementation_1.XmlImplementation.getOffersByCampaign(campaignId); }
+    static async getSubIdsByOfferData(offerId) { return await xmlImplementation_1.XmlImplementation.getSubIdsByOfferData(offerId); }
     // UPDATE DATA:
     static async updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode) { return await xmlImplementation_1.XmlImplementation.updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode); }
     static async disabledOrEnabledRemoteFeed(remoteFeedId, is_active) { return await xmlImplementation_1.XmlImplementation.disabledOrEnabledRemoteFeed(remoteFeedId, is_active); }
+    static async updateOfferBids(offerId, pubFeedId, subIdsNameAndBid) { return await xmlImplementation_1.XmlImplementation.updateOfferBids(offerId, pubFeedId, subIdsNameAndBid); }
 }
 exports.XML = XML;
 class Token {

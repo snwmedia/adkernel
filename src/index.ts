@@ -198,7 +198,7 @@ export class XML {
     public static async getPubFeedsReport(from: Date, to: Date) { return await XmlImplementation.getPubFeedsReport(from, to); }
     public static async getPubFeedsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number) { return await XmlImplementation.getPubFeedsReportByRemoteFeed(from, to, remoteFeedId); }
     public static async getPubFeedsReportByPublisher(from: Date, to: Date, publisherID: number) { return await XmlImplementation.getPubFeedsReportByPublisher(from, to, publisherID); }
-
+    public static async getPubFeedsReportByCampaign(from: Date, to: Date, campaignId: number) { return await XmlImplementation.getPubFeedsReportByCampaign(from, to, campaignId); }
 
     //Publusher reports
     public static async getPublisherReport(from: Date, to: Date) { return await XmlImplementation.getPublisherReport(from, to); }
@@ -212,10 +212,14 @@ export class XML {
     // GET DATA:
     public static async getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number) { return await XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
     public static async getRemoteFeedData(remoteFeedId: number) { return await XmlImplementation.getRemoteFeedData(remoteFeedId); }
+    public static async getCampaignDAta(campaignId: number) { return await XmlImplementation.getCampaignDAta(campaignId); }
+    public static async getOffersByCampaign(campaignId: number) { return await XmlImplementation.getOffersByCampaign(campaignId); }
+    public static async getSubIdsByOfferData(offerId: number) { return await XmlImplementation.getSubIdsByOfferData(offerId); }
 
     // UPDATE DATA:
     public static async updateSubIdsByRemotePublisherFeed(remoteFeedId: number, pubFeedId: number, subIdList: Set<string>, subIdListMode: Mode): Promise<[boolean, string]> { return await XmlImplementation.updateSubIdsByRemotePublisherFeed(remoteFeedId, pubFeedId, subIdList, subIdListMode); }
     public static async disabledOrEnabledRemoteFeed(remoteFeedId: number, is_active: boolean): Promise<[boolean, string]> { return await XmlImplementation.disabledOrEnabledRemoteFeed(remoteFeedId, is_active); }
+    public static async updateOfferBids(offerId: number, pubFeedId: number, subIdsNameAndBid: Map<string, number>): Promise<[boolean, string]> { return await XmlImplementation.updateOfferBids(offerId, pubFeedId, subIdsNameAndBid); }
 
 }
 
