@@ -75,6 +75,11 @@ export class XmlImplementation {
         return reportList;
     }
 
+    public static async getSubIdsReportByCampaignPublisherFeed(from: Date, to: Date, campaignId: number, pubFeedId: number, limit?: number) {
+        let url = `${process.env.DOMAIN}/api/AdvertiserReports/campaign=${campaignId}/feed=${pubFeedId}/pubsubid`;
+        let reportList: any[] = await Common.PrepareAPICallForReports(from, to, url, limit);
+        return reportList;
+    }
 
 
 

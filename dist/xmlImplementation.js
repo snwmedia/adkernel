@@ -59,6 +59,11 @@ class XmlImplementation {
         let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url, limit);
         return reportList;
     }
+    static async getSubIdsReportByCampaignPublisherFeed(from, to, campaignId, pubFeedId, limit) {
+        let url = `${process.env.DOMAIN}/api/AdvertiserReports/campaign=${campaignId}/feed=${pubFeedId}/pubsubid`;
+        let reportList = await dist_1.Common.PrepareAPICallForReports(from, to, url, limit);
+        return reportList;
+    }
     // GET DATA:
     static async getRemotePublisherFeedData(remoteFeedId, pubFeedId) {
         let token = await dist_1.Common.getToken();

@@ -61,6 +61,7 @@ export declare class XML {
     static getSubIdsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number): Promise<any[]>;
     static getSubIdsReportByPublisherFeed(from: Date, to: Date, pubFeedId: number, limit?: number): Promise<any[]>;
     static getSubIdsReportByRemotePublisherFeed(from: Date, to: Date, remoteFeedId: number, pubFeedId: number, limit?: number): Promise<any[]>;
+    static getSubIdsReportByCampaignPublisherFeed(from: Date, to: Date, campaignId: number, pubFeedId: number, limit?: number): Promise<any[]>;
     static getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number): Promise<any[]>;
     static getRemoteFeedData(remoteFeedId: number): Promise<any[]>;
     static getCampaignData(campaignId: number): Promise<any[]>;

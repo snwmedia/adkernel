@@ -208,6 +208,7 @@ export class XML {
     public static async getSubIdsReportByRemoteFeed(from: Date, to: Date, remoteFeedId: number, limit?: number) { return await XmlImplementation.getSubIdsReportByRemoteFeed(from, to, remoteFeedId, limit); }
     public static async getSubIdsReportByPublisherFeed(from: Date, to: Date, pubFeedId: number, limit?: number) { return await XmlImplementation.getSubIdsReportByPublisherFeed(from, to, pubFeedId, limit); }
     public static async getSubIdsReportByRemotePublisherFeed(from: Date, to: Date, remoteFeedId: number, pubFeedId: number, limit?: number) { return await XmlImplementation.getSubIdsReportByRemotePublisherFeed(from, to, remoteFeedId, pubFeedId, limit); }
+    public static async getSubIdsReportByCampaignPublisherFeed(from: Date, to: Date, campaignId: number, pubFeedId: number, limit?: number) { return await XmlImplementation.getSubIdsReportByCampaignPublisherFeed(from, to, campaignId, pubFeedId, limit); }
 
     // GET DATA:
     public static async getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number) { return await XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
