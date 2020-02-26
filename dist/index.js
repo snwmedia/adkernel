@@ -172,7 +172,7 @@ class XML {
     // GET DATA:
     static async getRemotePublisherFeedData(remoteFeedId, pubFeedId) { return await xmlImplementation_1.XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
     static async getRemoteFeedData(remoteFeedId) { return await xmlImplementation_1.XmlImplementation.getRemoteFeedData(remoteFeedId); }
-    static async getCampaignDAta(campaignId) { return await xmlImplementation_1.XmlImplementation.getCampaignDAta(campaignId); }
+    static async getCampaignData(campaignId) { return await xmlImplementation_1.XmlImplementation.getCampaignData(campaignId); }
     static async getOffersByCampaign(campaignId) { return await xmlImplementation_1.XmlImplementation.getOffersByCampaign(campaignId); }
     static async getSubIdsByOfferData(offerId) { return await xmlImplementation_1.XmlImplementation.getSubIdsByOfferData(offerId); }
     // UPDATE DATA:

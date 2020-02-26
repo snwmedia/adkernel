@@ -78,7 +78,7 @@ class XmlImplementation {
         }
         return null;
     }
-    static async getCampaignDAta(campaignId) {
+    static async getCampaignData(campaignId) {
         let token = await dist_1.Common.getToken();
         let url = `${process.env.DOMAIN}/api/Campaign/?token=${token}&filters=search:${campaignId}`;
         let campaignData = await dist_1.Common.getData(url);
