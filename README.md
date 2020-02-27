@@ -5,7 +5,8 @@ update/publish:
 
 
 API docs:
-- https://github.com/snwmedia/adkernel/blob/master/image/adkernel%20api.PNG<br/>
+- https://login.adservme.com/admin/api/help
+![API docs](https://github.com/snwmedia/adkernel/blob/master/image/adkernel%20api.PNG)
 
 
 
