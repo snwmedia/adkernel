@@ -1,14 +1,13 @@
 # adkernel
 
-update/publish:
-- npm publish
-
-
 API docs:
 - https://login.adservme.com/admin/api/help
 ![API docs](https://github.com/snwmedia/adkernel/blob/master/image/adkernel%20api.PNG)
 
 
+
+update/publish:
+- npm publish
 
 ***Don't forget to upgrade version before you publish:<br/>
 https://github.com/snwmedia/adkernel/blob/57d3ba4fad5faa2bb0a1540b1f0ca830dba6a765/package.json#L3
