@@ -16,6 +16,7 @@ export declare class XmlImplementation {
     static getSubIdsReportByCampaignPublisherFeed(from: Date, to: Date, campaignId: number, pubFeedId: number, limit?: number): Promise<any[]>;
     static getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number): Promise<any[]>;
     static getRemoteFeedData(remoteFeedId: number): Promise<any[]>;
+    static getPubFeedData(pubfeedId: number): Promise<any>;
     static getCampaignData(campaignId: number): Promise<any>;
     static getOffersByCampaign(campaignId: number): Promise<any[]>;
     static getSubIdsByOfferData(offerId: number): Promise<any[]>;

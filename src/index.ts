@@ -213,6 +213,7 @@ export class XML {
     // GET DATA:
     public static async getRemotePublisherFeedData(remoteFeedId: number, pubFeedId: number) { return await XmlImplementation.getRemotePublisherFeedData(remoteFeedId, pubFeedId); }
     public static async getRemoteFeedData(remoteFeedId: number) { return await XmlImplementation.getRemoteFeedData(remoteFeedId); }
+    public static async getPubFeedData(pubfeedId: number) { return await XmlImplementation.getPubFeedData(pubfeedId); }
     public static async getCampaignData(campaignId: number) { return await XmlImplementation.getCampaignData(campaignId); }
     public static async getOffersByCampaign(campaignId: number) { return await XmlImplementation.getOffersByCampaign(campaignId); }
     public static async getSubIdsByOfferData(offerId: number) { return await XmlImplementation.getSubIdsByOfferData(offerId); }

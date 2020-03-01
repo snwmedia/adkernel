@@ -14,7 +14,7 @@ function test() {
     to.setDate(to.getDate() - 2);
     let from = new Date();
     from.setDate(from.getDate() - 15);
-    XML.getSubIdsReportByCampaignPublisherFeed(from,to,360466,176387);
+    // XML.getPubFeedData(170776);
 
 
     // XML.getPubFeedsReportByPublisher(from, to,35152)

@@ -116,7 +116,7 @@ class RtbImplementation {
         for (let zone in remotePublisherFeed) {
             let zoneObject = remotePublisherFeed[zone];
             if (zoneObject.id === zoneId) {
-                return remotePublisherFeed;
+                return zoneObject;
             }
         }
         return null;

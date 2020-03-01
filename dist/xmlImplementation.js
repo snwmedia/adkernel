@@ -83,6 +83,18 @@ class XmlImplementation {
         }
         return null;
     }
+    static async getPubFeedData(pubfeedId) {
+        let token = await dist_1.Common.getToken();
+        let url = `${process.env.DOMAIN}/api/PublisherFeed/?token=${token}&filters=search:${pubfeedId}`;
+        let publisherFeed = await dist_1.Common.getData(url);
+        for (let feed in publisherFeed) {
+            let pubFeedObject = publisherFeed[feed];
+            if (pubFeedObject.id === pubfeedId) {
+                return pubFeedObject;
+            }
+        }
+        return null;
+    }
     static async getCampaignData(campaignId) {
         let token = await dist_1.Common.getToken();
         let url = `${process.env.DOMAIN}/api/Campaign/?token=${token}&filters=search:${campaignId}`;
